@@ -1,0 +1,23 @@
+.btnLink{
+    width:100%;
+    height:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    transition: 0.5s;
+}
+.btnLink:hover {
+    text-decoration: underline;
+    background-color: rgba(221, 219, 219, 0.5);
+}
+.mainBox{
+    font-size: clamp(28px, 2.5em, 68px);
+    font-weight: bold;
+    justify-content: flex-start;
+}
+.mainBox:hover{
+    text-decoration: none;
+    background-color: white;
+}
