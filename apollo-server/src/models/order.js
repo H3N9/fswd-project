@@ -19,7 +19,7 @@ const OrderSchema = new Schema({
         default: 'PROCESSING',
         index: true
     },
-    orderById: { type: String, require: true, ref: 'User' }
+    userId: { type: String, require: true, ref: 'User' }
 })
 
 export const OrderModel = mongoose.model('Order', OrderSchema)

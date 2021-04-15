@@ -16,4 +16,4 @@ export const me = schemaComposer.createResolver({
       const user = await UserModel.findById(_id)
       return user
     },
-  })
+})

@@ -6,9 +6,9 @@ OrderTC.addRelation(
     {
         resolver: () => UserTC.getResolver('findById'),
         prepareArgs: {
-            _id: (source) => source.orderById,
+            _id: (source) => source.userId,
         },
-        projection: { orderById: 1 },
+        projection: { userId: 1 },
     }
 )
 
