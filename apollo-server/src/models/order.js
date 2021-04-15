@@ -10,7 +10,7 @@ const enumOrderStatus = {
 }
 
 const OrderSchema = new Schema({
-    createdAt: { type: Date, default: new Date() },
+    createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     status: {
         type: String,
