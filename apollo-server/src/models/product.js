@@ -7,8 +7,8 @@ const ProductSchema = new Schema({
     name: {type: String, required: true, index: true},
     price: {type: Number, required: true},
     stock: {type: Number, required: true},
-    created: { type: Date, default: Date.now },
-    updated: { type: Date, default: Date.now },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
     description: {type: String}
 })
 

@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { OrderTC, UserTC } from '../../models'
+import { OrderTC, UserTC, OrderProductTC } from '../../models'
 
 OrderTC.addRelation(
     'orderBy',
@@ -9,6 +9,17 @@ OrderTC.addRelation(
             _id: (source) => source.userId,
         },
         projection: { userId: 1 },
+    }
+)
+
+OrderTC.addRelation(
+    'orderProducts',
+    {
+        resolver: () => OrderProductTC.getResolver('findMany'),
+        prepareArgs: {
+            filter: (source) => ({ orderId: source._id }),
+        },
+        projection: { _id: 1 },
     }
 )
 
