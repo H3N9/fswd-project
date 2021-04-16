@@ -10,11 +10,13 @@ import BestSalePage from './bestSalePage'
 import Detail from './detail'
 import Cart from './cart'
 import Payment from './payment'
+import MobileNavbar from '../components/mobileNavbar'
 
 const OrderContext = createContext()
 
 const Index = () => {
     const [order, setOrder] = useState([])
+    const [isShowMenu, setIsShowMenu] = useState(false)
 
     const addOrder = (newOrder) => {
         console.log(order)
@@ -26,11 +28,11 @@ const Index = () => {
     }
 
 
-
     return (
             <Router>
                 <OrderContext.Provider value={{order:order, addOrder, removeCart}}>
-                    <NavBar />
+                    <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                    <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                     <ContentBox >
                         <Switch>
                             <Route exact path="/">
