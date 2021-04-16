@@ -24,15 +24,15 @@ OrderTC.addRelation(
 )
 
 OrderTC.addFields({
-    createdAtWithFormat: {
+    createdAtWithFormatDateTime: {
         type: 'String',
-        resolve: (source) => moment(source.createdAt).fromNow(),
+        resolve: (source) => moment(source.createdAt).format("YYYY-MM-DD HH:mm:ss"),
         projection: { createdAt: 1 },
     },
 
-    createdAt: {
+    updatedAtWithFormatDateTime: {
         type: 'String',
-        resolve: (source) => source.createdAt,
-        projection: { createdAt: 1 }
-    }
+        resolve: (source) => moment(source.updatedAt).format("YYYY-MM-DD HH:mm:ss"),
+        projection: { updatedAt: 1 },
+    },
 })

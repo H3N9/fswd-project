@@ -5,7 +5,7 @@ const { Schema } = mongoose
 
 const OrderProductSchema = new Schema({
     productId: { type: String, require: true, ref: 'Product' },
-    unit: {type: Number, require: true, default: 1},
+    quantity: {type: Number, require: true, default: 1},
     createdAt: { type: Date, default: new Date() },
     orderId: { type: String, require: true, ref: 'Order' }
 })
