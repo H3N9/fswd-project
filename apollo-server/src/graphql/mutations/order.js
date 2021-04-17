@@ -7,10 +7,17 @@ export const createOrder = OrderTC.getResolver('createOne', [authCreateMiddlewar
 export const removeOrderById = OrderTC.getResolver('removeById')
 
 const setCartInput= schemaComposer.createInputTC({
-    name: "editCartInput",
+    name: 'editCartInput',
     fields: {
         productId: 'String!',
         quantity: 'Int!'
+    }
+})
+
+const setPromotionInput = schemaComposer.createInputTC({
+    name: 'setPromotionInput',
+    fields: {
+        promotionCode: 'String!'
     }
 })
 
@@ -38,4 +45,12 @@ export const setCart = schemaComposer.createResolver({
         }
         throw new Error('You must be authorized');
     }
+})
+
+export const setPromotion = schemaComposer.createResolver({
+    name: 'setPromotion',
+    args: {
+        record: [setPromotionInput]
+    },
+    type: OrderTC
 })
