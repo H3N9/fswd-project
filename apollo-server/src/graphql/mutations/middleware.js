@@ -1,0 +1,12 @@
+export const authCreateMiddleware = async (resolve, source, args, context, info) =>{
+    if (context?.user) {
+        const newArgs = { record: {
+            userId: context?.user._id
+        }}
+
+        return resolve(source, newArgs, context, info);
+    }
+    throw new Error('You must be authorized');
+}
+
+export default authCreateMiddleware
