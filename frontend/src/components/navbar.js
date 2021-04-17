@@ -21,10 +21,7 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                     <Link to={`/`} onClick={() => setIsShowMenu(false)}>{"Home"}</Link>
                 </Logo>
                 <BoxBtn>      
-                    <BoxLink title={"สินค้าใหม่"} link={"new"} main={""}  />
-                    <BoxLink title={"สินค้าขายดี"} link={"best"} />
-                    <BoxLink title={"สินค้าลดราคา"} link={"discount"} main={""}  />
-                    <BoxLink title={"สินค้าแนะนำ"} link={"recommend"} main={""}  />     
+                    <BoxLink title={"สินค้าลดราคา"} link={"discount"}/> 
                 </BoxBtn>  
                 <AccountBox>
                     <BoxButton>

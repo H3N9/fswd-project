@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 import '../styles/styleUniversal.css'
 
 
-const BtnNav = ({title, link, main, }) => {
+const BtnNav = ({title, link,}) => {
     return (
         <BoxLink>
-            <Link className={`btnLink ${main}`} to={`/${link}`}>{title}</Link>
+            <Link className={`btnLink`} to={`/${link}`}>{title}</Link>
         </BoxLink>
     )
 }

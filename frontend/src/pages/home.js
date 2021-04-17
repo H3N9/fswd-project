@@ -3,16 +3,16 @@ import styled from 'styled-components'
 import {Box9p, SpaceBox} from '../styles/styleComponents'
 import {apiGateway} from '../tools/tools'
 import CatgoriesBooks from '../components/catgoriesBooks'
+import { PRODUCT_QUERY } from '../graphql/productQuey'
+import { useQuery } from '@apollo/client'
 
 
 
 const Home = () => {
     const [books, setBooks] = useState([])
     const url = "http://localhost:9000/books"
-
-    useEffect(() => {
-        apiGateway(url, setBooks)
-    }, [])
+    const { loading, error, data } = useQuery(PRODUCT_QUERY)
+    console.log(data)
 
     return (
         <>
