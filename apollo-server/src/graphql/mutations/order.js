@@ -1,6 +1,6 @@
 import { schemaComposer } from 'graphql-compose'
 
-import { OrderProductModel, OrderTC, OrderModel } from '../../models'
+import { OrderProductModel, OrderTC, OrderModel, OrderPromotionModel } from '../../models'
 import { authCreateMiddleware } from './middleware'
 
 export const createOrder = OrderTC.getResolver('createOne', [authCreateMiddleware]).removeArg('record')
@@ -17,7 +17,7 @@ const setCartInput= schemaComposer.createInputTC({
 const setPromotionInput = schemaComposer.createInputTC({
     name: 'setPromotionInput',
     fields: {
-        promotionCode: 'String!'
+        promotionId: 'String!'
     }
 })
 
@@ -50,7 +50,25 @@ export const setCart = schemaComposer.createResolver({
 export const setPromotion = schemaComposer.createResolver({
     name: 'setPromotion',
     args: {
-        record: [setPromotionInput]
+        records: [setPromotionInput]
     },
-    type: OrderTC
+    type: OrderTC,
+    resolve: async ({ args, context }) =>{
+        if(context?.user){
+            const user = context.user
+            let order = await OrderModel.findOne({ status: 'PROCESSING', userId: user._id })
+            if (order === null){
+                order = await OrderModel.create({ userId: user._id })
+            }
+
+            const orderPromotionInput = args.records.map((item1) => ({...item1, orderId: order._id }))
+            await OrderPromotionModel.deleteMany({ orderId: order._id })
+            await OrderPromotionModel.insertMany(orderPromotionInput)
+            order.updatedAt = Date.now()
+            await order.save()
+
+            return order
+        }
+        throw new Error('You must be authorized');
+    }
 })
