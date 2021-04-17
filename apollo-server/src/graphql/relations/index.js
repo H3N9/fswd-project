@@ -1,3 +1,3 @@
-import './post'
 import './user'
 import './order'
+import './product'

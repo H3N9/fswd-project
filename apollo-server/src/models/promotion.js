@@ -5,7 +5,7 @@ const { Schema } = mongoose
 
 const DKey = 'type'
 const enumPromotionType = {
-    DISCOUNT_PRICE: 'Discount off price',
+    DISCOUNT_PRICE: 'DiscountPrice',
     COUPON: "Coupon"
 }
 
@@ -27,6 +27,7 @@ const PromotionSchema = new Schema({
         enum: Object.keys(enumPromotionMethod),
     },
     discountValue: { type: Number, require: true },
+    description: {type: String},
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
 })
