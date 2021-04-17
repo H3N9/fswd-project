@@ -4,18 +4,22 @@ import { Link } from 'react-router-dom'
 import '../styles/styleUniversal.css'
 
 
-const BtnNav = ({title, link, main}) => {
+const BtnNav = ({title, link,}) => {
     return (
         <BoxLink>
-            <Link className={`btnLink ${main}`} to={`/${link}`}>{title}</Link>
+            <Link className={`btnLink`} to={`/${link}`}>{title}</Link>
         </BoxLink>
     )
 }
 
 
 const BoxLink = styled.div`
-    width: 150px;
-    height: 100px;
+    width: fit-content;
+    height: 80px;
+    padding: 0 10px;
+    a{
+        padding: 0 10px;
+    }
 `
 
 
