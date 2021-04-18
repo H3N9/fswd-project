@@ -5,14 +5,6 @@ import jsonwebtoken from 'jsonwebtoken'
 
 import { UserModel, UserTC } from '../../models'
 
-// const LoginInput = schemaComposer.createInputTC({
-//   name: 'LoginInput',
-//   fields: {
-//     username: 'String!',
-//     password: 'String!',
-//   },
-// })
-
 const LoginPayload = schemaComposer.createObjectTC({
   name: 'LoginPayload',
   fields: {

@@ -23,45 +23,85 @@ const OrderSchema = new Schema({
     userId: { type: String, require: true, ref: 'User' },
 })
 
-OrderSchema.method('totalPrice', async function(){
-    const orderProducts = await OrderProductModel.find({ orderId: this._id }).populate('productId')
-    const totalPrice = orderProducts.reduce((acc, curr) => acc+(curr.productId.price*curr.quantity), 0)
-
-    return totalPrice
-})
-
-OrderSchema.method('totalDiscount', async function(){
+OrderSchema.method('getProductDiscount', async function(){
     const orderProducts = await OrderProductModel.find({ orderId: this._id }).populate('productId')
     const productIdList = orderProducts.map((item1) => item1.productId._id)
     const discountPricePromotions = await DiscountPricePromotionModel.find({ productId: {$in: productIdList } })
 
-    const totalDiscount = discountPricePromotions.reduce((acc, curr) => {
+    const discountObjs = discountPricePromotions.reduce((acc, curr) => {
         const index = orderProducts.findIndex((item1) => item1.productId._id+'' === curr.productId)
         if (index !== -1){
             const orderProduct = orderProducts[index]
-            let total
-            if (curr.method === 'DISCOUNT')
-                total = orderProduct.quantity * curr.discountValue
-            else
-                total = orderProduct.quantity * (orderProduct.productId.price * curr.discountValue/100)
-            return acc+total
-        }
-        return acc
-    }, 0)
+            const discount = (curr.method === 'DISCOUNT')?curr.discountValue:(orderProduct.productId.price * curr.discountValue/100)
+            const newObj = {
+                promotionId: curr._id,
+                type: curr.type,
+                discount,
+                description: curr.description,
+                quantity: orderProduct.quantity
+            }
 
-    const totalPrice = await this.totalPrice()
-    const coupons = await OrderPromotionModel.find({ orderId: this._id }).populate('promotionId')
-    const totalCouponDiscount = coupons.reduce((acc, curr) => {
-        const promotion = curr.promotionId
-        if (promotion.method === 'DISCOUNT'){
-            return acc + promotion.discountValue
+            return [...acc, newObj]
         }
-        else{
-            return acc + (totalPrice * promotion.discountValue/100)
-        }
+
+        return acc
+    }, [])
+
+    return discountObjs
+})
+
+OrderSchema.method('totalProductDiscount', async function(){
+    const productDiscounts = await this.getProductDiscount()
+    const totalDiscount = productDiscounts.reduce((acc, curr) => {
+        return acc + (curr.quantity * curr.discount)
     }, 0)
     
-    return totalDiscount + totalCouponDiscount
+    return totalDiscount
+})
+
+OrderSchema.method('totalPrice', async function(){
+    const orderProducts = await OrderProductModel.find({ orderId: this._id }).populate('productId')
+    const totalPriceRaw = orderProducts.reduce((acc, curr) => acc+(curr.productId.price*curr.quantity), 0)
+    const totalProductDiscount = await this.totalProductDiscount()
+
+    return totalPriceRaw - totalProductDiscount
+})
+
+OrderSchema.method('getCouponDiscount', async function(){
+    const totalPrice = await this.totalPrice()
+    const coupons = await OrderPromotionModel.find({ orderId: this._id }).populate('promotionId')
+
+    const couponDiscount = coupons.reduce((acc, curr) => {
+        const promotion = curr.promotionId
+        const discount = (promotion.method === 'DISCOUNT')?promotion.discountValue:(totalPrice * promotion.discountValue/100)
+        const newObj = {
+            promotionId: promotion._id,
+            type: promotion.type,
+            discount,
+            description: promotion.description,
+            quantity: 1
+        }
+
+        return [...acc, newObj]
+    }, [])
+
+    return couponDiscount
+})
+
+OrderSchema.method('totalCouponDiscount', async function(){
+    const couponDiscounts = await this.getCouponDiscount()
+    const totalDiscount = couponDiscounts.reduce((acc, curr) => {
+        return acc + curr.discount
+    }, 0)
+
+    return totalDiscount
+})
+
+OrderSchema.method('netTotalPrice', async function(){
+    const totalPrice = await this.totalPrice()
+    const totalCouponDiscount = await this.totalCouponDiscount()
+
+    return totalPrice - totalCouponDiscount
 })
 
 export const OrderModel = mongoose.model('Order', OrderSchema)

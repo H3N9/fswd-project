@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { schemaComposer } from 'graphql-compose'
 import { OrderTC, UserTC, OrderProductTC, OrderPromotionTC, OrderPromotionModel, OrderProductModel } from '../../models'
 
 OrderTC.addRelation(
@@ -34,6 +35,17 @@ OrderTC.addRelation(
     }
 )
 
+const discountsPayload = schemaComposer.createObjectTC({
+    name: 'discountsPayload',
+    fields: {
+        promotionId: 'String',
+        type: 'String',
+        description: 'String',
+        discount: 'Float',
+        quantity: 'Int'
+    }
+})
+
 OrderTC.addFields({
     createdAtWithFormatDateTime: {
         type: 'String',
@@ -56,15 +68,23 @@ OrderTC.addFields({
     netTotalPrice: {
         type: 'Float',
         resolve: async (source) => {
-            //const orderPromotions = await OrderPromotionModel.find({ orderId: source._id }).populate('promotionId')
+            const netTotalPrice = await source.netTotalPrice()
 
-            const totalPrice = await source.totalPrice()
-            const totalDiscount = await source.totalDiscount()
-            const totalPriceDiscount = totalPrice - totalDiscount
-
-            return totalPriceDiscount
+            return netTotalPrice
         },
 
+        projection: { orderId: 1 }
+    },
+
+    discounts: {
+        type: [discountsPayload],
+        //type: 'String',
+        resolve: async (source) => {
+            const productDiscounts = await source.getProductDiscount()
+            const couponDiscounts = await source.getCouponDiscount()
+
+            return [...productDiscounts, ...couponDiscounts]
+        },
         projection: { orderId: 1 }
     }
 })
