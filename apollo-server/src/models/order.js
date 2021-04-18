@@ -48,8 +48,20 @@ OrderSchema.method('totalDiscount', async function(){
         }
         return acc
     }, 0)
+
+    const totalPrice = await this.totalPrice()
+    const coupons = await OrderPromotionModel.find({ orderId: this._id }).populate('promotionId')
+    const totalCouponDiscount = coupons.reduce((acc, curr) => {
+        const promotion = curr.promotionId
+        if (promotion.method === 'DISCOUNT'){
+            return acc + promotion.discountValue
+        }
+        else{
+            return acc + (totalPrice * promotion.discountValue/100)
+        }
+    }, 0)
     
-    return totalDiscount
+    return totalDiscount + totalCouponDiscount
 })
 
 export const OrderModel = mongoose.model('Order', OrderSchema)

@@ -12,6 +12,7 @@ import { UserModel, UserTC } from '../../models'
 //     password: 'String!',
 //   },
 // })
+
 const LoginPayload = schemaComposer.createObjectTC({
   name: 'LoginPayload',
   fields: {
@@ -19,6 +20,7 @@ const LoginPayload = schemaComposer.createObjectTC({
     user: UserTC.getType(),
   },
 })
+
 export const login = schemaComposer.createResolver({
   name: 'login',
   args: {

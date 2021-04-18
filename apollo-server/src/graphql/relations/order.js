@@ -24,7 +24,7 @@ OrderTC.addRelation(
 )
 
 OrderTC.addRelation(
-    'promotionUse',
+    'discountCoupons',
     {
         resolver: () => OrderPromotionTC.getResolver('findMany'),
         prepareArgs: {
@@ -56,12 +56,13 @@ OrderTC.addFields({
     netTotalPrice: {
         type: 'Float',
         resolve: async (source) => {
-            const orderPromotions = await OrderPromotionModel.find({ orderId: source._id }).populate('promotionId')
+            //const orderPromotions = await OrderPromotionModel.find({ orderId: source._id }).populate('promotionId')
 
             const totalPrice = await source.totalPrice()
             const totalDiscount = await source.totalDiscount()
+            const totalPriceDiscount = totalPrice - totalDiscount
 
-            return totalPrice - totalDiscount
+            return totalPriceDiscount
         },
 
         projection: { orderId: 1 }
