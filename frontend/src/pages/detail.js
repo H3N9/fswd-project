@@ -111,12 +111,8 @@ const Detail = () => {
                             <a href="https://facebook.com" target="_blank"><ImageIcon src={FacebookIcon} /></a>
                             <a href="https://myaccount.google.com/profile" target="_blank"><ImageIcon src={GoogleIcon} /></a>
                             
-                        </BoxShare>
-                        
+                        </BoxShare>                   
                     </InfoBox>
-
-
-
                 </DetailBox>
             </Box9p>
             <SpaceBox />
@@ -150,16 +146,22 @@ const SecondImageBox = styled.div`
     background: white;
 `
 const SecondImage = styled.img`
-    width: 25%;
+    width: 17%;
     margin: 10px;
 
 `
 const MainImageBox = styled.div`
     width: 100%;
-    padding-bottom: 20px;
+    padding: 10px 0;
+    text-align: center;
+    background: #EAEAEA;
     
 `
-
+const MainImage = styled.img`
+    width: 50%;
+    object-fit: cover;
+    
+`
 const TitleDetial = styled.div`
     width: 90%;
     padding: 5%;
@@ -207,14 +209,15 @@ const PriceBox = styled.div`
 `
 const PriceText = styled.h1`
     margin: 0;
-    font-size: clamp(16px, 4em, 10vw);
+    font-size: clamp(32px, 10vw, 50px);
     margin-right: 30px;
     
 `
 const PriceTitle = styled.h2`
     margin: 0;
-    font-size: clamp(14px, 3em, 8vw);
-    margin-right: 70px;
+    font-size: clamp(14px, 8vw, 40px);
+    margin-right: 35px;
+    font-weight: lighter;
 `
 
 const PriceDiscountText = styled.h2`
@@ -281,10 +284,6 @@ const Underline = styled.div`
 
 const Ptext = styled.p`
     margin: 0;
-
-`
-const MainImage = styled.img`
-    width: 80%;
 
 `
 const DescriptBox = styled.div`

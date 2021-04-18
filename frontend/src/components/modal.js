@@ -73,12 +73,11 @@ const BoxModal = styled.div`
     right: 0;
     margin-right: 5%;
     flex-direction: column;
-    box-shadow: 0vw 0vw 1vw rgba(0,0,0,0.8);
-
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 `
 const BoxCover = styled.div`
     width: 100%;
-    background-color: white;
+    background-color: #FFF;
     display: flex;
     justify-content: center;
     align-items: center;

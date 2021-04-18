@@ -9,6 +9,8 @@ import DiscountPage from './discountPage'
 import BestSalePage from './bestSalePage'
 import Detail from './detail'
 import Cart from './cart'
+import Login from './login'
+import Register from './register'
 import Payment from './payment'
 import MobileNavbar from '../components/mobileNavbar'
 
@@ -37,6 +39,12 @@ const Index = () => {
                         <Switch>
                             <Route exact path="/">
                                 <Home />
+                            </Route>
+                            <Route path="/login">
+                                <Login />
+                            </Route>
+                            <Route path="/register">
+                                <Register />
                             </Route>
                             <Route path="/new">
                                 <NewGoodsPage />

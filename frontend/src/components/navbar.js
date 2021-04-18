@@ -15,12 +15,10 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
     return (
         <>
         <Package>
-            <div className="container">
-            <NavigateBar>
-                <Logo>
-                    <Link to={`/`} onClick={() => setIsShowMenu(false)}>{"Home"}</Link>
-                </Logo>
-                <BoxBtn>      
+                <BoxBtn>
+                    <Logo>
+                        <Link to={`/`} onClick={() => setIsShowMenu(false)}>{"Home"}</Link>
+                    </Logo>    
                     <BoxLink title={"สินค้าใหม่"} link={"new"} main={""}  />
                     <BoxLink title={"สินค้าขายดี"} link={"best"} />
                     <BoxLink title={"สินค้าลดราคา"} link={"discount"} main={""}  />
@@ -37,11 +35,8 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                     <BoxButton>
                         <Image src={Stephen} />
                     </BoxButton>
-                    <MobileMenuButton onClick={() => setIsShowMenu(!isShowMenu)} className={isShowMenu ? "active" : ""}>
-                    </MobileMenuButton>
-                </AccountBox>
-            </NavigateBar>           
-            </div>
+                    <MobileMenuButton onClick={() => setIsShowMenu(!isShowMenu)} className={isShowMenu ? "active" : ""} />
+                </AccountBox>        
         </Package>
         {modal && (
             <Modal />
@@ -56,27 +51,22 @@ const Package = styled.div`
     top: 0;
     z-index: 1;
     background: #FFF;
-    padding-top: 5px;
-    box-shadow: 0 4px 2px -2px gray;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 `
+
 const AccountBox = styled.div`
     display: flex;
     align-items: center;
+    padding-right: 20px;
 
-`
-const NavigateBar = styled.div`
-    /* padding: 5px 0; */
-    background: white;
-    display: flex;
-    justify-content: space-between;
 `
 
 const BoxBtn = styled.div`
+    padding-left: 20px;
     display: flex;
-    flex: 1;
-    @media (max-width: 960px) {
-        display: none;
-    }
+    align-items:center;
 `
 
 const Logo = styled.div`
@@ -149,8 +139,10 @@ const Image = styled.img`
 `
 const Circle = styled.div`
     border-radius: 50%;
+    min-width: 10px;
+    min-height: 10px;
     position: absolute;
-    background: #003cff;
+    background: #3058db;
     color: white;
     padding: 0px 6px 0px 6px;
     display: flex;
