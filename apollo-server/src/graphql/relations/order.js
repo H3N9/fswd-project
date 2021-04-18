@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { OrderTC, UserTC, OrderProductTC, OrderPromotionTC } from '../../models'
+import { OrderTC, UserTC, OrderProductTC, OrderPromotionTC, OrderPromotionModel, OrderProductModel } from '../../models'
 
 OrderTC.addRelation(
     'orderBy',
@@ -46,4 +46,24 @@ OrderTC.addFields({
         resolve: (source) => moment(source.updatedAt).format("YYYY-MM-DD HH:mm:ss"),
         projection: { updatedAt: 1 },
     },
+
+    totalPrice: {
+        type: 'Float',
+        resolve: async (source) => await source.totalPrice(),
+        projection: { orderId: 1 }
+    },
+
+    netTotalPrice: {
+        type: 'Float',
+        resolve: async (source) => {
+            const orderPromotions = await OrderPromotionModel.find({ orderId: source._id }).populate('promotionId')
+
+            const totalPrice = await source.totalPrice()
+            const totalDiscount = await source.totalDiscount()
+
+            return totalPrice - totalDiscount
+        },
+
+        projection: { orderId: 1 }
+    }
 })
