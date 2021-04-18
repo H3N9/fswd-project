@@ -15,12 +15,11 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
     return (
         <>
         <Package>
-            <NavigateBar>
-                <Logo>
-                    <Link to={`/`} onClick={() => setIsShowMenu(false)}>{"Home"}</Link>
-                </Logo>
-                <BoxBtn>      
-                    <BoxLink title={"สินค้าลดราคา"} link={"discount"}/> 
+                <BoxBtn>
+                    <Logo>
+                        <Link to={`/`} onClick={() => setIsShowMenu(false)}>{"Home"}</Link>
+                    </Logo>    
+                    <BoxLink title={"สินค้าลดราคา"} link={"discount"} main={""}  /> 
                 </BoxBtn>  
                 <AccountBox>
                     <BoxButton>
@@ -34,8 +33,7 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                         <Image src={Stephen} />
                     </BoxButton>
                     <MobileMenuButton onClick={() => setIsShowMenu(!isShowMenu)} className={isShowMenu ? "active" : ""} />
-                </AccountBox>  
-                </NavigateBar>      
+                </AccountBox>        
         </Package>
         {modal && (
             <Modal />
