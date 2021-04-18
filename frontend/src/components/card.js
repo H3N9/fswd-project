@@ -148,10 +148,11 @@ const BoxCard = styled.div`
     flex-direction: column;
     flex-shrink: 0;
     margin: 1vw;
-    transition: 0.5s;
-    padding: 1vw;
+    transition: 0.35s;
+    padding: 25px 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     :hover{
-        box-shadow: 0vw 0vw 1vw rgba(0,0,0,0.8);
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
         z-index: 1;
 
     }

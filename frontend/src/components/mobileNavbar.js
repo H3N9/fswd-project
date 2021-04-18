@@ -24,16 +24,21 @@ const Mainmenu = styled.div`
     height: 100vh;
     padding-left :50px;
     background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
     position: fixed;
     overflow: scroll;
     padding-top: 100px;
     right: 100%;
     transition: 0.65s;
+    @media (min-width: 960px) {
+       display: none;
+    }
 `
 const MenuContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: 10px 20px;
+    
     a{
         text-decoration: none;
         font-size: 1.6rem;

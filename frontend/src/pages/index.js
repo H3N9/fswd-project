@@ -6,6 +6,8 @@ import Home from './home'
 import DiscountPage from './discountPage'
 import Detail from './detail'
 import Cart from './cart'
+import Login from './login'
+import Register from './register'
 import Payment from './payment'
 import MobileNavbar from '../components/mobileNavbar'
 

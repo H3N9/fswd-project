@@ -13,6 +13,7 @@ export const Catgories = styled.div`
     overflow-x: scroll;
     display: flex;
     flex-direction: row;
+    padding-bottom : 25px;
 
 `
 
