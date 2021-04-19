@@ -52,6 +52,6 @@ app.use(
 )
 server.applyMiddleware({ app, path, cors: { origin: 'http://localhost:3000', credentials: true } })
 
-app.listen({ port: 5001 }, () => {
+app.listen({ port: 3001 }, () => {
   console.log(`🚀 Server ready at http://localhost:5001${server.graphqlPath}`)
 })

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {Button} from '../../styles/styleComponents'
 import {Link} from 'react-router-dom'
-import {useOrderContext} from '../../pages/index'
+import {useOrderContext} from '../../context/orderContext'
 
 
 const Modal = () => {
@@ -10,13 +10,13 @@ const Modal = () => {
 
     const renderBook = (product) => {
         return (
-            <Pack>
+            <Pack key={product._id}>
                 <AmountBox>
-                    {"1x"}
+                    {product?.quantity}
                 </AmountBox>
-                <ImageOrder src={product?.image} />
+                <ImageOrder src={product?.book?.image} />
                 <TitleOrder>
-                    {product?.title}
+                    {product?.book?.title}
                 </TitleOrder>
             </Pack>
         )

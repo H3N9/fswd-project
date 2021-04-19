@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {Title, TitleText, Box9p, SpaceBox} from '../styles/styleComponents'
 import CardCart from '../components/cart/cardCart'
-import { useOrderContext } from './index'
+import { useOrderContext } from '../context/orderContext'
 import {Link} from 'react-router-dom'
 import Summary from '../components/cart/summary'
 

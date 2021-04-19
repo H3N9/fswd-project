@@ -6,24 +6,42 @@ import CatgoriesProducts from '../components/home/catgoriesProducts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import FacebookIcon from '../images/facebook.png'
 import GoogleIcon from '../images/google-plus.png'
-import { useOrderContext } from './index'
+import { useOrderContext } from '../context/orderContext'
 import UpNumber from '../components/detail/upNumber'
 import { PRODUCT_QUERY, PRODUCT_BY_ID } from '../graphql/productQuey'
-import { useQuery } from '@apollo/client'
+import { useQuery, useLazyQuery} from '@apollo/client'
 
 
 const Detail = () => {
     const location = useLocation()
-    const product = location?.state
-    const {title = "", price = 0, description = "", image = "", author = "", publisher = "", types = ""} = product
-    const { data: products = {} } = useQuery(PRODUCT_QUERY)
-    const discount = 0
-    const url = "http://localhost:9000/books"
-    const priceWdiscount = price-discount
+    const [product, setProduct] = useState({})
+    const { bookId } = useParams()
+    const [loadProduct, {loading, data}] = useLazyQuery(PRODUCT_BY_ID, {variables: {id:bookId}})
+
+    useEffect(() => {
+        if(data?.productById){
+            setProduct(data?.productById)
+        }
+    }, [data])
+
+
+    useEffect(() => {
+        const load = async () => {
+            if(location.state){
+                setProduct(location.state)
+            }
+            else{
+                await loadProduct()
+            }
+        }
+        load()
+    }, [])
+    
+    const {title = "", price = 0, description = "", image = "", author = "", publisher = "", types = "", netPrice = 0} = product
+    const { data: products = [] } = useQuery(PRODUCT_QUERY)
+    const discount = netPrice !== price
     const [number, setNumber] = useState(0)
     const { addOrder } = useOrderContext()
-    
-    console.log(product)
 
    
 
@@ -86,15 +104,13 @@ const Detail = () => {
 
                         <PriceBox>
                             <PriceTitle>ราคา</PriceTitle>
-                            <PriceText>THB{priceWdiscount.toFixed(2)}</PriceText>
+                            <PriceText>THB{netPrice.toFixed(2)}</PriceText>
                             {discount? <PriceDiscountText>THB{price.toFixed(2)}</PriceDiscountText>:""}
                         </PriceBox>
 
                         <PackHandle>
                             <UpNumber number={number} handleNumber={handleNumber} />
-                            <ButtonAdd onClick={() => addOrder(Array.from({length:number}, () => {
-                                return product
-                            }))}>Add</ButtonAdd>
+                            <ButtonAdd onClick={() => addOrder(product, number)}>Add</ButtonAdd>
                             <ButtonWish>
                                 <FontAwesomeIcon icon={['fas', 'heart']}/>
                                 Wishlist

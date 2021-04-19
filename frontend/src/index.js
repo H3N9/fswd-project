@@ -5,20 +5,29 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { BrowserRouter as Router } from 'react-router-dom'
+import {OrderProvider} from './context/orderContext'
+import {SessionProvider} from './context/session'
+import {CookiesProvider} from 'react-cookie'
 
 const client = new ApolloClient({
-  uri: 'http://localhost:5001/graphql',
+  uri: 'http://localhost:3001/graphql',
   cache: new InMemoryCache(),
   credentials: 'include',
 })
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <ApolloProvider client={client}>
-          <App />
-      </ApolloProvider>
-    </Router>
+    <CookiesProvider>
+      <Router>
+        <ApolloProvider client={client}>
+          <SessionProvider>
+            <OrderProvider>
+            <App />
+            </OrderProvider>
+          </SessionProvider>
+        </ApolloProvider>
+      </Router>
+    </CookiesProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

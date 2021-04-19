@@ -3,17 +3,16 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from "prop-types"
-import { useOrderContext } from '../../pages/index'
+import { useOrderContext } from '../../context/orderContext'
 
 
 const Card = ({product}) => {
-    const {title = "", price = 0, _id = 0, image = ""} = product
-    const discount = 0
+    const {title = "", price = 0, _id = 0, image = "", netPrice = 0, promotion} = product
     const quantity = product?.quantity > 0 ? true:false
     const { addOrder } = useOrderContext()
 
-    const discountFuc = (discount, price) => {
-        if(discount){
+    const discountFuc = (promotion, price, netPrice) => {
+        if(promotion){
             return(
                 <>
                     <PriceBox>
@@ -21,7 +20,7 @@ const Card = ({product}) => {
                     </PriceBox>
 
                     <DiscountBox>
-                        {(<DiscountText>THB{(price-discount).toFixed(2)}</DiscountText>)}
+                        {(<DiscountText>THB{(netPrice).toFixed(2)}</DiscountText>)}
                     </DiscountBox>
                 </>
             )
@@ -76,7 +75,7 @@ const Card = ({product}) => {
                 </ImageBox>
 
                 <AddCart>
-                    <Button onClick={() => addOrder([product])}>
+                    <Button onClick={() => addOrder(product, 1)}>
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                         {" AddCart"}
                     </Button>
@@ -87,7 +86,7 @@ const Card = ({product}) => {
                     <TitleText>{title}</TitleText>
                 </TitleBox>
 
-                {discountFuc(discount, price)}
+                {discountFuc(promotion, price, netPrice)}
 
             </BoxCard>
         </Link>
@@ -201,7 +200,7 @@ const Button = styled.button`
 
 Card.propTypes = {
     product: PropTypes.shape({
-        _id: PropTypes.number.isRequired,
+        _id: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired
     }).isRequired,

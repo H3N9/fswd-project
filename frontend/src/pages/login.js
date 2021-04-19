@@ -1,15 +1,45 @@
-import React, {useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import {useSession} from '../context/session'
+import {useHistory} from 'react-router-dom'
 
 const Login = () =>{
-    const [loginData, setLoginData] = useState({username:"", password: ""})
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const { login, user } = useSession()
+    const history = useHistory()
+
+    useEffect(() => {
+        console.log(user)
+        if(user){
+            history.push('/')
+        }
+    }, [user])
+
+    const usernameHandle = useCallback((e) => {
+        setUsername(e.target.value)
+    }, [])
+
+    const passwordHandle = useCallback((e) => {
+        setPassword(e.target.value)
+    }, [])
+
+
+    const handleLogin = useCallback( async(e) => {
+        e.preventDefault()
+        await login(username, password)
+    }, [login, password, username])
+
     return(
         <MainContainer>
             <LoginContainer>
-                <input type="text" placeholder="username" value={loginData.username}  onChange={(e) => setLoginData({username: e.target.value, password: loginData.password})}/>
-                <input type="password"  placeholder="password" value={loginData.password} onChange={(e) => setLoginData({username: loginData.username, password: e.target.value})}/>
-                <button onClick={() => console.log(loginData)}>Login</button>
+                <form onSubmit={handleLogin}>
+                    <input type="text" placeholder="username" value={username}  onChange={usernameHandle}/>
+                    <input type="password"  placeholder="password" value={password} onChange={passwordHandle}/>
+                    <button>Login</button>
+                </form>
+                
                 <Link to={`/register`}>Register</Link>
 
             </LoginContainer>
