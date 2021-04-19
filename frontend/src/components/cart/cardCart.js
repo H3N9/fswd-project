@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import UpNumber from './upNumber'
+import UpNumber from '../detail/upNumber'
 
 
-const CardCart = ({book}) => {
-    const {image, title, price, discount} = book
+const CardCart = ({product}) => {
+    const {image = "", title = "", price = 0, discount = 0} = product
     const priceWdiscount = price-discount
 
     const lockClikcing = (n, command) => {

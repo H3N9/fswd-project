@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import {Box9p, SpaceBox} from '../styles/styleComponents'
-import {apiGateway} from '../tools/tools'
-import CatgoriesBooks from '../components/catgoriesBooks'
+import CatgoriesProducts from '../components/home/catgoriesProducts'
 import { PRODUCT_QUERY } from '../graphql/productQuey'
 import { useQuery } from '@apollo/client'
 
 
 
 const Home = () => {
-    const [books, setBooks] = useState([])
-    const url = "http://localhost:9000/books"
     const { loading, error, data } = useQuery(PRODUCT_QUERY)
-    console.log(data)
+    const products = data?.products || []
+    console.log(products)
 
     return (
         <>
@@ -22,8 +20,8 @@ const Home = () => {
 
                 </MainImage>
 
-                <CatgoriesBooks books={books} title={"สินค้าใหม่"}/>
-                <CatgoriesBooks books={books} title={"สินค้าแนะนำ"}/>
+                <CatgoriesProducts products={products} title={"All"}/>
+                <CatgoriesProducts products={products} title={"Save Price"}/>
             </Box9p>
             <SpaceBox />
         </>

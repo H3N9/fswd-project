@@ -3,43 +3,14 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from "prop-types"
-import { useOrderContext } from '../pages/index'
+import { useOrderContext } from '../../pages/index'
 
 
-const Card = ({book}) => {
-    const {title = "", image = "", price = 0, discount = 0, rates = 0, id = 0} = book
-    const quantity = book?.quantity > 0 ? true:false
+const Card = ({product}) => {
+    const {title = "", price = 0, _id = 0, image = ""} = product
+    const discount = 0
+    const quantity = product?.quantity > 0 ? true:false
     const { addOrder } = useOrderContext()
-
-    const rateHandle = (rates) => {
-        const amount = rates.length
-        if(amount > 0){
-            const star = rates.reduce((rate1, rate2) => rate1 + (rate2["rate"]||0), 0)/amount
-            return(
-                <PackStar>
-                    {rederStar(star-0, 1)}
-                    {rederStar(star-1, 2)}
-                    {rederStar(star-2, 3)}
-                    {rederStar(star-3, 4)}
-                    {rederStar(star-4, 5)}
-                    <ReviewText>{`Review(${amount})`}</ReviewText>
-                </PackStar>
-            )
-        }
-        
-    }
-
-    const rederStar = (rate, key) => {
-        if(rate >= 1) {
-            return <FontAwesomeIcon style={{color: "#e0ac18"}} key={key} icon={['fas', 'star']}  />
-        }
-        else if(rate > 0.5){
-            return <FontAwesomeIcon style={{color: "#e0ac18"}} key={key} icon={['fas', 'star-half-alt']}  />
-        }
-        else {
-            return <FontAwesomeIcon style={{color: "#e0ac18"}} key={key} icon={['far', 'star']}  />
-        }
-    }
 
     const discountFuc = (discount, price) => {
         if(discount){
@@ -91,8 +62,8 @@ const Card = ({book}) => {
     return (
         <Link to={
             {
-                pathname: `/detail/${id}`,
-                state: book,
+                pathname: `/detail/${_id}`,
+                state: product,
             }
         } style={{textDecoration: "none"}}>
             <BoxCard>
@@ -105,16 +76,12 @@ const Card = ({book}) => {
                 </ImageBox>
 
                 <AddCart>
-                    <Button onClick={() => addOrder([book])}>
+                    <Button onClick={() => addOrder([product])}>
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                         {" AddCart"}
                     </Button>
                     
-                </AddCart>
-
-                <RateBox>
-                    {rateHandle(rates)}
-                </RateBox>                
+                </AddCart>          
 
                 <TitleBox>
                     <TitleText>{title}</TitleText>
@@ -158,10 +125,6 @@ const BoxCard = styled.div`
     }
 `
 
-const PackStar = styled(Box)`
-    align-items: center;
-`
-
 const StateGoods = styled(Box)`
     background: white;
     height: 6%;
@@ -179,11 +142,6 @@ const ImageBox = styled.div`
 const Image = styled.img`
     object-fit: cover;
     height: 100%;
-`
-
-const RateBox = styled(Box)`
-    background: white;
-    height: 6%;
 `
 
 const TitleBox = styled(Box)`
@@ -214,11 +172,6 @@ const PtextFail = styled.p`
     margin: 0;
     color: red;
 `
-
-const ReviewText = styled.span`
-    color: gray;
-    margin-left: 5px;
-`
 const PriceText = styled.h2`
     margin: 0;
     text-decoration: line-through;
@@ -247,12 +200,9 @@ const Button = styled.button`
 `
 
 Card.propTypes = {
-    book: PropTypes.shape({
-        id: PropTypes.number.isRequired,
+    product: PropTypes.shape({
+        _id: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired,
-        rates: PropTypes.array.isRequired,
-        discount: PropTypes.number.isRequired,
         price: PropTypes.number.isRequired
     }).isRequired,
 }

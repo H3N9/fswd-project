@@ -1,22 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
-import {Button} from '../styles/styleComponents'
+import {Button} from '../../styles/styleComponents'
 import {Link} from 'react-router-dom'
-import {useOrderContext} from '../pages/index'
+import {useOrderContext} from '../../pages/index'
 
 
 const Modal = () => {
     const { order } = useOrderContext()
 
-    const renderBook = (book) => {
+    const renderBook = (product) => {
         return (
             <Pack>
                 <AmountBox>
                     {"1x"}
                 </AmountBox>
-                <ImageOrder src={book?.image} />
+                <ImageOrder src={product?.image} />
                 <TitleOrder>
-                    {book?.title}
+                    {product?.title}
                 </TitleOrder>
             </Pack>
         )
@@ -43,7 +43,7 @@ const Modal = () => {
 
             <BoxCover>
                 <Order>
-                    {order.map((book) => renderBook(book))}
+                    {order.map((product) => renderBook(product))}
                 </Order>
             </BoxCover>
             <Underline />
@@ -143,11 +143,15 @@ const AmountBox = styled.div`
 const ImageOrder = styled.img`
     padding: 2.5%;
     width: 20%;
+    height: 80px;
     object-fit: cover;
 `
 
 const TitleOrder = styled.div`
     width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 

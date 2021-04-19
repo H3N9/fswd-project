@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState} from 'react'
 import {Route, Switch} from 'react-router-dom'
-import NavBar from '../components/navbar'
+import NavBar from '../components/navbar/navbar'
 import styled from 'styled-components'
 import Home from './home'
 import DiscountPage from './discountPage'
@@ -9,7 +9,7 @@ import Cart from './cart'
 import Login from './login'
 import Register from './register'
 import Payment from './payment'
-import MobileNavbar from '../components/mobileNavbar'
+import MobileNavbar from '../components/navbar/mobileNavbar'
 
 const OrderContext = createContext()
 

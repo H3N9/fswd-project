@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import BoxLink from '../components/btnNav'
+import BoxLink from './btnNav'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import Stephen from '../images/stephen.jpg'
+import Stephen from '../../images/stephen.jpg'
 import Modal from './modal'
-import {useOrderContext} from '../pages/index'
+import {useOrderContext} from '../../pages/index'
 import { Link } from 'react-router-dom'
 
 const Navbar = ({setIsShowMenu, isShowMenu}) => {
