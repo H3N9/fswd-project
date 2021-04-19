@@ -28,6 +28,9 @@ const Home = () => {
 }
 
 const MainImage = styled.div`
+    background-image: url('https://www.harveyawards.org/wp-content/uploads/2020/03/new-book.jpg');
+    background-size: cover;
+    background-position: center center;
     width: 100%;
     height: 500px;
     margin-bottom: 5vh;

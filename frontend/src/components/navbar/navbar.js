@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import BoxLink from './btnNav'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Stephen from '../../images/stephen.jpg'
+import logo from '../../images/logo.webp'
 import Modal from './modal'
 import {useOrderContext} from '../../context/orderContext'
 import { Link } from 'react-router-dom'
@@ -16,8 +17,10 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
         <>
         <Package>
                 <BoxBtn>
-                    <Logo>
-                        <Link to={`/`} onClick={() => setIsShowMenu(false)}>{"Home"}</Link>
+                    <Logo>        
+                        <Link to={`/`} onClick={() => setIsShowMenu(false)}>
+                            <img src={logo} alt="" />
+                        </Link>
                     </Logo>    
                     <BoxLink title={"สินค้าลดราคา"} link={"discount"} main={""}  /> 
                 </BoxBtn>  
@@ -46,17 +49,17 @@ const Package = styled.div`
     width: 100%;
     position: fixed;
     top: 0;
-    z-index: 1;
-    background: #FFF;
+    z-index: 10;
     display: flex;
     justify-content: space-between;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    background: #FFF;
 `
 
 const AccountBox = styled.div`
     display: flex;
     align-items: center;
-    padding-right: 20px;
+    padding-right: 2.5vmin;
 
 `
 
@@ -67,12 +70,10 @@ const BoxBtn = styled.div`
 `
 
 const Logo = styled.div`
-    padding: 10px 0;
-    a{
-        font-weight: bold;
-        font-size: clamp(28px, 7vmin, 42px);
-        text-decoration: none;
-        color: #111;
+    padding-top: 5px;
+    img{
+        width: 85%;
+        border-radius: 10px;
     }
 `
 
@@ -88,7 +89,6 @@ const MobileMenuButton = styled.button`
         &::after{
             transform: translateY(0px) rotate(-45deg);
         }
-
     }
     background: transparent;
     width: 50px;

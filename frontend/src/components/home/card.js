@@ -71,13 +71,13 @@ const Card = ({product}) => {
                 </StateGoods>
 
                 <ImageBox>
-                    <Image src={image} />
+                    <Image src={"http://ird.rmuti.ac.th/2020/world/upload/post/picture/thumb/IRD291220C00001/noimg.png"} />
                 </ImageBox>
 
                 <AddCart>
                     <Button onClick={() => addOrder(product, 1)}>
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
-                        {" AddCart"}
+                        <p>{" AddCart"}</p>
                     </Button>
                     
                 </AddCart>          
@@ -107,20 +107,23 @@ const AddCart = styled.div`
 `
 
 const BoxCard = styled.div`
+    width: 320px;
     display: flex;
-    width: 300px;
-    height: 400px;
-    overflow: hidden;
     flex-direction: column;
-    flex-shrink: 0;
-    margin: 1vw;
-    transition: 0.35s;
+    height: 475px;
+    overflow: hidden;
     padding: 25px 15px;
+    margin: 0.25vw;
+    transition: 0.35s;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     :hover{
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
         z-index: 1;
-
+    }
+    @media (max-width: 420px){
+        width: 150px;
+        height: 325px;
+        margin: 0 5px;
     }
 `
 
@@ -144,11 +147,11 @@ const Image = styled.img`
 `
 
 const TitleBox = styled(Box)`
-    background: white;
-    height: 6%;
+
 `
 const TitleText = styled.h3`
     margin: 0;
+    font-size: clamp(20px, 5vmin,1.5rem);
     color: black;
 `
 
@@ -179,18 +182,25 @@ const PriceText = styled.h2`
 const DiscountText = styled.h1`
     margin: 0;
     color: black;
+    font-weight: 600;
+    font-size: clamp(25px, 6vmin, 2rem);
 `
 
 const Button = styled.button`
     outline: none;
-    border-radius: 20px;
+    border-radius: 50px;
     border: solid 2px #003cff;
     font-size: 1.2em;
     background: white;
-    padding: 3px 50px 3px 50px;
+    padding: 0px 6vmin 0px 6vmin;
     cursor: pointer;
     transition: 0.5s;
     color: #003cff;
+    display: flex;
+    align-items: center;
+    p{
+        margin: 0 0 0 7px;
+    }
     :hover{
         border: solid 2px #003cff;
         background: #003cff;

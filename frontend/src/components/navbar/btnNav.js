@@ -23,19 +23,15 @@ const BoxLink = styled.div`
         ::before{
             content: "";
             position: absolute;
-            width: 95%;
+            width: 0%;
             height: 25px;
-            transform: scale(0) rotate(60deg);
             border-radius: 5px;
             background: #222;
             z-index: -1;
-            left: 3px;
-            bottom: 0;
             transition: 0.32s;
         }
         :hover::before{
-            transform: scale(1) rotate(0deg);
-            
+            width: 95%;
         }
         :hover{
             color: #FFF;
