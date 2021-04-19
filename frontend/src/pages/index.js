@@ -48,6 +48,13 @@ const Index = () => {
                             <Route path="/payment">
                                 <Payment />
                             </Route>
+                            <Route path="/login">
+                                <Login />
+                            </Route>
+                            <Route path="/register">
+                                <Register />
+                            </Route>
+                            
                         </Switch>
                     </ContentBox>
                 </OrderContext.Provider>
