@@ -34,7 +34,7 @@ export const login = schemaComposer.createResolver({
       throw new UserInputError('Incorrect password')
     }
     return {
-      token: jsonwebtoken.sign({ _id: user._id }, process.env.SECRET ?? 'default-secret', { expiresIn: '1d', algorithm: 'HS256' }),
+      token: jsonwebtoken.sign({ _id: user._id, isAdmin: user.isAdmin }, process.env.SECRET ?? 'default-secret', { expiresIn: '1d', algorithm: 'HS256' }),
       user,
     }
   },

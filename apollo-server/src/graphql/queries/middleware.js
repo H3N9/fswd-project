@@ -1,4 +1,4 @@
-export const authQueryMiddleware = async (resolve, source, args, context, info) =>{
+export const authQueryMiddleware = async (resolve, source, args, context, info) => {
     if (context?.user) {
         const newArgs = {...args, filter: {
             ...args.filter,
