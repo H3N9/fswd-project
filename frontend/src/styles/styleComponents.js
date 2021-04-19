@@ -14,6 +14,7 @@ export const Catgories = styled.div`
     display: flex;
     flex-direction: row;
     padding-bottom : 25px;
+    position: relative;
 
 `
 

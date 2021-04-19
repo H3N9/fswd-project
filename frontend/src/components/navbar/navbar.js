@@ -46,17 +46,17 @@ const Package = styled.div`
     width: 100%;
     position: fixed;
     top: 0;
-    z-index: 1;
-    background: #FFF;
+    z-index: 10;
     display: flex;
     justify-content: space-between;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    background: #FFF;
 `
 
 const AccountBox = styled.div`
     display: flex;
     align-items: center;
-    padding-right: 20px;
+    padding-right: 2.5vmin;
 
 `
 
@@ -88,7 +88,6 @@ const MobileMenuButton = styled.button`
         &::after{
             transform: translateY(0px) rotate(-45deg);
         }
-
     }
     background: transparent;
     width: 50px;

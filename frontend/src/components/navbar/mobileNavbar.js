@@ -29,6 +29,7 @@ const Mainmenu = styled.div`
     overflow: scroll;
     padding-top: 100px;
     right: 100%;
+    z-index: 8;
     transition: 0.65s;
     @media (min-width: 960px) {
        display: none;
