@@ -17,7 +17,7 @@ export const PRODUCT_QUERY = gql`
 `
 
 export const PRODUCT_BY_ID = gql`
-    query Product($id: String!) {
+    query Product($id: MongoID) {
         productById(_id: $id) {
             _id
             name

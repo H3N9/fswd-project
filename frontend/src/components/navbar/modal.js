@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {Button} from '../../styles/styleComponents'
 import {Link} from 'react-router-dom'
-import {useOrderContext} from '../../pages/index'
+import {useOrderContext} from '../../context/orderContext'
 
 
 const Modal = () => {

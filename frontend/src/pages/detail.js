@@ -6,7 +6,7 @@ import CatgoriesProducts from '../components/home/catgoriesProducts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import FacebookIcon from '../images/facebook.png'
 import GoogleIcon from '../images/google-plus.png'
-import { useOrderContext } from './index'
+import { useOrderContext } from '../context/orderContext'
 import UpNumber from '../components/detail/upNumber'
 import { PRODUCT_QUERY, PRODUCT_BY_ID } from '../graphql/productQuey'
 import { useQuery } from '@apollo/client'
@@ -18,7 +18,6 @@ const Detail = () => {
     const {title = "", price = 0, description = "", image = "", author = "", publisher = "", types = ""} = product
     const { data: products = {} } = useQuery(PRODUCT_QUERY)
     const discount = 0
-    const url = "http://localhost:9000/books"
     const priceWdiscount = price-discount
     const [number, setNumber] = useState(0)
     const { addOrder } = useOrderContext()

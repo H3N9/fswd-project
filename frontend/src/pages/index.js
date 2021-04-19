@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useState} from 'react'
+import React, {useState} from 'react'
 import {Route, Switch} from 'react-router-dom'
 import NavBar from '../components/navbar/navbar'
 import styled from 'styled-components'
@@ -11,24 +11,11 @@ import Register from './register'
 import Payment from './payment'
 import MobileNavbar from '../components/navbar/mobileNavbar'
 
-const OrderContext = createContext()
-
 const Index = () => {
-    const [order, setOrder] = useState([])
     const [isShowMenu, setIsShowMenu] = useState(false)
 
-    const addOrder = (newOrder) => {
-        console.log(order)
-        setOrder([...order, ...newOrder])
-    }
-
-    const removeCart = () => {
-        setOrder([])
-    }
-
-
     return (
-                <OrderContext.Provider value={{order:order, addOrder, removeCart}}>
+                <>
                     <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                     <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                     <ContentBox >
@@ -54,10 +41,9 @@ const Index = () => {
                             <Route path="/register">
                                 <Register />
                             </Route>
-                            
                         </Switch>
                     </ContentBox>
-                </OrderContext.Provider>
+                </>
         
     )
 }
@@ -68,6 +54,3 @@ const ContentBox = styled.div`
 `
 
 export default Index
-
-
-export const useOrderContext = () => useContext(OrderContext)

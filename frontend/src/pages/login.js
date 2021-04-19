@@ -1,15 +1,26 @@
-import React, {useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const Login = () =>{
-    const [loginData, setLoginData] = useState({username:"", password: ""})
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+
+
+    const usernameHandle = useCallback((e) => {
+        setUsername(e.target.value)
+    }, [])
+
+    const passwordHandle = useCallback((e) => {
+        setPassword(e.target.value)
+    }, [])
+
     return(
         <MainContainer>
             <LoginContainer>
-                <input type="text" placeholder="username" value={loginData.username}  onChange={(e) => setLoginData({username: e.target.value, password: loginData.password})}/>
-                <input type="password"  placeholder="password" value={loginData.password} onChange={(e) => setLoginData({username: loginData.username, password: e.target.value})}/>
-                <button onClick={() => console.log(loginData)}>Login</button>
+                <input type="text" placeholder="username" value={username}  onChange={usernameHandle}/>
+                <input type="password"  placeholder="password" value={password} onChange={passwordHandle}/>
+                <button onClick={() => console.log(password, username)}>Login</button>
                 <Link to={`/register`}>Register</Link>
 
             </LoginContainer>

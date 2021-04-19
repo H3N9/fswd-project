@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from "prop-types"
-import { useOrderContext } from '../../pages/index'
+import { useOrderContext } from '../../context/orderContext'
 
 
 const Card = ({product}) => {
