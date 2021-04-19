@@ -3,7 +3,7 @@ import React, {createContext, useContext, useState} from 'react'
 const OrderContext = createContext()
 
 export const OrderProvider = (props) => {
-
+    const { children } = props
     const [order, setOrder] = useState([])
 
     const addOrder = (newOrder) => {
@@ -18,7 +18,7 @@ export const OrderProvider = (props) => {
 
     return (
         <OrderContext.Provider value={{order:order, addOrder, removeCart}}>
-            {props.children}
+            {children}
         </OrderContext.Provider>
     )
 }
