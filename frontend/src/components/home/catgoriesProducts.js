@@ -49,6 +49,9 @@ const NavButton = styled.button`
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    :active{
+        transform: scale(0.5);
+    }
 `
 
 const Wrapper = styled.div`

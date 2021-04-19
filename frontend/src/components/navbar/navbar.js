@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import BoxLink from './btnNav'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Stephen from '../../images/stephen.jpg'
+import logo from '../../images/logo.webp'
 import Modal from './modal'
 import {useOrderContext} from '../../context/orderContext'
 import { Link } from 'react-router-dom'
@@ -16,8 +17,10 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
         <>
         <Package>
                 <BoxBtn>
-                    <Logo>
-                        <Link to={`/`} onClick={() => setIsShowMenu(false)}>{"Home"}</Link>
+                    <Logo>        
+                        <Link to={`/`} onClick={() => setIsShowMenu(false)}>
+                            <img src={logo} alt="" />
+                        </Link>
                     </Logo>    
                     <BoxLink title={"สินค้าลดราคา"} link={"discount"} main={""}  /> 
                 </BoxBtn>  
@@ -67,12 +70,10 @@ const BoxBtn = styled.div`
 `
 
 const Logo = styled.div`
-    padding: 10px 0;
-    a{
-        font-weight: bold;
-        font-size: clamp(28px, 7vmin, 42px);
-        text-decoration: none;
-        color: #111;
+    padding-top: 5px;
+    img{
+        width: 85%;
+        border-radius: 10px;
     }
 `
 
