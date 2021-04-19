@@ -1,29 +1,32 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {Box9p, SpaceBox, Button} from '../styles/styleComponents'
-import {useLocation} from 'react-router-dom'
-import CatgoriesBooks from '../components/catgoriesBooks'
-import {apiGateway} from '../tools/tools'
+import {useLocation, useParams} from 'react-router-dom'
+import CatgoriesProducts from '../components/home/catgoriesProducts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import FacebookIcon from '../images/facebook.png'
 import GoogleIcon from '../images/google-plus.png'
 import { useOrderContext } from './index'
-import UpNumber from '../components/upNumber'
+import UpNumber from '../components/detail/upNumber'
+import { PRODUCT_QUERY, PRODUCT_BY_ID } from '../graphql/productQuey'
+import { useQuery } from '@apollo/client'
 
 
 const Detail = () => {
     const location = useLocation()
-    const book = location?.state
-    const {title = "", image = "", author = "", price = 0, discount = 0, publisher = "", catgories = "", type = "", code = "", description = ""} = book
-    const [books, setBooks] = useState([])
+    const product = location?.state
+    const {title = "", price = 0, description = "", image = "", author = "", publisher = "", types = ""} = product
+    const { data: products = {} } = useQuery(PRODUCT_QUERY)
+    const discount = 0
     const url = "http://localhost:9000/books"
     const priceWdiscount = price-discount
     const [number, setNumber] = useState(0)
     const { addOrder } = useOrderContext()
+    
+    console.log(product)
 
-    useEffect(() => {
-        apiGateway(url, setBooks)
-    }, [])
+   
+
 
     const handleNumber = (n, command) => {
         if("Decrease" === command && n > 0){
@@ -78,15 +81,7 @@ const Detail = () => {
                         </NormalDetailBox>
 
                         <NormalDetailBox>
-                            <NormalDetailText>หมวดหมู่ : {catgories}</NormalDetailText>
-                        </NormalDetailBox>
-                            
-                        <NormalDetailBox>
-                            <NormalDetailText>ประเภทของสินค้า : {type}</NormalDetailText>
-                        </NormalDetailBox>
-
-                        <NormalDetailBox>
-                            <NormalDetailText>บาร์โค้ด : {code}</NormalDetailText>
+                            <NormalDetailText>หมวดหมู่ : {types}</NormalDetailText>
                         </NormalDetailBox>
 
                         <PriceBox>
@@ -98,7 +93,7 @@ const Detail = () => {
                         <PackHandle>
                             <UpNumber number={number} handleNumber={handleNumber} />
                             <ButtonAdd onClick={() => addOrder(Array.from({length:number}, () => {
-                                return book
+                                return product
                             }))}>Add</ButtonAdd>
                             <ButtonWish>
                                 <FontAwesomeIcon icon={['fas', 'heart']}/>
@@ -133,7 +128,7 @@ const Detail = () => {
             </Box9p>
             <SpaceBox />
             <Box9p>
-                <CatgoriesBooks books={books} title={"สินค้าที่เกี่ยวข้อง"} />
+                <CatgoriesProducts products={products?.products} title={"สินค้าที่เกี่ยวข้อง"} />
             </Box9p>
             <SpaceBox />
             

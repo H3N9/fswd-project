@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import {Title, TitleText, Box9p, SpaceBox} from '../styles/styleComponents'
-import CardCart from '../components/cardCart'
-import { useOrderContext } from '../pages/index'
+import CardCart from '../components/cart/cardCart'
+import { useOrderContext } from './index'
 import {Link} from 'react-router-dom'
-import Summary from '../components/summary'
+import Summary from '../components/cart/summary'
 
 const Cart = () => {
     const { order, removeCart } = useOrderContext()
-    const totle = order.length > 0 ? order.reduce((book1, book2) => book1 + (book2['price'] - book2['discount']), 0):0
+    const totle = order.length > 0 ? order.reduce((product1, product2) => product1 + (product2['price']) || 0, 0):0
     return (
         <Box9p>
             <SpaceBox />
@@ -34,7 +34,7 @@ const Cart = () => {
                     </HeadTable>
 
                     <OrderBookBox>
-                        {order.map((book, index) => (<CardCart key={index} book={book}/>))}
+                        {order.map((product, index) => (<CardCart key={index} product={product}/>))}
                     </OrderBookBox>
 
                     <ButtonBox>

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import styled from 'styled-components'
-import BoxLink from '../components/btnNav'
+import BoxLink from './btnNav'
 import { Link } from 'react-router-dom'
 const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
     

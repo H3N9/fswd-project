@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import {SpaceBox, Box9p} from '../styles/styleComponents'
-import Summary from '../components/summary'
+import Summary from '../components/cart/summary'
 import {useOrderContext} from './index'
-import InputDouble from '../components/InputDouble'
-import InputLong from '../components/InputLong'
-import Select from '../components/select'
-import InputRadio from '../components/InputRadio'
+import InputDouble from '../components/payment/InputDouble'
+import InputLong from '../components/payment/InputLong'
+import Select from '../components/payment/select'
+import InputRadio from '../components/payment/InputRadio'
 
 
 const Payment = () => {

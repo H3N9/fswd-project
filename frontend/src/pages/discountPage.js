@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import {Box9p, SpaceBox} from '../styles/styleComponents'
 import {apiGateway} from '../tools/tools'
-import CatgoriesBooks from '../components/catgoriesBooks'
+import CatgoriesBooks from '../components/home/catgoriesProducts'
 
 
 const DiscountPage = () => {
