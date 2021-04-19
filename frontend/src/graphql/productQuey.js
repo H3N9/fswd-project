@@ -11,19 +11,32 @@ export const PRODUCT_QUERY = gql`
             price
             quantity
             types
+            netPrice
+            promotion {
+                _id
+                method
+            }
         }
     }
 
 `
 
 export const PRODUCT_BY_ID = gql`
-    query Product($id: MongoID) {
+    query Product($id: MongoID!) {
         productById(_id: $id) {
             _id
-            name
+            title
+            author
+            publisher
             description
             price
             quantity
+            types
+            netPrice
+            promotion {
+                _id
+                method
+            }
         }
     }
 `

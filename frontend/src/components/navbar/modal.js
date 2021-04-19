@@ -10,13 +10,13 @@ const Modal = () => {
 
     const renderBook = (product) => {
         return (
-            <Pack>
+            <Pack key={product._id}>
                 <AmountBox>
-                    {"1x"}
+                    {product?.quantity}
                 </AmountBox>
-                <ImageOrder src={product?.image} />
+                <ImageOrder src={product?.book?.image} />
                 <TitleOrder>
-                    {product?.title}
+                    {product?.book?.title}
                 </TitleOrder>
             </Pack>
         )

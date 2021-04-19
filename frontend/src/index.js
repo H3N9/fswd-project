@@ -10,7 +10,7 @@ import {SessionProvider} from './context/session'
 import {CookiesProvider} from 'react-cookie'
 
 const client = new ApolloClient({
-  uri: 'http://localhost:5001/graphql',
+  uri: 'http://localhost:3001/graphql',
   cache: new InMemoryCache(),
   credentials: 'include',
 })

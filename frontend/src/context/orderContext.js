@@ -4,20 +4,31 @@ const OrderContext = createContext()
 
 export const OrderProvider = (props) => {
     const { children } = props
-    const [order, setOrder] = useState([])
+    const [orders, setOrders] = useState([])
 
-    const addOrder = (newOrder) => {
-        console.log(order)
-        setOrder([...order, ...newOrder])
+    const addOrder = (newOrder, amount) => {
+        const { _id } = newOrder
+        console.log(newOrder)
+        const index = orders.findIndex((order) => order.id === _id)
+        if(index > -1) {
+            const copyArray = [...orders]
+            copyArray[index].quantity = copyArray[index].quantity+amount
+            setOrders(copyArray)
+        }
+        else{
+            const reStructOrder = {id:_id, quantity: amount, book:newOrder}
+            setOrders([...orders, reStructOrder])
+        }
+        
     }
 
     const removeCart = () => {
-        setOrder([])
+        setOrders([])
     }
 
 
     return (
-        <OrderContext.Provider value={{order:order, addOrder, removeCart}}>
+        <OrderContext.Provider value={{order:orders, addOrder, removeCart}}>
             {children}
         </OrderContext.Provider>
     )

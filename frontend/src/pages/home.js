@@ -10,7 +10,6 @@ import { useQuery } from '@apollo/client'
 const Home = () => {
     const { loading, error, data } = useQuery(PRODUCT_QUERY)
     const products = data?.products || []
-    console.log(products)
 
     return (
         <>
