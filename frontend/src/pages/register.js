@@ -1,13 +1,53 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { useMutation } from '@apollo/client'
+import {REGISTER_MUTATION} from '../graphql/registerMutation'
+import { validate } from 'graphql'
 
 const Register = () =>{
-    const [registerData, setRegisterData] = useState({username:"", password: "", confirm: ""});
-    const [ error, setError ] = useState(<></>);
+    const [registerData, setRegisterData] = useState({username:"", password: "", confirm: ""})
+    const [username, setUsername] = useState("")
+    const [name, setName] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirm, setConfirm] = useState("")
+    const [ error, setError ] = useState(<></>)
+    const [register] = useMutation(REGISTER_MUTATION)
 
-    const Validate = () =>{
-        if(registerData.password !== registerData.confirm){
+    const handleUsername = (e) => {
+        setUsername(e.target.value)
+    }
+
+    const handleName = (e) => {
+        setName(e.target.value)
+    }
+
+    const handlePassword = (e) => {
+        setPassword(e.target.value)
+    }
+
+    const handleConfirm = (e) => {
+        setConfirm(e.target.value)
+    }
+
+    const handleRegister = async () => {
+        try{
+            await register({variables: {object:{username, name, password}}})
+            setError(
+                <ErrorContainer style={{background: "#43c443"}}>
+                    <p>Account Create Successfully </p>
+                </ErrorContainer>
+            )
+        }
+        catch(e){
+            console.log("Error username already existed!!!")
+        }
+    }
+
+
+    const Validate = (e) =>{
+        e.preventDefault()
+        if(password !== confirm){
             console.log("Asd")
             setError(
                 <ErrorContainer>
@@ -16,11 +56,7 @@ const Register = () =>{
             )
         }
         else{
-            setError(
-                <ErrorContainer style={{background: "#43c443"}}>
-                    <p>Account Create Successfully </p>
-                </ErrorContainer>
-            )
+            handleRegister()
         }
     }
     return(
@@ -28,10 +64,14 @@ const Register = () =>{
             <LoginContainer>
                 <h1>Register</h1>
                 {error}
-                <input type="text" placeholder="username" value={registerData.username}  required onChange={(e) => setRegisterData({username: e.target.value, password: registerData.password, confirm: registerData.confirm})}/>
-                <input type="password"  placeholder="password" value={registerData.password} required onChange={(e) => setRegisterData({username: registerData.username, password: e.target.value, confirm: registerData.confirm})}/>
-                <input type="password"  placeholder="confirm password" value={registerData.confirm} required onChange={(e) => setRegisterData({username: registerData.username, password: registerData.password, confirm: e.target.value})}/>
-                <button onClick={() => Validate()}>Register</button>
+                <form onSubmit={Validate}>
+                    <input type="text" placeholder="username" value={username}  required onChange={handleUsername}/>
+                    <input type="text" placeholder="name" value={name}  required onChange={handleName}/>
+                    <input type="password"  placeholder="password" value={password} required onChange={handlePassword}/>
+                    <input type="password"  placeholder="confirm password" value={confirm} required onChange={handleConfirm}/>
+                    <button>Register</button>
+                </form>
+                
             </LoginContainer>
         </MainContainer>
     );
