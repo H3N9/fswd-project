@@ -10,6 +10,7 @@ const Login = () =>{
     const { login, user } = useSession()
     const history = useHistory()
 
+
     useEffect(() => {
         console.log(user)
         if(user){
@@ -28,7 +29,14 @@ const Login = () =>{
 
     const handleLogin = useCallback( async(e) => {
         e.preventDefault()
-        await login(username, password)
+        const session = await login(username, password)
+        if(session){
+            history.push('/')
+        }
+        else{
+            console.log("Password Wrong")
+        }
+        
     }, [login, password, username])
 
     return(
