@@ -7,8 +7,8 @@ import {Link} from 'react-router-dom'
 import Summary from '../components/cart/summary'
 
 const Cart = () => {
-    const { order, removeCart } = useOrderContext()
-    const totle = order.length > 0 ? order.reduce((product1, product2) => product1 + (product2['price']) || 0, 0):0
+    const { orders, removeCart } = useOrderContext()
+    const totle = orders.length > 0 ? orders.reduce((product1, product2) => product1 + (product2['price']) || 0, 0):0
     return (
         <Box9p>
             <SpaceBox />
@@ -34,7 +34,7 @@ const Cart = () => {
                     </HeadTable>
 
                     <OrderBookBox>
-                        {order.map((product, index) => (<CardCart key={index} product={product}/>))}
+                        {orders.map((product, index) => (<CardCart key={index} product={product}/>))}
                     </OrderBookBox>
 
                     <ButtonBox>

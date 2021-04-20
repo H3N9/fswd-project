@@ -10,8 +10,8 @@ import { Link } from 'react-router-dom'
 
 const Navbar = ({setIsShowMenu, isShowMenu}) => {
     const [modal, setModal] = useState(false)
-    const { order } = useOrderContext()
-    const amount = order.length
+    const { orders } = useOrderContext()
+    const amount = orders.reduce((val1, val2) => val1 + (val2.quantity || 0), 0)
 
     return (
         <>

@@ -10,8 +10,8 @@ import InputRadio from '../components/payment/InputRadio'
 
 
 const Payment = () => {
-    const { order } = useOrderContext()
-    const totle = order.length > 0 ? order.reduce((book1, book2) => book1 + (book2['price'] - book2['discount']), 0):0
+    const { orders } = useOrderContext()
+    const totle = orders.length > 0 ? orders.reduce((book1, book2) => book1 + (book2['price'] - book2['discount']), 0):0
     const [ shipping, setShipping ] = useState("")
     const [paid, setPaid ] = useState("")
     
