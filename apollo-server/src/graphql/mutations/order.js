@@ -67,8 +67,8 @@ export const setPromotion = schemaComposer.createResolver({
         records: [setPromotionInput]
     },
     type: OrderTC,
-    resolve: async ({ args, context }) =>{
-        if(context?.user){
+    resolve: async ({ args, context }) => {
+        if (context?.user){
             const user = context.user
             let order = await OrderModel.findOne({ status: 'PROCESSING', userId: user._id })
             if (order === null){
@@ -79,6 +79,42 @@ export const setPromotion = schemaComposer.createResolver({
             await OrderPromotionModel.deleteMany({ orderId: order._id })
             await OrderPromotionModel.insertMany(orderPromotionInput)
             order.updatedAt = Date.now()
+            await order.save()
+
+            return order
+        }
+        throw new Error('You must be authorized');
+    }
+})
+
+export const confirmOrder = schemaComposer.createResolver({
+    name: 'confirmOrder',
+    args: {},
+    type: OrderTC,
+    resolve: async ({ args, context }) => {
+        if (context?.user){
+            const user = context.user
+            const order = await OrderModel.findOne({ status: 'PROCESSING', userId: user._id })
+            const orderProducts = await OrderProductModel.find({ orderId: order._id })
+            if (orderProducts.length === 0){
+                throw new Error('There are no items in the cart');
+            }
+            for (const orderProduct of orderProducts) {
+                const product = await ProductModel.findById(orderProduct.productId)
+                const newQuantity = product.quantity - orderProduct.quantity
+                if (newQuantity < 0){
+                    orderProduct.quantity = product.quantity
+                    await orderProduct.save()
+                    if (product.quantity <= 0){
+                        await orderProduct.delete()
+                    }
+                    throw new Error(`product ${product.title} (id=${product._id}) quantity is not enough`);
+                }
+                product.quantity = newQuantity
+                product.updatedAt = Date.now()
+                await product.save()
+            }
+            order.status = 'COMPLETE'
             await order.save()
 
             return order
