@@ -35,7 +35,6 @@ export const setCart = schemaComposer.createResolver({
                 order = await OrderModel.create({ userId: user._id })
             }
 
-            //const productOrdersInput = args.records.map((item1) => ({...item1, orderId: order._id }))
             const productOrderInput = await args.records.reduce(async (acc, curr) => {
                 return acc.then( async (acc) => {
                     const product = await ProductModel.findById(curr.productId)
