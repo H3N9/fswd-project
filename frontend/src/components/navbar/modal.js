@@ -69,17 +69,22 @@ const BoxModal = styled.div`
     width: 320px;
     display: flex;
     position: fixed;
-    top: 110px;
-    right: 0;
+    top: 90px;
+    right: -10px;
+    z-index: 30;
     margin-right: 5%;
+    padding: 10px 0;
     flex-direction: column;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    border-radius: 5px;
+    background: #EFEFEF;
 `
 const BoxCover = styled.div`
     width: 100%;
-    background-color: #FFF;
+
     display: flex;
     justify-content: center;
+    
     align-items: center;
     flex-direction: column;
 `
@@ -102,13 +107,13 @@ const ButtonBox = styled.div`
     padding: 5px;
 `
 const ButtonOrder = styled(Button)`
-    background-color: white;
-    border: solid 3px #003cff;
+    background-color: #EFEFEF;
+    border: solid 2px #003cff;
     width: 255px;
     color: #003cff;
     :hover{
         background-color: #003cff;
-        color: white;
+        color: #EFEFEF;
     }
 
 `
@@ -120,7 +125,6 @@ const Underline = styled.div`
 const Order = styled.div`
     width: 100%;
     height: 100px;
-    background: white;
     overflow-y: scroll;
     margin: 10px 0 10px 0;
     display: flex;
