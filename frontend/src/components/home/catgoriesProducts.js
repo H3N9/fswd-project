@@ -23,7 +23,7 @@ const CatgoriesBooks = ({products, title}) => {
         }
     } 
     return (
-        <>
+        <Container>
             <Title>
                 <TitleText>{title}</TitleText>
             </Title>
@@ -38,9 +38,14 @@ const CatgoriesBooks = ({products, title}) => {
                     <NavButton onClick={() => nextClick()}><FontAwesomeIcon icon={['fas', 'chevron-right']} /></NavButton>
                 </ButtonWrapper>
             </Wrapper>
-        </>
+        </Container>
     )
 }
+
+
+const Container = styled.div`
+    padding: 8vmin 0;
+`
 
 const NavButton = styled.button`
     border: none;

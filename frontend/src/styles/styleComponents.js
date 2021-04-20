@@ -4,8 +4,7 @@ export const Title = styled.div`
     width: 100%;
     height: 50px;
     background-color: white;
-    margin: 1vw 0 0 0;
-
+    padding: 0px 0 25px 0;
 `
 
 export const Catgories = styled.div`
@@ -13,9 +12,8 @@ export const Catgories = styled.div`
     overflow-x: scroll;
     display: flex;
     flex-direction: row;
-    padding-bottom : 25px;
+    padding : 20px 0 50px 0;
     position: relative;
-
 `
 
 export const SpaceBox = styled.div`
@@ -29,6 +27,7 @@ export const Box9p = styled.div`
     margin: 0 5% 0 5%;
 `
 export const TitleText = styled.h1`
+    font-size: 2.5rem;
     margin: 0;
 `
 
