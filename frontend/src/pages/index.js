@@ -9,6 +9,7 @@ import Cart from './cart'
 import Login from './login'
 import Register from './register'
 import Payment from './payment'
+import CreateProduct from './createProduct'
 import MobileNavbar from '../components/navbar/mobileNavbar'
 
 const Index = () => {
@@ -40,6 +41,9 @@ const Index = () => {
                             </Route>
                             <Route path="/register">
                                 <Register />
+                            </Route>
+                            <Route path="/createProduct">
+                                <CreateProduct />
                             </Route>
                         </Switch>
                     </ContentBox>
