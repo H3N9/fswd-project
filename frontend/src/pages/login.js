@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import {useSession} from '../context/session'
 import {useHistory} from 'react-router-dom'
+import logo from '../images/logo_large.webp'
+import {Form, MainContainer, LoginContainer} from '../styles/styleComponents'
 
 const Login = () =>{
     const [username, setUsername] = useState("")
@@ -42,47 +44,41 @@ const Login = () =>{
     return(
         <MainContainer>
             <LoginContainer>
-                <form onSubmit={handleLogin}>
-                    <input type="text" placeholder="username" value={username}  onChange={usernameHandle}/>
-                    <input type="password"  placeholder="password" value={password} onChange={passwordHandle}/>
-                    <button>Login</button>
-                </form>
-                
-                <Link to={`/register`}>Register</Link>
+                <Logo>
+                    <img src={logo} alt="" width="200px"/>
+                </Logo>
+                <Form  onSubmit={handleLogin}>
+                        <div className="input">                     
+                            <input type="text" id="username" value={username}  onChange={usernameHandle} required/>
+                            <label for="username">Username</label>
+                        </div>
 
+                        <div className="input">    
+                            <input type="password" id="password" value={password} onChange={passwordHandle} required/>
+                            <label for="password">Password</label>
+                        </div>
+                        <div>
+                            <button>Login</button>
+                            <Link to={`/register`}>Register</Link>
+                        </div>
+                </Form>
             </LoginContainer>
         </MainContainer>
     );
 }
 
-const MainContainer = styled.div`
-    width:100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`
-const LoginContainer = styled.div`
-    background: rgba(0,0,0, 0.9);
-    border-radius: 5px;
-    width: 320px;
-    padding: 20px;
-    input{
-        outline: none;
-        margin: 20px 0;
-        position: relative;
+const Logo = styled.div`
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 5vmin;
+    img{
+        width: 40%;
+        max-width: 200px;
+        border-radius: 10px;
     }
-
-    a{
-        margin: 20px 0;
-        text-decoration: none;
-        color: #FFF;
-        text-align: center;
-    }
-    display: flex;
-    flex-direction: column;
 `
-
 
 
 export default Login;
