@@ -30,7 +30,7 @@ export const OrderProvider = (props) => {
         if(data?.myOrders){
             const copyOrders = data?.myOrders[0]?.orderProducts.map((order) => {
                 return {productId: order.productId, quantity: order.quantity, product:order.product}
-            })
+            }) || []
             setOrders(copyOrders)
             console.log(copyOrders)
         }
@@ -78,7 +78,7 @@ export const OrderProvider = (props) => {
         
     }
 
-
+    console.log(orders)
     return (
         <OrderContext.Provider value={{orders:orders, addOrder, removeCart}}>
             {children}
