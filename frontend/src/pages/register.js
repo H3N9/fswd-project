@@ -58,11 +58,6 @@ const Register = () =>{
         }
         else{
             handleRegister()
-            setError(
-                <ErrorContainer style={{background: "#62bd62"}}>
-                    <p>Account Create Successfully </p>
-                </ErrorContainer>
-            )
         }
     }
     return(
