@@ -7,7 +7,6 @@ import { validate } from 'graphql'
 import {Form, MainContainer, LoginContainer} from '../styles/styleComponents'
 
 const Register = () =>{
-    const [registerData, setRegisterData] = useState({username:"", password: "", confirm: ""})
     const [username, setUsername] = useState("")
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
@@ -79,19 +78,19 @@ const Register = () =>{
                 <Form onSubmit={Validate}>
                     {error}
                     <div className="input">                     
-                        <input type="text" id="username" value={registerData.username} required name="username" onChange={handleUsername}/>
+                        <input type="text" id="username" value={username} required name="username" onChange={handleUsername}/>
                         <label for="username">Username</label>
                     </div>
                     <div className="input">
-                        <input type="text"  id="name" value={registerData.password} required name="name" onChange={handleName}/>
+                        <input type="text"  id="name" value={name} required name="name" onChange={handleName}/>
                         <label for="name">Name</label>
                     </div>
                     <div className="input">
-                        <input type="password"  id="password" value={registerData.password} required name="password" onChange={handlePassword}/>
+                        <input type="password"  id="password" value={password} required name="password" onChange={handlePassword}/>
                         <label for="password">Password</label>
                     </div>
                     <div className="input">
-                        <input type="password"  id="confirm-password" value={registerData.confirm} required name="confirm" onChange={handleConfirm}/>
+                        <input type="password"  id="confirm-password" value={confirm} required name="confirm" onChange={handleConfirm}/>
                         <label for="confirm-password">Confirm Password</label>
                     </div>
                     <div>
