@@ -3,24 +3,10 @@ import styled from 'styled-components'
 import {Button} from '../../styles/styleComponents'
 import {Link} from 'react-router-dom'
 import {useOrderContext} from '../../context/orderContext'
-
+import CardOrder from './cardOrder'
 
 const Modal = () => {
-    const { order } = useOrderContext()
-
-    const renderBook = (product) => {
-        return (
-            <Pack key={product._id}>
-                <AmountBox>
-                    {product?.quantity}
-                </AmountBox>
-                <ImageOrder src={product?.book?.image} />
-                <TitleOrder>
-                    {product?.book?.title}
-                </TitleOrder>
-            </Pack>
-        )
-    }
+    const { orders } = useOrderContext()
 
     return (
         <BoxModal>
@@ -43,7 +29,7 @@ const Modal = () => {
 
             <BoxCover>
                 <Order>
-                    {order.map((product) => renderBook(product))}
+                    {orders.map((product) => (<CardOrder product={product} />))}
                 </Order>
             </BoxCover>
             <Underline />
@@ -129,33 +115,6 @@ const Order = styled.div`
     margin: 10px 0 10px 0;
     display: flex;
     flex-direction: column;
-`
-
-const Pack = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-`
-const AmountBox = styled.div`
-    width: 20%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`
-
-const ImageOrder = styled.img`
-    padding: 2.5%;
-    width: 20%;
-    height: 80px;
-    object-fit: cover;
-`
-
-const TitleOrder = styled.div`
-    width: 60%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 `
 
 
