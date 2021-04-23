@@ -9,9 +9,9 @@ const CardOrder = ({product}) => {
             <AmountBox>
                 {product?.quantity}
             </AmountBox>
-            <ImageOrder src={product?.book?.image} />
+            <ImageOrder src={product?.product?.image} />
             <TitleOrder>
-                {product?.book?.title}
+                {product?.product?.title}
             </TitleOrder>
         </Pack>
     )

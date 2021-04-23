@@ -3,7 +3,6 @@ import { useCookies } from 'react-cookie'
 import {useLazyQuery, useMutation} from '@apollo/client'
 import {LOGIN_MUTATION} from '../graphql/loginMutation'
 import {ME_QUERY} from '../graphql/meQuery'
-import { useHistory } from 'react-router-dom'
 
 
 const SessionContext = createContext()
@@ -15,7 +14,7 @@ export const SessionProvider = (props) => {
     const [, setCookie, removeCookie] = useCookies(['token'])
     const [loadUser, {loading, data}] = useLazyQuery(ME_QUERY, { fetchPolicy: 'network-only' })
     const [login] = useMutation(LOGIN_MUTATION)
-    const history = useHistory()
+    
 
     const handleLogin = useCallback(async (username, password) => {
         try {
@@ -23,10 +22,11 @@ export const SessionProvider = (props) => {
             if (res?.data?.login?.token) {
                 setCookie('token', res?.data?.login?.token)
                 setUser(res?.data?.login?.user)
-                history.push('/')
+                return true
             }
         } catch (err) {
                 removeCookie('token')
+                return false
         }
     }, [login, removeCookie, setCookie])
 

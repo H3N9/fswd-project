@@ -9,6 +9,7 @@ import Cart from './cart'
 import Login from './login'
 import Register from './register'
 import Payment from './payment'
+import CreateProduct from './createProduct'
 import MobileNavbar from '../components/navbar/mobileNavbar'
 
 const Index = () => {
@@ -16,30 +17,46 @@ const Index = () => {
 
     return (
                 <>
-                    <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                    <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                 
                     <ContentBox >
+                        
                         <Switch>
+                        
                             <Route exact path="/">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                                 <Home />
                             </Route>
-                            <Route path="/discount">
-                                <DiscountPage />
-                            </Route>
-                            <Route path="/detail/:bookId">
-                                <Detail />
-                            </Route>
-                            <Route path="/cart">
-                                <Cart />
-                            </Route>
-                            <Route path="/payment">
-                                <Payment />
+                            <Route path="/register">
+                                <Register />
                             </Route>
                             <Route path="/login">
                                 <Login />
                             </Route>
-                            <Route path="/register">
-                                <Register />
+                            <Route path="/discount">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                                <DiscountPage />
+                            </Route>
+                            <Route path="/detail/:bookId">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                                <Detail />
+                            </Route>
+                            <Route path="/cart">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                                <Cart />
+                            </Route>
+                            <Route path="/payment">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                                <Payment />
+                            </Route>
+                            <Route path="/createProduct">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                                <CreateProduct />
                             </Route>
                         </Switch>
                     </ContentBox>
