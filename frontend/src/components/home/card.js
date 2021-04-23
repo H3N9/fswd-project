@@ -33,7 +33,6 @@ const Card = ({product}) => {
     }
 
     return (
-        <>
             <BoxCard onClick={addCart} >
                 <State quantity={quantity}/>
 
@@ -56,7 +55,6 @@ const Card = ({product}) => {
                 <Discount price={price} promotion={promotion} netPrice={netPrice} />
 
             </BoxCard>
-        </>
     )
 }
 
@@ -78,6 +76,7 @@ const BoxCard = styled.div`
     width: 270px;
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     height: 475px;
     overflow: hidden;
     padding: 25px 15px;
