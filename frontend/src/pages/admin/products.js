@@ -30,6 +30,10 @@ const Products = () => {
                     <td>{value.types}</td>
                     <td>{value.price}</td>
                     <td>{value.quantity}</td>
+                    <td>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </td>
                 </tr>
                 )}
             </Table>
