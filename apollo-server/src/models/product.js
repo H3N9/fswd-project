@@ -19,7 +19,7 @@ const ProductSchema = new Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     description: {type: String},
-    imageUrl: {type: String}
+    image: {type: String}
 })
 
 export const ProductModel = mongoose.model('Product', ProductSchema)

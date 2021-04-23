@@ -1,19 +1,23 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {useMutation} from '@apollo/client'
+import {CREATE_PRODUCT} from '../../graphql/productMutation'
 import {Input} from '../../styles/styleComponents'
+
 const CreateProduct = () => {
     const [ product, setProduct ] = useState({
         title: "",
         publisher: "",
         author: "",
         price: 0,
-        type: "",
+        types: "",
         quantity: 0,
         description: "",
         image: ""
     })
     const [image, setImage] = useState();
+    const [createProduct] = useMutation(CREATE_PRODUCT)
 
     const inputHandle = (event) =>{
         const {name, value, files} = event.target
@@ -37,6 +41,33 @@ const CreateProduct = () => {
             })
         }
     }
+
+    const submitForm = async (e) => {
+        const { image, quantity, price } = product
+        const objInput = {...product, quantity: Number(quantity), price: Number(price) }
+        let filename = ''
+
+        if (image !== ''){
+            const formData = new FormData()
+            formData.append('image', image)
+
+            const uploadResponse = await fetch('http://localhost:3001/image', { 
+                method: 'POST',
+                body: formData
+            })
+            const fileData = await uploadResponse.json()
+            filename = fileData.filename
+        }
+        objInput.image = filename
+
+        try {
+            const response = await createProduct({variables: {object: objInput}})
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <Container>
             
@@ -62,8 +93,8 @@ const CreateProduct = () => {
                         </FromInline>
                        
                        <Input>       
-                            <input type="text" name="type" id="type" value={product.type} required onChange={(e) => inputHandle(e)}/>                    
-                            <label for="type">ประเภท</label>
+                            <input type="text" name="types" id="types" value={product.types} required onChange={(e) => inputHandle(e)}/>                    
+                            <label for="types">ประเภท</label>
                        </Input>
                         
                         <FromInline>
@@ -81,8 +112,7 @@ const CreateProduct = () => {
                             <textarea name="" id="" cols="20" rows="5" name="description" value={product.description} onChange={(e) => inputHandle(e)}></textarea>
                             <label htmlFor="">คำอธิบาย</label>
                         </Input>
-                        
-                        <button onClick={() => console.log(product)}>ยืนยัน</button>
+                        <button onClick={submitForm}>ยืนยัน</button>
                     </FormContainer>
                     <ImageFormContainer>
                         <Image>
@@ -91,7 +121,7 @@ const CreateProduct = () => {
                         <InputWrapper>
                
                             <div>
-                                <input type="file" id="image" name="image" accept="image/*" onChange={(e) => inputHandle(e)}/> 
+                                <input type="file" id="image" name="image" accept="image/jpeg" onChange={(e) => inputHandle(e)}/> 
                                 <label htmlFor="image">อัปโหลดหน้าปก</label>
                             </div>
                         </InputWrapper>             
