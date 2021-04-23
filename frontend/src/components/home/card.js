@@ -1,95 +1,62 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { createRef } from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from "prop-types"
 import { useOrderContext } from '../../context/orderContext'
+import State from './state'
+import Discount from './discount'
 
 
 const Card = ({product}) => {
     const {title = "", price = 0, _id = 0, image = "", netPrice = 0, promotion} = product
     const quantity = product?.quantity > 0 ? true:false
     const { addOrder } = useOrderContext()
-
-    const discountFuc = (promotion, price, netPrice) => {
-        if(promotion){
-            return(
-                <>
-                    <PriceBox>
-                        {(<PriceText>THB{price.toFixed(2)}</PriceText>)}
-                    </PriceBox>
-
-                    <DiscountBox>
-                        {(<DiscountText>THB{(netPrice).toFixed(2)}</DiscountText>)}
-                    </DiscountBox>
-                </>
-            )
-        }
-        else{
-            return(
-                <>
-                    <PriceBox>
-                    </PriceBox>
-                    <DiscountBox>
-                        {(<DiscountText>THB{(price).toFixed(2)}</DiscountText>)}
-                    </DiscountBox>
-                </>
-            )
-        }
-    }
-
-    const renderState = (quantity) => {
-        if(quantity){
-            return (
-                <PtextPass>
-                    <FontAwesomeIcon icon={['fas', 'check-circle']} />
-                    <span> มีสินค้า</span>
-                </PtextPass>
-            )
-        }
-        else{
-            return (
-                <PtextFail>
-                    <FontAwesomeIcon icon={['fas', 'times-circle']} />
-                    <span> ไม่มีสินค้า</span>
-                </PtextFail>
-            )
-        }
-    }
+    const history = useHistory()
+    const ignoreClick = createRef()
 
 
-    return (
-        <Link to={
-            {
+    const addCart = (e) => {
+        const svgTag = ignoreClick.current.firstChild
+        const path = ignoreClick.current.firstChild.firstChild
+        const pText = ignoreClick.current.lastChild
+        const buttonAdd = ignoreClick.current
+        console.log(e.target == svgTag)
+        if(e.target !== svgTag && e.target !== buttonAdd && e.target !== pText && e.target !== path){
+            const location = {
                 pathname: `/detail/${_id}`,
                 state: product,
             }
-        } style={{textDecoration: "none"}}>
-            <BoxCard>
-                <StateGoods>
-                    {renderState(quantity)}
-                </StateGoods>
+            history.push(location)
+        }
+        
+    }
 
-                <ImageBox>
+    return (
+        <>
+            <BoxCard onClick={addCart} >
+                <State quantity={quantity}/>
+
+                <ImageBox  >
                     <Image src={"http://ird.rmuti.ac.th/2020/world/upload/post/picture/thumb/IRD291220C00001/noimg.png"} />
                 </ImageBox>
 
-                <AddCart>
-                    <Button onClick={() => addOrder(product, 1)}>
+                <AddCart >
+                    <Button ref={ignoreClick} onClick={() => addOrder(product, 1)}>
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                         <p>{"เพิ่มไปยังรถเข็น"}</p>
                     </Button>
                     
                 </AddCart>          
 
-                <TitleBox>
+                <TitleBox >
                     <TitleText>{title}</TitleText>
                 </TitleBox>
 
-                {discountFuc(promotion, price, netPrice)}
+                <Discount price={price} promotion={promotion} netPrice={netPrice} />
 
             </BoxCard>
-        </Link>
+        </>
     )
 }
 
@@ -107,6 +74,7 @@ const AddCart = styled.div`
 `
 
 const BoxCard = styled.div`
+    cursor: pointer;
     width: 270px;
     display: flex;
     flex-direction: column;
@@ -125,12 +93,6 @@ const BoxCard = styled.div`
         height: 325px;
         margin: 0 5px;
     }
-`
-
-const StateGoods = styled(Box)`
-    background: white;
-    height: 6%;
-    
 `
 
 const ImageBox = styled.div`
@@ -154,38 +116,6 @@ const TitleText = styled.h3`
     font-size: clamp(20px, 5vmin,1.5rem);
     color: black;
 `
-
-const PriceBox = styled(Box)`
-    background: white;
-    height: 8%;
-`
-
-const DiscountBox = styled(Box)`
-    background: white;
-    height: 10%;
-`
-const PtextPass = styled.p`
-    margin: 0;
-    color: green;
-
-`
-
-const PtextFail = styled.p`
-    margin: 0;
-    color: red;
-`
-const PriceText = styled.h2`
-    margin: 0;
-    text-decoration: line-through;
-    color: gray;
-`
-const DiscountText = styled.h1`
-    margin: 0;
-    color: black;
-    font-weight: 600;
-    font-size: clamp(25px, 6vmin, 2rem);
-`
-
 const Button = styled.button`
     outline: none;
     border-radius: 50px;
