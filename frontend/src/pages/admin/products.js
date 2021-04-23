@@ -3,21 +3,38 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { PRODUCT_QUERY } from '../../graphql/productQuey'
-import Card from '../../components/home/card'
 import { useQuery } from '@apollo/client'
 const Products = () => {
     const { loading, error, data } = useQuery(PRODUCT_QUERY)
     const products = data?.products || []
+    console.log(products.map((value) => value._id))
     return (
-        <>         
+        <Container>         
             <Header>
                 <h1>สินค้าทั้งหมด</h1>
                 <Link to={`/createProduct`}><FontAwesomeIcon icon={['fas', 'plus']} /> เพิ่มสินค้า</Link>
             </Header>
-            <Flex>
-                {products?.map((product, index) => (<Card key={index} product={product} styled={{}}/>))} 
-            </Flex>
-        </>
+            <Table>
+                <tr>
+                    <th>ลำดับ</th>
+                    <th>ชื่อ</th>
+                    <th>ประเภท</th>
+                    <th>ราคา</th>
+                    <th>จำนวนที่มี</th>
+                    <th></th>
+                </tr>
+                {products.map((value, index) => 
+                <tr>
+                    <td>{index+1}</td>
+                    <td>{value.title}</td>
+                    <td>{value.types}</td>
+                    <td>{value.price}</td>
+                    <td>{value.quantity}</td>
+                </tr>
+                )}
+            </Table>
+            
+        </Container>
     )
 }
 
@@ -44,13 +61,15 @@ const Header = styled.div`
         margin-top: 10px;
     }
 `
-const Flex = styled.div`
-    display: flex;
-    margin-top: 50px;
-    grid-template-columns: repeat(4, 1fr);
-    width: 100%;
-    margin: 0 auto;
-    background: red;
+const Table = styled.table`
+    width:100%;
+    overflow: scroll;
+    tr{
+        td{
+            padding: 10px 0;
+            text-align: center;
+        }
+    }
 `
 
-export default Products;
+export default Products;                    
