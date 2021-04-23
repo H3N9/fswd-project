@@ -15,7 +15,7 @@ const Products = () => {
                 <Link to={`/admin/product/create`}><FontAwesomeIcon icon={['fas', 'plus']} /> เพิ่มสินค้า</Link>
             </Header>
             <Table>
-                <tr>
+                <tr className="table-header">
                     <th>ลำดับ</th>
                     <th>ชื่อ</th>
                     <th>ประเภท</th>
@@ -31,8 +31,8 @@ const Products = () => {
                     <td>{value.price}</td>
                     <td>{value.quantity}</td>
                     <td>
-                        <button>Edit</button>
-                        <button>Delete</button>
+                        <button className="edit-button"><FontAwesomeIcon icon={['fas', 'edit']} /> แก้ไข</button>
+                        <button className="delete-button"><FontAwesomeIcon icon={['fas', 'trash']} /> ลบ</button>
                     </td>
                 </tr>
                 )}
@@ -68,10 +68,32 @@ const Header = styled.div`
 const Table = styled.table`
     width:100%;
     overflow: scroll;
+    border-collapse:collapse;  
     tr{
+        &.table-header{
+            background: rgba(0,0,0,0.75);
+            color: #FFF;
+            margin: 0;
+            border: none;
+            th{
+                padding: 15px 10px;
+            }
+        }
         td{
             padding: 10px 0;
             text-align: center;
+            button{
+                margin: 3px;
+                padding: 10px 15px;
+                border: none;
+                &.edit-button{
+                    background: #ffd000;   
+                }
+                &.delete-button{
+                    background: #e02323;   
+                    color: #FFF;
+                }
+            }
         }
     }
 `
