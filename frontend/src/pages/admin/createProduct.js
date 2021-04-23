@@ -74,7 +74,7 @@ const CreateProduct = () => {
             <Flex>
                 <FormFlex>
                     <FormContainer>
-                        <h1>เพิ่ม/แก้ไข สินค้า</h1>
+                        <h1>เพิ่มสินค้า</h1>
                         <Input>       
                             <input type="text" name="title" id="title" value={product.title} required onChange={(e) => inputHandle(e)}/>
                             <label for="title">ชื่อ</label>

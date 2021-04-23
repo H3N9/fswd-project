@@ -71,7 +71,7 @@ export const Form = styled.form`
             padding: 5px 0 5px 5px;
             position: relative;
             border-bottom: 2px solid #5128e6;
-            :focus~label, :valid~label {
+            :focus~label, :valid~label, :-webkit-autofill~label {
                 top: -5px;
                 left: 0;
                 color: #111;
@@ -153,7 +153,7 @@ export const Input = styled.div`
             padding: 5px 0 5px 5px;
             position: relative;
             border-bottom: 2px solid #5128e6;
-            :focus~label, :valid~label {
+            :focus~label, :valid~label, :-webkit-autofill~label{
                 top: -5px;
                 left: 0;
                 color: #111;

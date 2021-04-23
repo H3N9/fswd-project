@@ -50,12 +50,12 @@ const Login = () =>{
                 <Form  onSubmit={handleLogin}>
                         <div className="input">                     
                             <input type="text" id="username" value={username}  onChange={usernameHandle} required/>
-                            <label for="username">Username</label>
+                            <label htmlFor="username">Username</label>
                         </div>
 
                         <div className="input">    
                             <input type="password" id="password" value={password} onChange={passwordHandle} required/>
-                            <label for="password">Password</label>
+                            <label htmlFor="password">Password</label>
                         </div>
                         <div>
                             <button>Login</button>
