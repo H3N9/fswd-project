@@ -12,7 +12,7 @@ const Products = () => {
         <Container>         
             <Header>
                 <h1>สินค้าทั้งหมด</h1>
-                <Link to={`/createProduct`}><FontAwesomeIcon icon={['fas', 'plus']} /> เพิ่มสินค้า</Link>
+                <Link to={`/admin/product/create`}><FontAwesomeIcon icon={['fas', 'plus']} /> เพิ่มสินค้า</Link>
             </Header>
             <Table>
                 <tr>
