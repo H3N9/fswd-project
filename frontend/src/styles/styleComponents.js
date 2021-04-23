@@ -128,3 +128,39 @@ export const LoginContainer = styled.div`
 
 
 //----------------------------------------------------------------------------------------
+
+
+export const Input = styled.div`
+        position: relative;
+        width: 100%;
+        label {
+            position: absolute;
+            top: 35%;
+            left: 5px;
+            width: 100%;
+            color: rgba(0,0,0, 0.5);
+            transition: 0.2s all;
+            cursor: text;
+            font-size: 1.1rem;
+        }
+        input, textarea{
+            width: 100%;
+            outline: none;
+            margin: 30px 0;
+            outline: none;
+            border: none;
+            font-size: 1rem;
+            padding: 5px 0 5px 5px;
+            position: relative;
+            border-bottom: 2px solid #5128e6;
+            :focus~label, :valid~label {
+                top: -5px;
+                left: 0;
+                color: #111;
+            }
+        }
+        textarea{
+            background: #f2f2f2
+        }
+    
+`

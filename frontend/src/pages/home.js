@@ -32,7 +32,7 @@ const MainImage = styled.div`
     background-size: cover;
     background-position: center center;
     width: 100%;
-    height: 500px;
+    height: 40vh;
     margin-bottom: 5vh;
     background-color: #f1f1f1;
 `

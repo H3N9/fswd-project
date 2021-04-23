@@ -1,9 +1,9 @@
 import { schemaComposer } from 'graphql-compose'
 
-import { OrderProductModel, OrderTC, OrderModel, OrderPromotionModel, ProductModel } from '../../models'
+import { OrderProductModel, OrderTC, OrderModel, OrderPromotionModel, ProductModel, ShippingModel } from '../../models'
 import { authCreateMiddleware } from './middleware'
 
-export const createOrder = OrderTC.getResolver('createOne', [authCreateMiddleware]).removeArg('record')
+//export const createOrder = OrderTC.getResolver('createOne', [authCreateMiddleware]).removeArg('record')
 export const removeOrderById = OrderTC.getResolver('removeById')
 
 const setCartInput= schemaComposer.createInputTC({
@@ -78,6 +78,33 @@ export const setPromotion = schemaComposer.createResolver({
             const orderPromotionInput = args.records.map((item1) => ({...item1, orderId: order._id }))
             await OrderPromotionModel.deleteMany({ orderId: order._id })
             await OrderPromotionModel.insertMany(orderPromotionInput)
+            order.updatedAt = Date.now()
+            await order.save()
+
+            return order
+        }
+        throw new Error('You must be authorized');
+    }
+})
+
+export const setShipping = schemaComposer.createResolver({
+    name: 'setShipping',
+    args: {
+        shippingId: 'String!'
+    },
+    type: OrderTC,
+    resolve: async ({ args, context }) => {
+        if (context?.user){
+            const user = context.user
+            const shipping = await ShippingModel.findOne({ _id: args.shippingId, userId: user._id })
+            if (shipping === null){
+                throw new Error('you have not permission to access');
+            }
+            let order = await OrderModel.findOne({ status: 'PROCESSING', userId: user._id })
+            if (order === null){
+                order = await OrderModel.create({ userId: user._id })
+            }
+            order.shippingId = shipping._id
             order.updatedAt = Date.now()
             await order.save()
 

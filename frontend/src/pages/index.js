@@ -9,8 +9,10 @@ import Cart from './cart'
 import Login from './login'
 import Register from './register'
 import Payment from './payment'
-import CreateProduct from './createProduct'
+import CreateProduct from './admin/createProduct'
 import MobileNavbar from '../components/navbar/mobileNavbar'
+import Promotions from './admin/promotions'
+import Products from './admin/products'
 
 const Index = () => {
     const [isShowMenu, setIsShowMenu] = useState(false)
@@ -58,6 +60,16 @@ const Index = () => {
                                 <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                                 <CreateProduct />
                             </Route>
+                            <Route path="/promotions">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                                <Promotions />
+                            </Route>
+                            <Route path="/products">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                                <Products />
+                            </Route>                  
                         </Switch>
                     </ContentBox>
                 </>

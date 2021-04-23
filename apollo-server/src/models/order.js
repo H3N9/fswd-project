@@ -21,6 +21,7 @@ const OrderSchema = new Schema({
         index: true
     },
     userId: { type: String, require: true, ref: 'User' },
+    shippingId: {type: String, ref: 'Shipping'}
 })
 
 OrderSchema.method('getProductDiscount', async function(){
