@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import {Title, TitleText, Box9p, SpaceBox} from '../styles/styleComponents'
 import CardCart from '../components/cart/cardCart'
@@ -8,7 +8,10 @@ import Summary from '../components/cart/summary'
 
 const Cart = () => {
     const { orders, removeCart } = useOrderContext()
-    const totle = orders.length > 0 ? orders.reduce((product1, product2) => product1 + (product2['price']) || 0, 0):0
+    const products = orders.map((object) => object.product) || []
+    const totle = orders.length > 0 ? orders.reduce((v1, v2) => v1 + (v2.product.netPrice * v2.quantity) || 0, 0):0
+
+
     return (
         <Box9p>
             <SpaceBox />
@@ -34,7 +37,7 @@ const Cart = () => {
                     </HeadTable>
 
                     <OrderBookBox>
-                        {orders.map((product, index) => (<CardCart key={index} product={product}/>))}
+                        {products.map((product, index) => (<CardCart key={index} product={product}/>))}
                     </OrderBookBox>
 
                     <ButtonBox>

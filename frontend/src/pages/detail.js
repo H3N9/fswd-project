@@ -37,7 +37,7 @@ const Detail = () => {
         load()
     }, [])
     
-    const {title = "", price = 0, description = "", image = "", author = "", publisher = "", types = "", netPrice = 0} = product
+    const {title = "", price = 0, description = "", image = "", author = "", publisher = "", types = "", netPrice = 0, quantity = 0} = product
     const { data: products = [] } = useQuery(PRODUCT_QUERY)
     const discount = netPrice !== price
     const [number, setNumber] = useState(0)
@@ -91,15 +91,19 @@ const Detail = () => {
                         </TitleDetial>
 
                         <NormalDetailBox>
-                            <NormalDetailText>ผู้เขียน : {author}</NormalDetailText>
+                            <NormalDetailText>Author : {author}</NormalDetailText>
                         </NormalDetailBox>
 
                         <NormalDetailBox>
-                            <NormalDetailText>สำนักพิมพ์ : {publisher}</NormalDetailText>
+                            <NormalDetailText>Publisher : {publisher}</NormalDetailText>
                         </NormalDetailBox>
 
                         <NormalDetailBox>
-                            <NormalDetailText>หมวดหมู่ : {types}</NormalDetailText>
+                            <NormalDetailText>Catgories : {types}</NormalDetailText>
+                        </NormalDetailBox>
+
+                        <NormalDetailBox>
+                            <NormalDetailText>Quantity : {quantity}</NormalDetailText>
                         </NormalDetailBox>
 
                         <PriceBox>
@@ -118,7 +122,7 @@ const Detail = () => {
                         </PackHandle>
 
                         <BoxShare>
-                            <NormalDetailText>แชร์ : </NormalDetailText>
+                            <NormalDetailText>Share : </NormalDetailText>
                             <a href="https://facebook.com" target="_blank"><ImageIcon src={FacebookIcon} /></a>
                             <a href="https://myaccount.google.com/profile" target="_blank"><ImageIcon src={GoogleIcon} /></a>
                             

@@ -38,6 +38,11 @@ export const OrderProvider = (props) => {
 
     const addOrder = (newOrder, amount) => {
         const { _id } = newOrder
+        const quantity = newOrder.quantity
+        if(quantity < amount){
+            console.log("Quantity is lower than your order.")
+            return false
+        }
         const index = orders.findIndex((order) => order.productId === _id)
         const cart = orders.map((order) => {
             return {productId: order.productId, quantity: order.quantity}
@@ -66,19 +71,32 @@ export const OrderProvider = (props) => {
             try{
                 setCart({variables:{object: cart}})
                 console.log("Success save my order")
+                return true
             }
             catch (e) {
                 console.log("Fail save my order")
+                return false
             }
         }
     }
 
     const removeCart = () => {
-        setOrders([])
-        
+        if(user){
+            try{
+                setCart({variables:{object: []}})
+                console.log("Success save my order")
+                setOrders([])
+                return true
+            }
+            catch (e) {
+                console.log("Fail save my order")
+                return false
+            }
+        } 
+        setOrders([])  
     }
 
-    console.log(orders)
+    
     return (
         <OrderContext.Provider value={{orders:orders, addOrder, removeCart}}>
             {children}
