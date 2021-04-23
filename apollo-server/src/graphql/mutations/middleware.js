@@ -1,6 +1,7 @@
 export const authCreateMiddleware = async (resolve, source, args, context, info) => {
     if (context?.user) {
         const newArgs = { record: {
+            ...args.record,
             userId: context?.user._id
         }}
 

@@ -1,6 +1,7 @@
 import moment from 'moment'
 import { schemaComposer } from 'graphql-compose'
-import { OrderTC, UserTC, OrderProductTC, OrderPromotionTC, OrderPromotionModel, OrderProductModel } from '../../models'
+import { OrderTC, UserTC, OrderProductTC, OrderPromotionTC, 
+    OrderPromotionModel, OrderProductModel, ShippingTC } from '../../models'
 
 OrderTC.addRelation(
     'orderBy',
@@ -32,6 +33,17 @@ OrderTC.addRelation(
             filter: (source) => ({ orderId: source._id }),
         },
         projection: { _id: 1 },
+    }
+)
+
+OrderTC.addRelation(
+    'shipping',
+    {
+        resolver: () => ShippingTC.getResolver('findById'),
+        prepareArgs: {
+            _id: (source) => source.shippingId
+        },
+        projection: { shippingId: 1 }
     }
 )
 
