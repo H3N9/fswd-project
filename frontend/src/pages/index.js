@@ -13,6 +13,7 @@ import CreateProduct from './admin/createProduct'
 import MobileNavbar from '../components/navbar/mobileNavbar'
 import Promotions from './admin/promotions'
 import Products from './admin/products'
+import UpdateProduct from './admin/updateProduct'
 
 const Index = () => {
     const [isShowMenu, setIsShowMenu] = useState(false)
@@ -69,6 +70,11 @@ const Index = () => {
                                 <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                                 <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                                 <Products />
+                            </Route>
+                            <Route path="/admin/product/:productId">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                                <UpdateProduct />
                             </Route>                  
                         </Switch>
                     </ContentBox>

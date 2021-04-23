@@ -31,7 +31,7 @@ const Products = () => {
                     <td>{value.price}</td>
                     <td>{value.quantity}</td>
                     <td>
-                        <button className="edit-button"><FontAwesomeIcon icon={['fas', 'edit']} /> แก้ไข</button>
+                        <Link to={`/admin/product/${value._id}`} ><button className="edit-button"><FontAwesomeIcon icon={['fas', 'edit']} /> แก้ไข</button></Link>
                         <button className="delete-button"><FontAwesomeIcon icon={['fas', 'trash']} /> ลบ</button>
                     </td>
                 </tr>
