@@ -123,7 +123,7 @@ const FormFlex = styled.div`
 `
 
 const FormContainer = styled.div`
-    width: 470px;
+    width: 500px;
     max-width: 100%;
     display: flex;
     flex-direction: column;
@@ -154,7 +154,8 @@ const FormContainer = styled.div`
     button{
         border: none;
         margin: 10px;
-        color: #5128e6;
+        background: #3fb161;
+        color: #fff;
         height: 50px;
         width: 50%;
         text-align: center;
