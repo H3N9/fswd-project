@@ -63,13 +63,9 @@ const Register = () =>{
     return(
         <MainContainer>
             <LoginContainer>
-                <h1>Register</h1>
-                {error}
-
                 <Logo>
                     <h1>Register</h1>
-                </Logo>
-                
+                </Logo>      
                 <Form onSubmit={Validate}>
                     {error}
                     <div className="input">                     
