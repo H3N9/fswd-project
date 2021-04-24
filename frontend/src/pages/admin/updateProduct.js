@@ -43,9 +43,19 @@ const UpdateProduct = () => {
     })
 
     const submitForm = async (e) => {
-        console.log('1')
-        const { _id, image, quantity, price } = product
-        const objInput = {...product, quantity: Number(quantity), price: Number(price) }
+        e.preventDefault()
+        const { _id, quantity, price } = product
+        const reStruct  = {
+            price: product.price,
+            publisher: product.publisher,
+            quantity: product.quantity,
+            title: product.title,
+            tpyes: product.tpyes,
+            image: product.image,
+            description: product.description,
+            author: product.author
+        }
+        //const objInput = {...product, quantity: Number(quantity), price: Number(price) }
         let filename = ''
 
         // if (image !== ''){
@@ -62,7 +72,7 @@ const UpdateProduct = () => {
         // objInput.image = filename
 
         try {
-            const response = await updateProduct({variables: {id: _id, object: objInput}})
+            const response = await updateProduct({variables: {id: _id, object: reStruct}})
             console.log(response)
         } catch (error) {
             console.log(error)
