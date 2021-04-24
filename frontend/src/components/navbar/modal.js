@@ -55,7 +55,7 @@ const BoxModal = styled.div`
     width: 320px;
     display: flex;
     position: fixed;
-    top: 90px;
+    top: 80px;
     right: -10px;
     z-index: 30;
     margin-right: 5%;
@@ -63,7 +63,10 @@ const BoxModal = styled.div`
     flex-direction: column;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     border-radius: 5px;
-    background: #EFEFEF;
+    background: rgba(20,20,20,0.85);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    color: #FFF;
 `
 const BoxCover = styled.div`
     width: 100%;
@@ -76,6 +79,7 @@ const BoxCover = styled.div`
 `
 const TitleBox = styled.div`
     padding: 5px;
+
 `
 const Title = styled.h3`
     margin: 0;
@@ -94,11 +98,11 @@ const ButtonBox = styled.div`
 `
 const ButtonOrder = styled(Button)`
     background-color: #EFEFEF;
-    border: solid 2px #003cff;
+    border: none;
     width: 255px;
-    color: #003cff;
+    color: #111;
     :hover{
-        background-color: #003cff;
+        background-color: #3f64df;
         color: #EFEFEF;
     }
 
