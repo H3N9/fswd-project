@@ -183,26 +183,40 @@ export const Header = styled.div`
         padding: 10px 20px;
         border-radius: 5px;
         margin-top: 10px;
+        font-size: 1.05rem;
     }
 `
 
 export const Table = styled.table`
-    width:100%;
-    overflow: scroll;
     border-collapse:collapse;  
-    tr{
-        &.table-header{
-            background: rgba(0,0,0,0.75);
-            color: #FFF;
-            margin: 0;
-            border: none;
-            th{
-                padding: 15px 10px;
+    width:100%;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    thead{
+        background-image: linear-gradient(120deg, #5128e6 , #2891e6);
+        color: #FFF;
+        margin: 0;
+        border: none;
+        th{
+            padding: 15px 10px;
+            &:first-child{
+                border-top-left-radius: 10px;
             }
+            &:last-child{
+                border-top-right-radius: 10px;
+            }
+        }
+    }
+    tr{
+        &.dim-row{
+            background:#F1F1F1;
+        }
     }
     td{
-        padding: 10px 0;
+        padding: 15px 0;
+        font-size: 1.05rem;
         text-align: center;
+        
         button{
             margin: 3px;
             padding: 10px 15px;

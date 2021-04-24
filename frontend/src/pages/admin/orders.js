@@ -15,16 +15,18 @@ const Orders = () => {
                 <h1>จัดการออเดอร์</h1>
             </Header>
             <Table>
-                <tr className="table-header">
-                    <th>ลำดับ</th>
-                    <th>ผู้ใช้</th>
-                    <th>ราคาทั้งหมด</th>
-                    <th>สถานะออเดอร์</th>
-                    <th>สร้างเมื่อ</th>
-                    <th></th>
-                </tr>
+                <thead>
+                    <tr className="table-header">
+                        <th>ลำดับ</th>
+                        <th>ผู้ใช้</th>
+                        <th>ราคาทั้งหมด</th>
+                        <th>สถานะออเดอร์</th>
+                        <th>สร้างเมื่อ</th>
+                        <th></th>
+                    </tr>                              
+                </thead>
                 {products.map((value, index) => 
-                <tr>
+                <tr className={index%2 == 0 ? "dim-row" : ""}>
                     <td>{index+1}</td>
                     <td>{value.title}</td>
                     <td>{value.types}</td>

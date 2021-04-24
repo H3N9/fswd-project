@@ -52,7 +52,7 @@ const Orders = () => {
                     <textarea id="description" rows="5" type="text" name="description" required value={promo.description} onChange={(e) => inputHandle(e)} />
                     <label htmlFor="description">คำอธิบายโปรโมชั่น</label>
                 </Input>
-                <button onClick={() => console.log(promo)}>บันทึก</button>
+                <button onClick={() => console.log(promo)}><FontAwesomeIcon icon={['fas', 'save']} /> บันทึก</button>
             </Content>     
         </Container>
     )
