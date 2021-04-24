@@ -50,7 +50,6 @@ const CreateProduct = () => {
         const { image, quantity, price } = product
         const objInput = {...product, quantity: Number(quantity), price: Number(price) }
         let filename = ''
-
         if (image !== ''){
             const formData = new FormData()
             formData.append('image', image)
@@ -100,7 +99,11 @@ const CreateProduct = () => {
                         </FromInline>
                        
                        <Input>       
-                            <input type="text" name="types" id="types" value={product.types} required onChange={(e) => inputHandle(e)}/>                    
+                            <select type="text" name="types" id="types" value={product.types} required onChange={(e) => inputHandle(e)}>
+                                <option value="Normal">Normal</option>
+                                <option value="Dramas">Dramas</option>
+                                <option value="Cosmoslogy">Cosmoslogy</option>
+                            </select>               
                             <label htmlFor="types">ประเภท</label>
                        </Input>
                         
