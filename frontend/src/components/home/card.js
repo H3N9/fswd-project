@@ -43,7 +43,7 @@ const Card = ({product}) => {
                 <AddCart >
                     <Button ref={ignoreClick} onClick={() => addOrder(product, 1)}>
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
-                        <p>{"เพิ่มไปยังรถเข็น"}</p>
+                        <p>{"เพิ่มลงรถเข็น"}</p>
                     </Button>
                     
                 </AddCart>          
@@ -80,7 +80,7 @@ const BoxCard = styled.div`
     height: 475px;
     overflow: hidden;
     padding: 25px 15px;
-    margin: 0 15px;
+    margin: 20px 15px;
     transition: 0.35s;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     :hover{
@@ -88,9 +88,9 @@ const BoxCard = styled.div`
         z-index: 1;
     }
     @media (max-width: 420px){
-        width: 150px;
+        width: 36.25%;
         height: 325px;
-        margin: 0 5px;
+        margin: 5px;
     }
 `
 
@@ -121,19 +121,23 @@ const Button = styled.button`
     border: solid 2px #003cff;
     font-size: 1.2em;
     background: white;
-    padding: 0px 4.5vmin 0px 4.5vmin;
+    width:80%;
     cursor: pointer;
     transition: 0.5s;
     color: #003cff;
     display: flex;
     align-items: center;
+    justify-content:center;
+    @media (max-width: 420px){
+        width:100%;
+    }
     svg{
+        margin-right: 5px;
         @media(max-width: 414px){
             display: none;
         }
     }
     p{
-        margin: 0 0 0 7px;
         padding: 5px 0;
         font-size: clamp(0.9rem, 3vmin, 1.1rem);
     }

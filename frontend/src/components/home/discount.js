@@ -55,7 +55,7 @@ const DiscountText = styled.h1`
     margin: 0;
     color: black;
     font-weight: 600;
-    font-size: clamp(25px, 6vmin, 2rem);
+    font-size: clamp(21px, 6vmin, 2rem);
 `
 
 export default Discount

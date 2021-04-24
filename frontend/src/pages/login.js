@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import {useSession} from '../context/session'
 import {useHistory} from 'react-router-dom'
-import logo from '../images/logo_large.webp'
+import logo from '../images/logo.png'
 import {Form, MainContainer, LoginContainer} from '../styles/styleComponents'
 
 const Login = () =>{
@@ -74,8 +74,8 @@ const Logo = styled.div`
     margin: 0 auto;
     margin-bottom: 5vmin;
     img{
-        width: 40%;
-        max-width: 200px;
+        width: 95%;
+        max-width: 350px;
         border-radius: 10px;
     }
 `
