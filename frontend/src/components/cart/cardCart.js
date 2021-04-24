@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import UpNumber from '../detail/upNumber'
 
 
-const CardCart = ({product}) => {
+const CardCart = ({product, quantity}) => {
     const {image = "", title = "", price = 0, discount = 0} = product
     const priceWdiscount = price-discount
 
@@ -25,7 +25,7 @@ const CardCart = ({product}) => {
                 {`THB${priceWdiscount.toFixed(2)}`}
             </TextBox>
             <TextBox>
-                <UpNumber number={1} handleNumber={lockClikcing} />
+                <UpNumber number={quantity} handleNumber={lockClikcing} />
             </TextBox>
             <TextBox>
                 {`THB${priceWdiscount.toFixed(2)}`}

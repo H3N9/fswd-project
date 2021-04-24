@@ -8,7 +8,6 @@ import Summary from '../components/cart/summary'
 
 const Cart = () => {
     const { orders, removeCart } = useOrderContext()
-    const products = orders.map((object) => object.product) || []
     const totle = orders.length > 0 ? orders.reduce((v1, v2) => v1 + (v2.product.netPrice * v2.quantity) || 0, 0):0
 
 
@@ -37,7 +36,7 @@ const Cart = () => {
                     </HeadTable>
 
                     <OrderBookBox>
-                        {products.map((product, index) => (<CardCart key={index} product={product}/>))}
+                        {orders.map((product, index) => (<CardCart key={index} product={product?.product || {}} quantity={product.quantity}/>))}
                     </OrderBookBox>
 
                     <ButtonBox>
