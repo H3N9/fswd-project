@@ -11,7 +11,7 @@ export const OrderProvider = (props) => {
     const [orders, setOrders] = useState([])
     const [setCart] = useMutation(SETCART_MUTATION)
     const {user} = useSession()
-    const [loadMyOrder, {loading, data}] = useLazyQuery(MYORDER_QUERY)
+    const [loadMyOrder, {data}] = useLazyQuery(MYORDER_QUERY)
     useEffect(() => {
         const loadCart = async () => {
             try {
