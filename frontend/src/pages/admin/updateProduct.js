@@ -10,6 +10,7 @@ const UpdateProduct = () => {
     const { data } = useQuery(PRODUCT_BY_ID, {variables: {id: productId}})
     const [ product, setProduct ] = useState(null)
     const [image, setImage] = useState();
+    const [isImageChange, setIsImageChange] = useState(false)
     const [ updateProduct ] = useMutation(UPDATE_PRODUCT)
 
     useEffect(() => {
@@ -39,6 +40,7 @@ const UpdateProduct = () => {
                 ...product,
                 [name]: files[0]
             })
+            setIsImageChange(true)
         }
     })
 
@@ -58,18 +60,18 @@ const UpdateProduct = () => {
         //const objInput = {...product, quantity: Number(quantity), price: Number(price) }
         let filename = ''
 
-        // if (image !== ''){
-        //     const formData = new FormData()
-        //     formData.append('image', image)
+        if (isImageChange){
+            const formData = new FormData()
+            formData.append('image', product.image)
 
-        //     const uploadResponse = await fetch('http://localhost:3001/image', { 
-        //         method: 'POST',
-        //         body: formData
-        //     })
-        //     const fileData = await uploadResponse.json()
-        //     filename = fileData.filename
-        // }
-        // objInput.image = filename
+            const uploadResponse = await fetch('http://localhost:3001/image', { 
+                method: 'POST',
+                body: formData
+            })
+            const fileData = await uploadResponse.json()
+            filename = fileData.filename
+            reStruct.image = filename
+        }
 
         try {
             const response = await updateProduct({variables: {id: _id, object: reStruct}})

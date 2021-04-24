@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {useMutation} from '@apollo/client'
@@ -21,7 +21,6 @@ const CreateProduct = () => {
     const history = useHistory();
     const [isCreate, setIsCreate] = useState(undefined);
     const [createProduct] = useMutation(CREATE_PRODUCT)
-    
 
     const inputHandle = (event) =>{
         const {name, value, files} = event.target

@@ -2,7 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 
-const InputLong = ({text, behind, command, type}) => {
+const InputLong = ({text, behind, command, type, name, value, handle }) => {
+
     return (
         <BoxInput>
             <BoxLabelInput>
@@ -12,7 +13,7 @@ const InputLong = ({text, behind, command, type}) => {
                         {behind}
                     </CommandText>
                 </LabelText>
-                <Input type={type} />
+                <Input type={type} name={name} value={value} onChange={(e) => { handle(e) }} />
             </BoxLabelInput>
         </BoxInput>
     )
