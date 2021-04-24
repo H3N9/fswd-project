@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
-import { useQuery } from '@apollo/client'
+import { useQuery, useMutation } from '@apollo/client'
 import { PRODUCT_BY_ID } from '../../graphql/productQuey'
+import { UPDATE_PRODUCT } from '../../graphql/productMutation'
 import ProductForm from '../../components/adminProduct/productForm'
 
 const UpdateProduct = () => {
@@ -9,6 +10,7 @@ const UpdateProduct = () => {
     const { data } = useQuery(PRODUCT_BY_ID, {variables: {id: productId}})
     const [ product, setProduct ] = useState(null)
     const [image, setImage] = useState();
+    const [ updateProduct ] = useMutation(UPDATE_PRODUCT)
 
     useEffect(() => {
         if (data?.productById){
@@ -40,10 +42,11 @@ const UpdateProduct = () => {
         }
     })
 
-    const submitForm = useCallback( async (e) => {
-        // const { image, quantity, price } = product
-        // const objInput = {...product, quantity: Number(quantity), price: Number(price) }
-        // let filename = ''
+    const submitForm = async (e) => {
+        console.log('1')
+        const { _id, image, quantity, price } = product
+        const objInput = {...product, quantity: Number(quantity), price: Number(price) }
+        let filename = ''
 
         // if (image !== ''){
         //     const formData = new FormData()
@@ -58,13 +61,13 @@ const UpdateProduct = () => {
         // }
         // objInput.image = filename
 
-        // try {
-        //     const response = await createProduct({variables: {object: objInput}})
-        //     console.log(response)
-        // } catch (error) {
-        //     console.log(error)
-        // }
-    })
+        try {
+            const response = await updateProduct({variables: {id: _id, object: objInput}})
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <div>
