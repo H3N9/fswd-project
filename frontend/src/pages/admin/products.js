@@ -7,7 +7,7 @@ import { useQuery } from '@apollo/client'
 import {Header, Table} from '../../styles/styleComponents'
 
 const Products = () => {
-    const { loading, error, data } = useQuery(PRODUCT_QUERY)
+    const { data } = useQuery(PRODUCT_QUERY)
     const products = data?.products || []
 
     return (
