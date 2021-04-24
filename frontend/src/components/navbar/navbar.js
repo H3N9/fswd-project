@@ -19,7 +19,7 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                 <BoxBtn>
                     <Logo>        
                         <Link to={`/`} onClick={() => setIsShowMenu(false)}>
-                            <img src={logo} alt="" />
+                            <img src={logo} alt="" width="10px"/>
                         </Link>
                     </Logo>    
                     <BoxLink title={"สินค้าลดราคา"} link={"login"} main={""}  /> 
@@ -72,7 +72,8 @@ const BoxBtn = styled.div`
 const Logo = styled.div`
     padding-top: 5px;
     img{
-        width: 85%;
+        width: 100%;
+        max-width: 62px;
         border-radius: 10px;
     }
 `

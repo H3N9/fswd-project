@@ -12,11 +12,13 @@ import Payment from './payment'
 import CreateProduct from './admin/createProduct'
 import MobileNavbar from '../components/navbar/mobileNavbar'
 import Promotions from './admin/promotions'
-import Promotion from './admin/promotion'
+import PromotionDetail from './admin/promotionDetail'
 import Products from './admin/products'
 import UpdateProduct from './admin/updateProduct'
 import Orders from './admin/orders'
 import Order from './admin/order'
+import AllProducts from './allProduct'
+
 const Index = () => {
     const [isShowMenu, setIsShowMenu] = useState(false)
 
@@ -71,7 +73,7 @@ const Index = () => {
                             <Route path="/admin/promotion/:promotionId">
                                 <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                                 <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
-                                <Promotion />
+                                <PromotionDetail />
                             </Route>
                             <Route path="/admin/products">
                                 <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
@@ -92,7 +94,13 @@ const Index = () => {
                                 <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                                 <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                                 <Order />
-                            </Route>                  
+                            </Route> 
+                            <Route path="/allProduct">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                                <AllProducts />
+                            </Route> 
+                                             
                         </Switch>
                     </ContentBox>
                 </>
