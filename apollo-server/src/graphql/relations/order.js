@@ -4,7 +4,7 @@ import { OrderTC, UserTC, OrderProductTC, OrderPromotionTC,
     OrderPromotionModel, OrderProductModel, ShippingTC } from '../../models'
 
 OrderTC.addRelation(
-    'orderBy',
+    'user',
     {
         resolver: () => UserTC.getResolver('findById'),
         prepareArgs: {
