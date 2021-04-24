@@ -1,5 +1,5 @@
 import { OrderTC } from '../../models'
-import { authQueryMiddleware } from './middleware'
+import { authQueryMiddleware, adminPermission } from './middleware'
 
-export const orders = OrderTC.getResolver('findMany')
+export const orders = OrderTC.getResolver('findMany', [adminPermission])
 export const myOrders = OrderTC.getResolver('findMany', [authQueryMiddleware])
