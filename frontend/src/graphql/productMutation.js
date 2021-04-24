@@ -8,3 +8,11 @@ export const CREATE_PRODUCT = gql`
         }
     }
 `
+
+export const UPDATE_PRODUCT = gql`
+    mutation UpdateProductById($object: UpdateByIdProductInput! $id: MongoID!){
+        updateProductById(_id: $id record: $object){
+        recordId
+        }
+    }
+`

@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import {Input} from '../../styles/styleComponents'
 
-const ProductForm = ({ title, product, image, inputHandle }) => {
+const ProductForm = ({ title, product, image, inputHandle, submitForm }) => {
 
-    const submitForm = async (e) => {
+    //const submitForm = async (e) => {
         // const { image, quantity, price } = product
         // const objInput = {...product, quantity: Number(quantity), price: Number(price) }
         // let filename = ''
@@ -28,14 +28,14 @@ const ProductForm = ({ title, product, image, inputHandle }) => {
         // } catch (error) {
         //     console.log(error)
         // }
-    }
+    //}
 
     return (
         <Container>
             
             <Flex>
                 <FormFlex>
-                    <FormContainer>
+                    <FormContainer onSubmit={(e) => submitForm(e)}>
                         <h1>{title}</h1>
                         <Input>       
                             <input type="text" name="title" id="title" value={product.title} required onChange={(e) => inputHandle(e)}/>
@@ -74,7 +74,7 @@ const ProductForm = ({ title, product, image, inputHandle }) => {
                             <textarea name="" id="" cols="20" rows="5" name="description" value={product.description} onChange={(e) => inputHandle(e)}></textarea>
                             <label htmlFor="">คำอธิบาย</label>
                         </Input>
-                        <button onClick={submitForm}>ยืนยัน</button>
+                        <button>ยืนยัน</button>
                     </FormContainer>
                     <ImageFormContainer>
                         <Image>
@@ -114,7 +114,7 @@ const FormFlex = styled.div`
     margin-bottom: 30px;
 `
 
-const FormContainer = styled.div`
+const FormContainer = styled.form`
     width: 500px;
     max-width: 100%;
     display: flex;

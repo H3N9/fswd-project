@@ -10,4 +10,11 @@ export const authQueryMiddleware = async (resolve, source, args, context, info) 
     throw new Error('You must be authorized');
 }
 
+export const adminPermission = async (resolve, source, args, context, info) => {
+    if (context?.user?.isAdmin) {
+        return resolve(source, args, context, info)
+    }
+    throw new Error('You must be authorized');
+}
+
 export default authQueryMiddleware

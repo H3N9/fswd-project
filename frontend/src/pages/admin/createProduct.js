@@ -47,6 +47,7 @@ const CreateProduct = () => {
     }
 
     const submitForm = async (e) => {
+        e.preventDefault()
         const { image, quantity, price } = product
         const objInput = {...product, quantity: Number(quantity), price: Number(price) }
         let filename = ''
@@ -79,7 +80,7 @@ const CreateProduct = () => {
             {isCreate === "success" ? <ModalResult title="เพิ่มสินค้าสำเร็จ" icon="check" color="#22aa4b" setIsCreate={setIsCreate}/> : isCreate === "fail" ? <ModalResult title="เพิ่มสินค้าไม่สำเร็จ" icon="times" color="#a82626" setIsCreate={setIsCreate}/> : null}
             <Flex>
                 <FormFlex>
-                    <FormContainer>
+                    <FormContainer onSubmit={submitForm}>
                         <h1>เพิ่มสินค้า</h1>
                         <Input>       
                             <input type="text" name="title" id="title" value={product.title} required onChange={(e) => inputHandle(e)}/>
@@ -122,7 +123,7 @@ const CreateProduct = () => {
                             <textarea name="" id="" cols="20" rows="5" name="description" value={product.description} onChange={(e) => inputHandle(e)}></textarea>
                             <label htmlFor="">คำอธิบาย</label>
                         </Input>
-                        <button onClick={submitForm}><FontAwesomeIcon icon={['fas', 'check']} /> ยืนยัน</button>
+                        <button><FontAwesomeIcon icon={['fas', 'check']} /> ยืนยัน</button>
                     </FormContainer>
                     <ImageFormContainer>
                         <Image>
