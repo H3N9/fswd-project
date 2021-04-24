@@ -28,7 +28,7 @@ const Products = () => {
                     </tr>                       
                 </thead>
                 {products.map((value, index) => 
-                <tr>
+                <tr className={index%2 == 0 ? "dim-row" : ""}>
                     <td>{index+1}</td>
                     <td>{value.title}</td>
                     <td>{value.types}</td>
