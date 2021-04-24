@@ -230,5 +230,4 @@ export const Table = styled.table`
             }
         }
     }
-}
 `
