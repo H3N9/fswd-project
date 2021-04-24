@@ -71,7 +71,7 @@ export const Form = styled.form`
             padding: 5px 0 5px 5px;
             position: relative;
             border-bottom: 2px solid #5128e6;
-            :focus~label, :valid~label {
+            :focus~label, :valid~label, :-webkit-autofill~label {
                 top: -5px;
                 left: 0;
                 color: #111;
@@ -153,7 +153,7 @@ export const Input = styled.div`
             padding: 5px 0 5px 5px;
             position: relative;
             border-bottom: 2px solid #5128e6;
-            :focus~label, :valid~label {
+            :focus~label, :valid~label, :-webkit-autofill~label{
                 top: -5px;
                 left: 0;
                 color: #111;
@@ -163,4 +163,71 @@ export const Input = styled.div`
             background: #f2f2f2
         }
     
+`
+
+export const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-bottom: 50px;
+    h1{
+        margin: 0;
+        font-size: clamp(2rem, 5vmin, 2.5rem);
+    }
+    a, button{
+        border: none;
+        text-decoration:none;
+        color: #FFF;
+        background: #2fb12f;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin-top: 10px;
+        font-size: 1.05rem;
+    }
+`
+
+export const Table = styled.table`
+    border-collapse:collapse;  
+    width:100%;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    thead{
+        background-image: linear-gradient(120deg, #5128e6 , #2891e6);
+        color: #FFF;
+        margin: 0;
+        border: none;
+        th{
+            padding: 15px 10px;
+            &:first-child{
+                border-top-left-radius: 10px;
+            }
+            &:last-child{
+                border-top-right-radius: 10px;
+            }
+        }
+    }
+    tr{
+        &.dim-row{
+            background:#F1F1F1;
+        }
+    }
+    td{
+        padding: 15px 0;
+        font-size: 1.05rem;
+        text-align: center;
+        
+        button{
+            margin: 3px;
+            padding: 10px 15px;
+            border: none;
+            &.edit-button{
+                background: #ffd000;   
+            }
+            &.delete-button{
+                background: #e02323;   
+                color: #FFF;
+            }
+        }
+    }
 `

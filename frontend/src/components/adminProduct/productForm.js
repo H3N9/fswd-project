@@ -1,87 +1,42 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {useMutation} from '@apollo/client'
-import {CREATE_PRODUCT} from '../../graphql/productMutation'
 import {Input} from '../../styles/styleComponents'
-import ModalResult from '../../components/modalResult'
-import { useHistory } from "react-router-dom";
-const CreateProduct = () => {
-    const [ product, setProduct ] = useState({
-        title: "",
-        publisher: "",
-        author: "",
-        price: 0,
-        types: "",
-        quantity: 0,
-        description: "",
-        image: ""
-    })
-    const [image, setImage] = useState();
-    const history = useHistory();
-    const [isCreate, setIsCreate] = useState(undefined);
-    const [createProduct] = useMutation(CREATE_PRODUCT)
-    
 
-    const inputHandle = (event) =>{
-        const {name, value, files} = event.target
-        if (name !== "image"){
-            setProduct({
-                ...product,
-                [name]: value
-            })
-        }
-        else{
-            const reader = new FileReader();
-            reader.onload = () =>{
-                if (reader.readyState === 2){
-                    setImage(reader.result)
-                }
-            }
-            reader.readAsDataURL(files[0])
-            setProduct({
-                ...product,
-                [name]: files[0]
-            })
-        }
-    }
+const ProductForm = ({ title, product, image, inputHandle }) => {
 
     const submitForm = async (e) => {
-        const { image, quantity, price } = product
-        const objInput = {...product, quantity: Number(quantity), price: Number(price) }
-        let filename = ''
+        // const { image, quantity, price } = product
+        // const objInput = {...product, quantity: Number(quantity), price: Number(price) }
+        // let filename = ''
 
-        if (image !== ''){
-            const formData = new FormData()
-            formData.append('image', image)
+        // if (image !== ''){
+        //     const formData = new FormData()
+        //     formData.append('image', image)
 
-            const uploadResponse = await fetch('http://localhost:3001/image', { 
-                method: 'POST',
-                body: formData
-            })
-            const fileData = await uploadResponse.json()
-            filename = fileData.filename
-        }
-        objInput.image = filename
+        //     const uploadResponse = await fetch('http://localhost:3001/image', { 
+        //         method: 'POST',
+        //         body: formData
+        //     })
+        //     const fileData = await uploadResponse.json()
+        //     filename = fileData.filename
+        // }
+        // objInput.image = filename
 
-        try {
-            const response = await createProduct({variables: {object: objInput}})
-            console.log(response)
-            setIsCreate("success")
-            setTimeout(() => history.push("/admin/products"), 3000);
-        } catch (error) {
-            console.log(error)
-            setIsCreate("fail")
-        }
+        // try {
+        //     const response = await createProduct({variables: {object: objInput}})
+        //     console.log(response)
+        // } catch (error) {
+        //     console.log(error)
+        // }
     }
 
     return (
         <Container>
-            {isCreate === "success" ? <ModalResult title="เพิ่มสินค้าสำเร็จ" icon="check" color="#22aa4b" setIsCreate={setIsCreate}/> : isCreate === "fail" ? <ModalResult title="เพิ่มสินค้าไม่สำเร็จ" icon="times" color="#a82626" setIsCreate={setIsCreate}/> : null}
+            
             <Flex>
                 <FormFlex>
                     <FormContainer>
-                        <h1>เพิ่มสินค้า</h1>
+                        <h1>{title}</h1>
                         <Input>       
                             <input type="text" name="title" id="title" value={product.title} required onChange={(e) => inputHandle(e)}/>
                             <label for="title">ชื่อ</label>
@@ -119,18 +74,17 @@ const CreateProduct = () => {
                             <textarea name="" id="" cols="20" rows="5" name="description" value={product.description} onChange={(e) => inputHandle(e)}></textarea>
                             <label htmlFor="">คำอธิบาย</label>
                         </Input>
-                        <button onClick={submitForm}><FontAwesomeIcon icon={['fas', 'check']} /> ยืนยัน</button>
+                        <button onClick={submitForm}>ยืนยัน</button>
                     </FormContainer>
                     <ImageFormContainer>
                         <Image>
-                            <FontAwesomeIcon icon={['fas', 'image']} size="9x" /> 
                             <img src={image} alt=""/>
                         </Image>
                         <InputWrapper>
                
                             <div>
                                 <input type="file" id="image" name="image" accept="image/jpeg" onChange={(e) => inputHandle(e)}/> 
-                                <label htmlFor="image"><FontAwesomeIcon icon={['fas', 'image']} /> อัปโหลดหน้าปก</label>
+                                <label htmlFor="image">อัปโหลดหน้าปก</label>
                             </div>
                         </InputWrapper>             
                     </ImageFormContainer>
@@ -177,7 +131,7 @@ const FormContainer = styled.div`
             content: "";
             position: absolute;
             width: 80%;
-            height: 4px;
+            height: 3px;
             background: #111;
             bottom: -10px;
         }
@@ -211,31 +165,16 @@ const ImageFormContainer = styled.div`
     justify-content: center;
     align-items: center;
     padding: 20px 0;
-
 `
 const Image = styled.div`
     background: rgba(200,200,200, 0.5);
     border-radius: 5px;
     width: 100%;
     height: 500px;
-    border: 2px solid rgba(180,180,180, 1);
+    border: 2px solid #666;
     border-style: dashed;
-    text-align: center;
-    overflow: hidden;
-    position: relative;
-    svg{
-        color: rgba(190,190,190, 1);
-        position: absolute;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        z-index: -1;
-        transform: translate(-50%, -50%);
-    }
     img{
-        z-index: 1;
         width: 100%;
-        border-radius: 5px;
         margin: 0;
     }
 `
@@ -292,4 +231,4 @@ const FromInline = styled.div`
     }
 `
 
-export default CreateProduct;
+export default ProductForm

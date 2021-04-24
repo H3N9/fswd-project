@@ -12,8 +12,11 @@ import Payment from './payment'
 import CreateProduct from './admin/createProduct'
 import MobileNavbar from '../components/navbar/mobileNavbar'
 import Promotions from './admin/promotions'
+import Promotion from './admin/promotion'
 import Products from './admin/products'
-
+import UpdateProduct from './admin/updateProduct'
+import Orders from './admin/orders'
+import Order from './admin/order'
 const Index = () => {
     const [isShowMenu, setIsShowMenu] = useState(false)
 
@@ -55,20 +58,40 @@ const Index = () => {
                                 <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                                 <Payment />
                             </Route>
-                            <Route path="/createProduct">
+                            <Route path="/admin/product/create">
                                 <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                                 <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                                 <CreateProduct />
                             </Route>
-                            <Route path="/promotions">
+                            <Route path="/admin/promotions">
                                 <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                                 <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                                 <Promotions />
                             </Route>
-                            <Route path="/products">
+                            <Route path="/admin/promotion/:promotionId">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                                <Promotion />
+                            </Route>
+                            <Route path="/admin/products">
                                 <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                                 <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                                 <Products />
+                            </Route>
+                            <Route path="/admin/product/:productId">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                                <UpdateProduct />
+                            </Route>
+                            <Route path="/admin/orders">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                                <Orders />
+                            </Route>  
+                            <Route path="/admin/order/:orderId">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                                <Order />
                             </Route>                  
                         </Switch>
                     </ContentBox>

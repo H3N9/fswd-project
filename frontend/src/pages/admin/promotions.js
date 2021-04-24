@@ -2,8 +2,8 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {Header} from '../../styles/styleComponents'
 const Promotions = () => {
-
 
     return (
         <Container>
@@ -42,24 +42,6 @@ const Container = styled.div`
     padding: 100px 5%;
 `
 
-const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: center;
-    h1{
-        margin: 0;
-        font-size: clamp(2rem, 5vmin, 2.5rem);
-    }
-    a{
-        text-decoration:none;
-        color: #FFF;
-        background: #2fb12f;
-        padding: 10px 20px;
-        border-radius: 5px;
-        margin-top: 10px;
-    }
-`
 const Flex = styled.div`
     display: flex;
     margin-top: 50px;
