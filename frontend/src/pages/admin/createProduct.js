@@ -112,17 +112,18 @@ const CreateProduct = () => {
                             <textarea name="" id="" cols="20" rows="5" name="description" value={product.description} onChange={(e) => inputHandle(e)}></textarea>
                             <label htmlFor="">คำอธิบาย</label>
                         </Input>
-                        <button onClick={submitForm}>ยืนยัน</button>
+                        <button onClick={submitForm}><FontAwesomeIcon icon={['fas', 'check']} /> ยืนยัน</button>
                     </FormContainer>
                     <ImageFormContainer>
                         <Image>
+                            <FontAwesomeIcon icon={['fas', 'image']} size="9x" /> 
                             <img src={image} alt=""/>
                         </Image>
                         <InputWrapper>
                
                             <div>
                                 <input type="file" id="image" name="image" accept="image/jpeg" onChange={(e) => inputHandle(e)}/> 
-                                <label htmlFor="image">อัปโหลดหน้าปก</label>
+                                <label htmlFor="image"><FontAwesomeIcon icon={['fas', 'image']} /> อัปโหลดหน้าปก</label>
                             </div>
                         </InputWrapper>             
                     </ImageFormContainer>
@@ -169,7 +170,7 @@ const FormContainer = styled.div`
             content: "";
             position: absolute;
             width: 80%;
-            height: 3px;
+            height: 4px;
             background: #111;
             bottom: -10px;
         }
@@ -203,16 +204,31 @@ const ImageFormContainer = styled.div`
     justify-content: center;
     align-items: center;
     padding: 20px 0;
+
 `
 const Image = styled.div`
     background: rgba(200,200,200, 0.5);
     border-radius: 5px;
     width: 100%;
     height: 500px;
-    border: 2px solid #666;
+    border: 2px solid rgba(180,180,180, 1);
     border-style: dashed;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    svg{
+        color: rgba(190,190,190, 1);
+        position: absolute;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: -1;
+        transform: translate(-50%, -50%);
+    }
     img{
+        z-index: 1;
         width: 100%;
+        border-radius: 5px;
         margin: 0;
     }
 `

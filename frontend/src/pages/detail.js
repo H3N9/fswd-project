@@ -75,7 +75,7 @@ const Detail = () => {
                 <DetailBox>
                     <ImageBox>
                         <MainImageBox>
-                            <MainImage src={image} />
+                            <MainImage src={image === "" ? "http://ird.rmuti.ac.th/2020/world/upload/post/picture/thumb/IRD291220C00001/noimg.png" : image} />
                         </MainImageBox>
                         <SecondImageBox>
                             <SecondImage href="" src={image} />
@@ -169,11 +169,11 @@ const MainImageBox = styled.div`
     width: 100%;
     padding: 10px 0;
     text-align: center;
-    background: #EAEAEA;
+    background: #ececec;
     
 `
 const MainImage = styled.img`
-    width: 50%;
+    width: 70%;
     object-fit: cover;
     
 `
