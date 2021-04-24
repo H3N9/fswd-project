@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import styled from 'styled-components'
-import { useQuery } from '@apollo/client'
-import { SHIPPINGS } from '../graphql/shippingQuery'
+import { useQuery, useMutation } from '@apollo/client'
+import { MY_SHIPPINGS } from '../graphql/shippingQuery'
+import { CREATE_SHIPPING, UPDATE_SHIPPING } from '../graphql/shippingMutation'
 import {SpaceBox, Box9p} from '../styles/styleComponents'
 import Summary from '../components/cart/summary'
 import {useOrderContext} from '../context/orderContext'
@@ -14,33 +15,38 @@ import InputRadio from '../components/payment/InputRadio'
 const Payment = () => {
     const { orders } = useOrderContext()
     const totle = orders.length > 0 ? orders.reduce((book1, book2) => book1 + (book2['price'] - book2['discount']), 0):0
-    const { data } = useQuery(SHIPPINGS)
+    const { data } = useQuery(MY_SHIPPINGS)
+    const [ createShipping ] = useMutation(CREATE_SHIPPING)
+    const [ updateShipping ] = useMutation(UPDATE_SHIPPING)
 
     const [ address, setAddress ] = useState({
-        addressInfo: '',
+        address: '',
         subDistrict: '',
         district: '',
         province: '',
-        country: 'ไทย',
         postalCode: '',
         phoneNumber: ''
     })
-    const [addressSelect, setAddressSelect] = useState(-1)
+    const [ addressSelect, setAddressSelect ] = useState(-1)
     const [ addresses, setAddresses ] = useState([])
     const [ shipping, setShipping ] = useState("")
     const [ paid, setPaid ] = useState("")
 
     useEffect(() => {
-        if (data?.shippings.length > 0){
+        if (data?.myShippings.length > 0){
             setAddressSelect(0)
-            setAddresses(data.shippings)
+            setAddresses(data.myShippings)
             setAddress({
-                ...data.shippings[0],
-                addressInfo: data.shippings[0].address
+                ...data.myShippings[0],
+                address: data.myShippings[0].address
             })
         }
 
     }, [data])
+
+    useEffect(() => {
+        console.log(addresses)
+    }, [addresses])
     
     const setShipingHandle = (text) => {
         setShipping(text)
@@ -58,7 +64,17 @@ const Payment = () => {
                 ...addresses[index],
                 subDistrict: addresses[index].subDistrict || '',
                 district: addresses[index].district || '',
-                addressInfo: addresses[index].address
+                address: addresses[index].address
+            })
+        }
+        else{
+            setAddress({
+                address: '',
+                subDistrict: '',
+                district: '',
+                province: '',
+                postalCode: '',
+                phoneNumber: ''
             })
         }
     })
@@ -71,6 +87,40 @@ const Payment = () => {
         })
     }
 
+    const submitForm = useCallback( async (e) => {
+        const objInput = {
+            address: address.address,
+            subDistrict: address.subDistrict,
+            district: address.district,
+            province: address.province,
+            postalCode: address.postalCode,
+            phoneNumber: address.phoneNumber
+        }
+        const index = Number(addressSelect)
+
+        if (index === -1){
+            try {
+                const newShipping = await createShipping({ variables: { object: objInput } })
+                setAddresses([...addresses, newShipping.data.createShipping.record])
+                setAddressSelect(addresses.length)
+            } catch (error) {
+                console.log(error.message)
+            }
+
+        }
+        else{
+            try{
+                console.log(objInput)
+                const shipping = await updateShipping({ variables: { id: addresses[index]._id, object: objInput } })
+                const addressesCopy = [...addresses]
+                addressesCopy[index] = shipping.data.updateShippingById.record
+                setAddresses(addressesCopy)
+            } catch (error){
+                console.log(error.message)
+            }
+        }
+    })
+
     return (
         <Box9p>
             <SpaceBox />
@@ -82,26 +132,22 @@ const Payment = () => {
                     </TitlePayment>
                     <TextWline>
                         {"ที่อยู่ในการจัดส่ง"}
-                        <select onChange={addressSelectHandle} >
-                            {addresses.map((item, index) => {
-                                if (index === 0)
-                                    return (<option key={item._id} value={index} selected={"selected"}>{item.address}</option>)
-                                else
-                                    return (<option key={item._id} value={index}>{item.address}</option>)
-                            })}
+                        <select onChange={addressSelectHandle} value={addressSelect} >
+                            {addresses.map((item, index) => (<option key={item._id} value={index}>{item.address}</option>))}
                             <option value={-1} >เพิ่มที่อยู่</option>
                         </select>
                     </TextWline>
                     <LineBreak />
                     {/*<Select text={"ประเทศ"} />*/}
                     <InputLong text={"ที่อยู่"} behind={"(บ้านเลขที่ / หมู่บ้าน / หมู่ที่ / ซอย / ถนน)"} 
-                    command={"red"} type={"text"} name={"addressInfo"} value={address.addressInfo} handle={addressHandle}/>
+                    command={"red"} type={"text"} name={"address"} value={address.address} handle={addressHandle}/>
                     <InputDouble text1={"แขวง/ตำบล"} text2={"เขตอำเภอ"} 
                     name1={"subDistrict"} value1={address.subDistrict} name2={"district"} value2={address.district} handle={addressHandle} />
                     <InputDouble text1={"จังหวัด"} text2={"รหัสไปรษณีย์"} 
                     name1={"province"} value1={address.province} name2={"postalCode"} value2={address.postalCode} handle={addressHandle}/>
                     <InputLong text={"เบอร์ติดต่อ"} behind={"(กรุณาระบุหมายเลขโทรศัพท์ เฉพาะตัวเลขเท่านั้น)"} type={"text"}
                     name={"phoneNumber"} value={address.phoneNumber} handle={addressHandle} />
+                    <button onClick={submitForm} >{(addressSelect >= 0?"แก้ไขที่อยู่จัดส่ง":"เพิ่มที่อยู่จัดส่ง")}</button>
                     <SpaceBox />
                     <TextWline>
                         เลือกขนส่ง

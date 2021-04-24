@@ -15,3 +15,19 @@ export const SHIPPINGS = gql`
         }
     }
 `
+
+export const MY_SHIPPINGS = gql`
+    query{
+        myShippings{
+        _id
+        address
+        phoneNumber
+        subDistrict
+        district
+        province
+        phoneNumber
+        postalCode
+        province
+    }
+}
+`
