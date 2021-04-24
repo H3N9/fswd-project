@@ -22,7 +22,9 @@ export const OrderProvider = (props) => {
                 console.log("User doesn't login to load my order")
             }
         }
-        loadCart()
+        if(user){
+            loadCart()
+        }
     }, [user])
 
     useEffect(() => {
@@ -41,7 +43,12 @@ export const OrderProvider = (props) => {
 
     const combineItems = (product, base) => {
         const { productId, quantity } = product
+        const limit = product?.product?.quantity
         const index = base.findIndex((object) => object.productId === productId)
+        const totle = index > -1 ? base[index].quantity + quantity:0
+        if( totle > limit){
+            return
+        }
         if(index > -1){
             const addQuantity = base[index]
             addQuantity.quantity = addQuantity.quantity + quantity
@@ -77,13 +84,13 @@ export const OrderProvider = (props) => {
         
     }
 
-    const handleSetCart = (carts) => {
+    const handleSetCart = async (carts) => {
         const delProduct = carts.map((cart) => {
             return {productId:cart.productId, quantity: cart.quantity}
         })
         if(user){
             try{
-                setCart({variables:{object: delProduct}})
+                await setCart({variables:{object: delProduct}})
                 console.log("Success save my order")
                 return true
             }
