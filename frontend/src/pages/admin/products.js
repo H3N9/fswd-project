@@ -17,14 +17,16 @@ const Products = () => {
                 <Link to={`/admin/product/create`}><FontAwesomeIcon icon={['fas', 'plus']} /> เพิ่มสินค้า</Link>
             </Header>
             <Table>
-                <tr className="table-header">
-                    <th>ลำดับ</th>
-                    <th>ชื่อ</th>
-                    <th>ประเภท</th>
-                    <th>ราคา</th>
-                    <th>จำนวนที่มี</th>
-                    <th></th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>ลำดับ</th>
+                        <th>ชื่อ</th>
+                        <th>ประเภท</th>
+                        <th>ราคา</th>
+                        <th>จำนวนที่มี</th>
+                        <th></th>
+                    </tr>                       
+                </thead>
                 {products.map((value, index) => 
                 <tr>
                     <td>{index+1}</td>
