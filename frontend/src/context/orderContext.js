@@ -12,7 +12,6 @@ export const OrderProvider = (props) => {
     const [setCart] = useMutation(SETCART_MUTATION)
     const {user} = useSession()
     const [loadMyOrder, {loading, data}] = useLazyQuery(MYORDER_QUERY)
-
     useEffect(() => {
         const loadCart = async () => {
             try {
@@ -24,52 +23,67 @@ export const OrderProvider = (props) => {
             }
         }
         loadCart()
-    }, [])
+    }, [user])
 
     useEffect(() => {
         if(data?.myOrders){
             const copyOrders = data?.myOrders[0]?.orderProducts.map((order) => {
                 return {productId: order.productId, quantity: order.quantity, product:order.product}
             }) || []
+            if(orders.length > 0){
+                orders.forEach((product) => combineItems(product, copyOrders))
+                handleSetCart(copyOrders)
+            }
             setOrders(copyOrders)
-            console.log(copyOrders)
+            
         }
     }, [data])
+
+    const combineItems = (product, base) => {
+        const { productId, quantity } = product
+        const index = base.findIndex((object) => object.productId === productId)
+        if(index > -1){
+            const addQuantity = base[index]
+            addQuantity.quantity = addQuantity.quantity + quantity
+            return addQuantity
+        }
+        else{
+            base.push(product)
+        }
+    }
 
     const addOrder = (newOrder, amount) => {
         const { _id } = newOrder
         const quantity = newOrder.quantity
-        if(quantity < amount){
+        const index = orders.findIndex((order) => order.productId === _id)
+        const totle = index > -1 ? orders[index].quantity + amount:0
+        if(quantity < totle){
             console.log("Quantity is lower than your order.")
             return false
         }
-        const index = orders.findIndex((order) => order.productId === _id)
-        const cart = orders.map((order) => {
-            return {productId: order.productId, quantity: order.quantity}
-        })
         if(index > -1 && amount > 0) {
             const copyArray = [...orders]
             copyArray[index].quantity = copyArray[index].quantity+amount
-            cart[index].quantity = copyArray[index].quantity
-            console.log(cart)
             setOrders(copyArray)
-            handleSetCart(cart)
+            handleSetCart(copyArray)
 
         }
         else if(amount > 0){
             const reStructOrder = {productId:_id, quantity: amount, product:newOrder}
-            cart[cart.length] = {productId:_id, quantity: amount}
-            console.log(cart)
-            setOrders([...orders, reStructOrder])
-            handleSetCart(cart)
+            const merge = [...orders, reStructOrder]
+            setOrders(merge)
+            handleSetCart(merge)
         }
         
     }
 
-    const handleSetCart = (cart) => {
+    const handleSetCart = (carts) => {
+        const delProduct = carts.map((cart) => {
+            return {productId:cart.productId, quantity: cart.quantity}
+        })
         if(user){
             try{
-                setCart({variables:{object: cart}})
+                setCart({variables:{object: delProduct}})
                 console.log("Success save my order")
                 return true
             }

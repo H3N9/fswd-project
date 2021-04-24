@@ -22,7 +22,7 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                             <img src={logo} alt="" />
                         </Link>
                     </Logo>    
-                    <BoxLink title={"สินค้าลดราคา"} link={"discount"} main={""}  /> 
+                    <BoxLink title={"สินค้าลดราคา"} link={"login"} main={""}  /> 
                 </BoxBtn>  
                 <AccountBox>
                     <BoxButton>
