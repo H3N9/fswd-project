@@ -164,3 +164,57 @@ export const Input = styled.div`
         }
     
 `
+
+export const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-bottom: 50px;
+    h1{
+        margin: 0;
+        font-size: clamp(2rem, 5vmin, 2.5rem);
+    }
+    a, button{
+        border: none;
+        text-decoration:none;
+        color: #FFF;
+        background: #2fb12f;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+`
+
+export const Table = styled.table`
+    width:100%;
+    overflow: scroll;
+    border-collapse:collapse;  
+    tr{
+        &.table-header{
+            background: rgba(0,0,0,0.75);
+            color: #FFF;
+            margin: 0;
+            border: none;
+            th{
+                padding: 15px 10px;
+            }
+    }
+    td{
+        padding: 10px 0;
+        text-align: center;
+        button{
+            margin: 3px;
+            padding: 10px 15px;
+            border: none;
+            &.edit-button{
+                background: #ffd000;   
+            }
+            &.delete-button{
+                background: #e02323;   
+                color: #FFF;
+            }
+        }
+    }
+}
+`

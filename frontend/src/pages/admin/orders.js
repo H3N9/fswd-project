@@ -5,24 +5,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { PRODUCT_QUERY } from '../../graphql/productQuey'
 import { useQuery } from '@apollo/client'
 import {Header, Table} from '../../styles/styleComponents'
-
-const Products = () => {
+const Orders = () => {
     const { loading, error, data } = useQuery(PRODUCT_QUERY)
     const products = data?.products || []
-
+    console.log(products.map((value) => value._id))
     return (
         <Container>         
             <Header>
-                <h1>สินค้าทั้งหมด</h1>
-                <Link to={`/admin/product/create`}><FontAwesomeIcon icon={['fas', 'plus']} /> เพิ่มสินค้า</Link>
+                <h1>จัดการออเดอร์</h1>
             </Header>
             <Table>
                 <tr className="table-header">
                     <th>ลำดับ</th>
-                    <th>ชื่อ</th>
-                    <th>ประเภท</th>
-                    <th>ราคา</th>
-                    <th>จำนวนที่มี</th>
+                    <th>ผู้ใช้</th>
+                    <th>ราคาทั้งหมด</th>
+                    <th>สถานะออเดอร์</th>
+                    <th>สร้างเมื่อ</th>
                     <th></th>
                 </tr>
                 {products.map((value, index) => 
@@ -38,8 +36,7 @@ const Products = () => {
                     </td>
                 </tr>
                 )}
-            </Table>
-            
+            </Table>      
         </Container>
     )
 }
@@ -49,4 +46,5 @@ const Container = styled.div`
 `
 
 
-export default Products;                    
+
+export default Orders;                    
