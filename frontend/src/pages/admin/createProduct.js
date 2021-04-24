@@ -84,30 +84,30 @@ const CreateProduct = () => {
                         <h1>เพิ่มสินค้า</h1>
                         <Input>       
                             <input type="text" name="title" id="title" value={product.title} required onChange={(e) => inputHandle(e)}/>
-                            <label for="title">ชื่อ</label>
+                            <label htmlFor="title">ชื่อ</label>
                         </Input>
                       
                         
                         <FromInline>
                             <Input>                           
                                 <input id="publisher" type="text" name="publisher" required value={product.publisher} onChange={(e) => inputHandle(e)}/>
-                                <label for="publisher">สำนักพิมพ์</label>
+                                <label htmlFor="publisher">สำนักพิมพ์</label>
                             </Input>
                             <Input>                      
                                 <input id="author" type="text" name="author" required value={product.author} onChange={(e) => inputHandle(e)}/>
-                                <label for="author">ผู้เขียน</label>
+                                <label htmlFor="author">ผู้เขียน</label>
                             </Input>   
                         </FromInline>
                        
                        <Input>       
                             <input type="text" name="types" id="types" value={product.types} required onChange={(e) => inputHandle(e)}/>                    
-                            <label for="types">ประเภท</label>
+                            <label htmlFor="types">ประเภท</label>
                        </Input>
                         
                         <FromInline>
                             <Input>                           
                                 <input type="number" min="0" name="price" id="price" value={product.price} required onChange={(e) => inputHandle(e)}/>
-                                <label for="price">ราคา (บาท)</label>
+                                <label htmlFor="price">ราคา (บาท)</label>
                             </Input>
                             <Input>
                                 <input type="number" min="0" name="quantity" value={product.quantity} required onChange={(e) => inputHandle(e)}/> 
@@ -160,7 +160,7 @@ const FormFlex = styled.div`
     margin-bottom: 30px;
 `
 
-const FormContainer = styled.div`
+const FormContainer = styled.form`
     width: 500px;
     max-width: 100%;
     display: flex;
