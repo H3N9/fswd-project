@@ -2,34 +2,8 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import {Input} from '../../styles/styleComponents'
 
-const ProductForm = ({ title, product, image, inputHandle }) => {
-
-    const submitForm = async (e) => {
-        // const { image, quantity, price } = product
-        // const objInput = {...product, quantity: Number(quantity), price: Number(price) }
-        // let filename = ''
-
-        // if (image !== ''){
-        //     const formData = new FormData()
-        //     formData.append('image', image)
-
-        //     const uploadResponse = await fetch('http://localhost:3001/image', { 
-        //         method: 'POST',
-        //         body: formData
-        //     })
-        //     const fileData = await uploadResponse.json()
-        //     filename = fileData.filename
-        // }
-        // objInput.image = filename
-
-        // try {
-        //     const response = await createProduct({variables: {object: objInput}})
-        //     console.log(response)
-        // } catch (error) {
-        //     console.log(error)
-        // }
-    }
-
+const ProductForm = ({ title, product, image, inputHandle, submitForm }) => {
+    
     return (
         <Container>
             
