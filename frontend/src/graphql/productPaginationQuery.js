@@ -15,6 +15,18 @@ export const PRODUCT_PAGINATION_QUERY = gql`
             items{
                 _id
                 title
+                author
+                publisher
+                description
+                price
+                quantity
+                types
+                netPrice
+                image
+                promotion {
+                    _id
+                    method
+                }
             }
         }
     }
