@@ -4,6 +4,7 @@ import { useQuery, useMutation } from '@apollo/client'
 import { PRODUCT_BY_ID } from '../../graphql/productQuey'
 import { UPDATE_PRODUCT } from '../../graphql/productMutation'
 import ProductForm from '../../components/adminProduct/productForm'
+import ModalResult from '../../components/modalResult'
 
 const UpdateProduct = () => {
     const { productId } = useParams()
@@ -11,6 +12,7 @@ const UpdateProduct = () => {
     const [ product, setProduct ] = useState(null)
     const [image, setImage] = useState();
     const [isImageChange, setIsImageChange] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(undefined);
     const [ updateProduct ] = useMutation(UPDATE_PRODUCT)
 
     useEffect(() => {
@@ -75,16 +77,19 @@ const UpdateProduct = () => {
 
         try {
             const response = await updateProduct({variables: {id: _id, object: reStruct}})
-            console.log(response)
+            setIsSuccess("success")
         } catch (error) {
             console.log(error)
+            setIsSuccess("fail")
         }
     }
 
     return (
         <div>
+            {isSuccess === "success" ? <ModalResult title="แก้ไขสินค้าสำเร็จ" icon="check" color="#22aa4b" setIsCreate={setIsSuccess}/> : isSuccess === "fail" ? <ModalResult title="แก้ไขสินค้าไม่สำเร็จ" icon="times" color="#a82626" setIsCreate={setIsSuccess}/> : null}
             {product !== null && (
-                <ProductForm title={`แก้ไขสินค้า`} product={product} image={image} inputHandle={inputHandle} submitForm={submitForm} />
+                <ProductForm title={`แก้ไขสินค้า`} product={product} image={image} 
+                inputHandle={inputHandle} submitForm={submitForm} />
             )}
         </div>
     )
