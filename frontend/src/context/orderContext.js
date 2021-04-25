@@ -87,11 +87,11 @@ export const OrderProvider = (props) => {
     }
 
     const addCarts = (product, index, amount, id, quantity, copyArr) => {
-        const totle = (copyArr[index]?.quantity + amount) || 0
-        if(index > -1 && amount > 0 && totle <= quantity){
+        const totle = copyArr[index]?.quantity || 0
+        if(index > -1 && amount > 0 && totle < quantity){
             copyArr[index].quantity = copyArr[index].quantity + amount
         }
-        else if(amount > 0 && index < 0){
+        else if(amount > 0 && index < 0 && totle < quantity){
             copyArr.push(createCart(product, id, amount))
         }
         setOrdersHandle([...copyArr])
@@ -107,7 +107,7 @@ export const OrderProvider = (props) => {
         else if(index > -1 && amount === 0){
             copyArr.splice(index, 1)
         }
-        else if(index < 0){
+        else if(index < 0 && amount > 0){
             copyArr.push(createCart(product, id, amount))
         }
         setOrdersHandle([...copyArr])

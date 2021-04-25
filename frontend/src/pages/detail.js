@@ -17,11 +17,9 @@ const Detail = () => {
     const [product, setProduct] = useState({})
     const { productSlug } = useParams()
     const productTitle = productSlug.replace(/-/gi, ' ')
-    const [loadProduct, {loading, data}] = useLazyQuery(PRODUCT_FIND_ONE, {variables: {object: {title: productTitle}}})
+    const [loadProduct, {loading, error, data}] = useLazyQuery(PRODUCT_FIND_ONE, {variables: {object: {title: productTitle}}})
+    console.log(error)
 
-    useEffect(() => {
-        console.log(productTitle)
-    }, [])
 
     useEffect(() => {
         if(data?.product){
