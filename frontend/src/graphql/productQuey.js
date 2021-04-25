@@ -41,3 +41,24 @@ export const PRODUCT_BY_ID = gql`
         }
     }
 `
+
+export const PRODUCT_FIND_ONE = gql`
+    query Product($object: FilterFindOneProductInput!){
+        product(filter: $object){
+            _id
+            title
+            author
+            publisher
+            description
+            price
+            quantity
+            types
+            netPrice
+            image
+            promotion {
+                _id
+                method
+            }
+        }
+    }
+`

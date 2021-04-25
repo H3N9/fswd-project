@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {useMutation} from '@apollo/client'
@@ -21,7 +21,6 @@ const CreateProduct = () => {
     const history = useHistory();
     const [isCreate, setIsCreate] = useState(undefined);
     const [createProduct] = useMutation(CREATE_PRODUCT)
-    
 
     const inputHandle = (event) =>{
         const {name, value, files} = event.target
@@ -51,7 +50,6 @@ const CreateProduct = () => {
         const { image, quantity, price } = product
         const objInput = {...product, quantity: Number(quantity), price: Number(price) }
         let filename = ''
-
         if (image !== ''){
             const formData = new FormData()
             formData.append('image', image)
@@ -86,9 +84,7 @@ const CreateProduct = () => {
                         <Input>       
                             <input type="text" name="title" id="title" value={product.title} required onChange={(e) => inputHandle(e)}/>
                             <label htmlFor="title">ชื่อ</label>
-                        </Input>
-                      
-                        
+                        </Input>                
                         <FromInline>
                             <Input>                           
                                 <input id="publisher" type="text" name="publisher" required value={product.publisher} onChange={(e) => inputHandle(e)}/>
@@ -101,7 +97,11 @@ const CreateProduct = () => {
                         </FromInline>
                        
                        <Input>       
-                            <input type="text" name="types" id="types" value={product.types} required onChange={(e) => inputHandle(e)}/>                    
+                            <select type="text" name="types" id="types" value={product.types} required onChange={(e) => inputHandle(e)}>
+                                <option value="Normal">Normal</option>
+                                <option value="Dramas">Dramas</option>
+                                <option value="Cosmoslogy">Cosmoslogy</option>
+                            </select>               
                             <label htmlFor="types">ประเภท</label>
                        </Input>
                         

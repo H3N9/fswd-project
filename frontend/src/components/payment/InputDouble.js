@@ -1,16 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const InputDouble = ({text1, text2}) => {
+const InputDouble = ({text1, text2, name1, name2, value1, value2, handle}) => {
     return (
         <BoxInput>
             <BoxLabelInput>
                 <LabelText>{text1}</LabelText>
-                <Input />
+                <Input name={name1} value={value1} onChange={(e) => {handle(e)}} />
             </BoxLabelInput>
             <BoxLabelInput>
                 <LabelText>{text2}</LabelText>
-                <Input />
+                <Input name={name2} value={value2} onChange={(e) => {handle(e)}} />
             </BoxLabelInput>
         </BoxInput>
     )

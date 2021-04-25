@@ -12,7 +12,7 @@ export const Catgories = styled.div`
     overflow-x: scroll;
     display: flex;
     flex-direction: row;
-    padding : 20px 0 50px 0;
+    padding : 20px 0 50px 0px;
     position: relative;
 `
 
@@ -143,7 +143,7 @@ export const Input = styled.div`
             cursor: text;
             font-size: 1.1rem;
         }
-        input, textarea{
+        input, textarea, select{
             width: 100%;
             outline: none;
             margin: 30px 0;

@@ -10,7 +10,7 @@ const types = [
 ]
 
 const ProductSchema = new Schema({
-    title: {type: String, required: true, index: true},
+    title: {type: String, required: true, index: true, unique: true},
     publisher: {type: String, required: true},
     author: {type: String, required: true},
     price: {type: Number, required: true},
