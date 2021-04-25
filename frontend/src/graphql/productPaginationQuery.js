@@ -1,0 +1,21 @@
+import { gql } from '@apollo/client'
+
+export const PRODUCT_PAGINATION_QUERY = gql`
+    query productsWithPagination($pageNum: Int $perPageNum: Int){
+        productsWithPagination(page: $pageNum perPage: $perPageNum){
+            count
+            pageInfo{
+                currentPage
+                hasNextPage
+                hasPreviousPage
+                perPage
+                pageCount
+                itemCount
+            }
+            items{
+                _id
+                title
+            }
+        }
+    }
+`

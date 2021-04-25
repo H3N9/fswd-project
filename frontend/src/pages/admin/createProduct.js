@@ -84,9 +84,7 @@ const CreateProduct = () => {
                         <Input>       
                             <input type="text" name="title" id="title" value={product.title} required onChange={(e) => inputHandle(e)}/>
                             <label htmlFor="title">ชื่อ</label>
-                        </Input>
-                      
-                        
+                        </Input>                
                         <FromInline>
                             <Input>                           
                                 <input id="publisher" type="text" name="publisher" required value={product.publisher} onChange={(e) => inputHandle(e)}/>
