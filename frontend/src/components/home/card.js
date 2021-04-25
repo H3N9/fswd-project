@@ -23,8 +23,10 @@ const Card = ({product}) => {
         const buttonAdd = ignoreClick.current
         console.log(e.target == svgTag)
         if(e.target !== svgTag && e.target !== buttonAdd && e.target !== pText && e.target !== path){
+            const productSlug = title.replace(/ /gi, '-')
+            console.log(productSlug)
             const location = {
-                pathname: `/detail/${_id}`,
+                pathname: `/product/${productSlug}`,
                 state: product,
             }
             history.push(location)
