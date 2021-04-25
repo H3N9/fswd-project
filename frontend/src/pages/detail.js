@@ -8,19 +8,24 @@ import FacebookIcon from '../images/facebook.png'
 import GoogleIcon from '../images/google-plus.png'
 import { useOrderContext } from '../context/orderContext'
 import UpNumber from '../components/detail/upNumber'
-import { PRODUCT_QUERY, PRODUCT_BY_ID } from '../graphql/productQuey'
+import { PRODUCT_QUERY, PRODUCT_BY_ID, PRODUCT_FIND_ONE } from '../graphql/productQuey'
 import { useQuery, useLazyQuery} from '@apollo/client'
 
 
 const Detail = () => {
     const location = useLocation()
     const [product, setProduct] = useState({})
-    const { bookId } = useParams()
-    const [loadProduct, {loading, data}] = useLazyQuery(PRODUCT_BY_ID, {variables: {id:bookId}})
+    const { productSlug } = useParams()
+    const productTitle = productSlug.replace(/-/gi, ' ')
+    const [loadProduct, {loading, data}] = useLazyQuery(PRODUCT_FIND_ONE, {variables: {object: {title: productTitle}}})
 
     useEffect(() => {
-        if(data?.productById){
-            setProduct(data?.productById)
+        console.log(productTitle)
+    }, [])
+
+    useEffect(() => {
+        if(data?.product){
+            setProduct(data?.product)
         }
     }, [data])
 

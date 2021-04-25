@@ -45,7 +45,7 @@ const Index = () => {
                                 <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                                 <DiscountPage />
                             </Route>
-                            <Route path="/detail/:bookId">
+                            <Route path="/product/:productSlug">
                                 <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                                 <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                                 <Detail />
@@ -95,7 +95,7 @@ const Index = () => {
                                 <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                                 <Order />
                             </Route> 
-                            <Route path="/allProduct">
+                            <Route path="/products">
                                 <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                                 <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                                 <AllProducts />
