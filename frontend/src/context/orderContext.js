@@ -12,6 +12,14 @@ export const OrderProvider = (props) => {
     const [setCart] = useMutation(SETCART_MUTATION)
     const {user} = useSession()
     const [loadMyOrder, {data}] = useLazyQuery(MYORDER_QUERY)
+
+    const setOrdersHandle = (carts) => {
+        setOrders(carts)
+        handleSetCart(carts)
+    }
+
+
+
     useEffect(() => {
         const loadCart = async () => {
             try {
@@ -59,30 +67,54 @@ export const OrderProvider = (props) => {
         }
     }
 
-    const addOrder = (newOrder, amount) => {
-        const { _id } = newOrder
-        const quantity = newOrder.quantity
-        const index = orders.findIndex((order) => order.productId === _id)
-        const totle = index > -1 ? orders[index].quantity + amount:0
-        if(quantity < totle){
-            console.log("Quantity is lower than your order.")
-            return false
-        }
-        if(index > -1 && amount > 0) {
-            const copyArray = [...orders]
-            copyArray[index].quantity = copyArray[index].quantity+amount
-            setOrders(copyArray)
-            handleSetCart(copyArray)
+    const createCart = (product, id, amount) => {
+        return {productId: id, quantity: amount, product} 
+    }
 
+
+
+    const ordersHandle = (product, amount, command) => {
+        const { _id, quantity } = product
+        const index = orders.findIndex((order) => order.productId === _id)
+        const copyArr = [...orders]
+        if(command === "Set"){
+            setCarts(product, index, amount, _id, copyArr)
         }
-        else if(amount > 0){
-            const reStructOrder = {productId:_id, quantity: amount, product:newOrder}
-            const merge = [...orders, reStructOrder]
-            setOrders(merge)
-            handleSetCart(merge)
+        else if(command === "Add"){
+            addCarts(product, index, amount, _id, quantity, copyArr)
         }
         
     }
+
+    const addCarts = (product, index, amount, id, quantity, copyArr) => {
+        const totle = copyArr[index]?.quantity || 0
+        if(index > -1 && amount > 0 && totle < quantity){
+            copyArr[index].quantity = copyArr[index].quantity + amount
+        }
+        else if(amount > 0 && index < 0 && totle < quantity){
+            copyArr.push(createCart(product, id, amount))
+        }
+        setOrdersHandle([...copyArr])
+    }
+
+    const setCarts = (product, index, amount, id, copyArr) => {
+        const totle = product?.quantity || 0
+        console.log(totle)
+        if(index > -1 && amount > 0 && totle >= amount){
+            copyArr[index].quantity = amount
+            console.log(copyArr[index])
+        }
+        else if(index > -1 && amount === 0){
+            copyArr.splice(index, 1)
+        }
+        else if(index < 0 && amount > 0){
+            copyArr.push(createCart(product, id, amount))
+        }
+        setOrdersHandle([...copyArr])
+    }
+
+    
+
 
     const handleSetCart = async (carts) => {
         const delProduct = carts.map((cart) => {
@@ -119,7 +151,7 @@ export const OrderProvider = (props) => {
 
     
     return (
-        <OrderContext.Provider value={{orders:orders, addOrder, removeCart}}>
+        <OrderContext.Provider value={{orders:orders, addOrder: ordersHandle, removeCart}}>
             {children}
         </OrderContext.Provider>
     )

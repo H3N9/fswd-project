@@ -3,12 +3,17 @@ import styled from 'styled-components'
 import UpNumber from '../detail/upNumber'
 
 
-const CardCart = ({product, quantity}) => {
+const CardCart = ({product, quantity, addOrder}) => {
     const {image = "", title = "", price = 0, discount = 0} = product
     const priceWdiscount = price-discount
 
     const lockClikcing = (n, command) => {
-        return null
+        if(command === "Increase"){
+            addOrder(product, n+1, "Set")
+        }
+        else if(command === "Decrease"){
+            addOrder(product, n-1, "Set")
+        }
     }
 
     return (
