@@ -42,15 +42,18 @@ const Detail = () => {
         load()
     }, [])
     
-    const {title = "", price = 0, description = "", image = "", author = "", publisher = "", types = "", netPrice = 0, quantity = 0} = product
+    const {_id, title = "", price = 0, description = "", image = "", author = "", publisher = "", types = "", netPrice = 0, quantity = 0} = product
     const { data: products = [] } = useQuery(PRODUCT_QUERY)
     const discount = netPrice !== price
     const { addOrder, orders } = useOrderContext()
-    const indexOfProduct = orders.findIndex((product) => product.productId === bookId)
+    const indexOfProduct = orders.findIndex((product) => product.productId ===  _id)
     const baseProduct = orders[indexOfProduct] || {}
     const defaultOrder = baseProduct?.quantity || 0
     const [number, setNumber] = useState(defaultOrder)
 
+    useEffect(() => {
+        setNumber(defaultOrder)
+    }, [product])
 
     const handleNumber = (n, command) => {
         if("Increase" === command && n < quantity){
