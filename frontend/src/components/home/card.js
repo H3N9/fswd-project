@@ -41,7 +41,7 @@ const Card = ({product}) => {
                 </ImageBox>
 
                 <AddCart >
-                    <Button ref={ignoreClick} onClick={() => addOrder(product, 1)}>
+                    <Button ref={ignoreClick} onClick={() => addOrder(product, 1, "Add")}>
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                         <p>{"เพิ่มไปยังรถเข็น"}</p>
                     </Button>

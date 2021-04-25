@@ -40,21 +40,21 @@ const Detail = () => {
     const {title = "", price = 0, description = "", image = "", author = "", publisher = "", types = "", netPrice = 0, quantity = 0} = product
     const { data: products = [] } = useQuery(PRODUCT_QUERY)
     const discount = netPrice !== price
-    const [number, setNumber] = useState(0)
-    const { addOrder } = useOrderContext()
-
-   
+    const { addOrder, orders } = useOrderContext()
+    const indexOfProduct = orders.findIndex((product) => product.productId === bookId)
+    const baseProduct = orders[indexOfProduct] || {}
+    const defaultOrder = baseProduct?.quantity || 0
+    const [number, setNumber] = useState(defaultOrder)
 
 
     const handleNumber = (n, command) => {
-        if("Decrease" === command && n > 0){
-            setNumber(n-1)
+        if("Increase" === command && n < quantity){
+            setNumber(n + 1)
 
         }
-        else if("Increase" === command){
-            setNumber(n+1)
+        else if("Decrease" === command && n > 0){
+            setNumber(n - 1)
         }
-        console.log(n)
     }
 
 
@@ -114,7 +114,7 @@ const Detail = () => {
 
                         <PackHandle>
                             <UpNumber number={number} handleNumber={handleNumber} />
-                            <ButtonAdd onClick={() => addOrder(product, number)}>Add</ButtonAdd>
+                            <ButtonAdd onClick={() => addOrder(product, number, "Set")}>Add</ButtonAdd>
                             <ButtonWish>
                                 <FontAwesomeIcon icon={['fas', 'heart']}/>
                                 Wishlist
