@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,8 +7,9 @@ import { useQuery } from '@apollo/client'
 import {Header, Table} from '../../styles/styleComponents'
 
 const Products = () => {
-    const { data } = useQuery(PRODUCT_QUERY)
+    const { data } = useQuery(PRODUCT_QUERY, {fetchPolicy: 'network-only'})
     const products = data?.products || []
+
 
     return (
         <Container>         

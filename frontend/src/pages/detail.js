@@ -40,7 +40,7 @@ const Detail = () => {
     }, [])
     
     const {_id, title = "", price = 0, description = "", image = "", author = "", publisher = "", types = "", netPrice = 0, quantity = 0} = product
-    const { data: products = [] } = useQuery(PRODUCT_QUERY)
+    const { data: products = [] } = useQuery(PRODUCT_QUERY, {fetchPolicy: 'network-only'})
     const discount = netPrice !== price
     const { addOrder, orders } = useOrderContext()
     const indexOfProduct = orders.findIndex((product) => product.productId ===  _id)

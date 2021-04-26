@@ -5,6 +5,7 @@ import { PRODUCT_BY_ID } from '../../graphql/productQuey'
 import { UPDATE_PRODUCT } from '../../graphql/productMutation'
 import ProductForm from '../../components/adminProduct/productForm'
 import ModalResult from '../../components/modalResult'
+import Response from '../../components/response'
 
 const UpdateProduct = () => {
     const { productId } = useParams()
@@ -104,7 +105,7 @@ const UpdateProduct = () => {
 
     return (
         <div>
-            <UpdateResponse />
+            <Response state={isUpdate} setState={setIsUpdate} />
             {product !== null && (
                 <ProductForm title={`แก้ไขสินค้า`} product={product} image={image} 
                 inputHandle={inputHandle} submitForm={submitForm} />
