@@ -63,3 +63,12 @@ export const PRODUCT_FIND_ONE = gql`
         }
     }
 `
+
+export const PRODUCT_QUERY_QUANTITY = gql`
+    query Products($object: FilterFindManyProductInput){
+        products(filter: $object){
+            _id
+            quantity
+        }
+    }
+`

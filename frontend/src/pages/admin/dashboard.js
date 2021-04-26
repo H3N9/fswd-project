@@ -2,15 +2,19 @@ import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { PRODUCT_QUERY } from '../../graphql/productQuey'
+import { PRODUCT_QUERY_QUANTITY } from '../../graphql/productQuey'
 import { PRODUCT_PAGINATION_QUERY } from '../../graphql/productPaginationQuery'
 import { ORDERS_COUNT_QUERY } from '../../graphql/orderQuery'
 import { useQuery } from '@apollo/client'
 import {Header, Table} from '../../styles/styleComponents'
 const Dashboard = () => {
     const [products, setProducts] = useState([])
+    const [productQuantity, setProductQuantity] = useState(0)
     const productQuery = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:1, perPageNum: 10}})
     const ordersCountQuery = useQuery(ORDERS_COUNT_QUERY)
+    const productQuantityQuery = useQuery(PRODUCT_QUERY_QUANTITY, {variables: {
+        object: {_operators: {quantity: {gt: 0 }}}
+    }})
     const { completeCount, shippedCount } = ordersCountQuery?.data?.ordersCount || { 
         completeCount: 0,
         shippedCount: 0
@@ -23,6 +27,13 @@ const Dashboard = () => {
             setProducts(newProducts)
         }
     }, [productQuery])
+
+    useEffect(() => {
+        if (productQuantityQuery?.data){
+            const sumProductQuantity = productQuantityQuery.data.products.reduce((acc, curr) => acc+curr.quantity, 0)
+            setProductQuantity(sumProductQuantity)
+        }
+    }, [productQuantityQuery])
 
     return (
         <Container>
@@ -45,7 +56,7 @@ const Dashboard = () => {
                     <DataBox>
                         <FontAwesomeIcon icon={['fas', 'book']} size="3x" />
                         <h3>จำนวนสินค้าคงเหลือ</h3> 
-                        <h2>50</h2>
+                        <h2>{productQuantity}</h2>
                     </DataBox>
                 </Link>
                 <Link style={{textDecoration: "none"}} to={`/admin/promotions`}>
