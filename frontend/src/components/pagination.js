@@ -1,17 +1,26 @@
 import React,{Fragment, useState} from 'react'
 import styled from 'styled-components'
-import {Link} from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const Pagination = ({setQueryPage, queryPage, pageData}) => {
     const { currentPage, pageCount, hasPreviousPage, hasNextPage } = pageData
     const paginationSize = 5
+    const history = useHistory()
+
+    const switchPage = (page) => {
+        const searchParams = new URLSearchParams()
+        searchParams.append("page", page)
+        setQueryPage(page)
+        history.push({ search: searchParams.toString() })
+    }
+
     return (
         <Container>
             <ButtonContainer>
                 <div>
-                    <button className={hasPreviousPage ? "" : "disable-button"} onClick={() => setQueryPage(queryPage-1)}>
+                    <button className={hasPreviousPage ? "" : "disable-button"} onClick={() => switchPage(queryPage-1)}>
                         <FontAwesomeIcon icon={['fas', 'chevron-left']} />
                     </button>
                 </div>
@@ -19,12 +28,12 @@ const Pagination = ({setQueryPage, queryPage, pageData}) => {
                     currentPage > 3 ? (
                         <Fragment>
                             <div>
-                                <button className={currentPage === currentPage-2 ? "active" : ""} onClick={() => setQueryPage(queryPage-2)} key={currentPage-2}>
+                                <button className={currentPage === currentPage-2 ? "active" : ""} onClick={() => switchPage(queryPage-2)} key={currentPage-2}>
                                     {currentPage-2}
                                 </button>
                             </div>
                             <div>
-                                <button className={currentPage === currentPage-1 ? "active" : ""} onClick={() => setQueryPage(queryPage-1)} key={currentPage-1}>
+                                <button className={currentPage === currentPage-1 ? "active" : ""} onClick={() => switchPage(queryPage-1)} key={currentPage-1}>
                                     {currentPage-1}
                                 </button>
                             </div>
@@ -32,9 +41,9 @@ const Pagination = ({setQueryPage, queryPage, pageData}) => {
                             if(currentPage > 3 &&  currentPage+index <= pageCount){
                              return(
                                  <div>
-                                      <button className={currentPage === currentPage+index ? "active" : ""} onClick={() => setQueryPage(queryPage+index)} key={index}>
-                                          {currentPage+index}
-                                      </button>
+                                    <button className={currentPage === currentPage+index ? "active" : ""} onClick={() => {switchPage(queryPage+index)}} key={index}>
+                                        {currentPage+index}
+                                    </button>
                                  </div>
                               )
                             }
@@ -45,7 +54,7 @@ const Pagination = ({setQueryPage, queryPage, pageData}) => {
                     Array(pageCount >= 5 ? 5 : pageCount).fill().map((_, index) => { 
                          return(
                              <div>
-                                  <button className={currentPage === index+1 ? "active" : ""} onClick={() => setQueryPage(index+1)} key={index}>
+                                  <button className={currentPage === index+1 ? "active" : ""} onClick={() => switchPage(index+1)} key={index}>
                                       {index+1}
                                   </button>
                              </div>
@@ -53,7 +62,7 @@ const Pagination = ({setQueryPage, queryPage, pageData}) => {
                      }) 
                 }
                 <div>
-                    <button className={hasNextPage ? "" : "disable-button"} onClick={() => setQueryPage(queryPage+1)}>
+                    <button className={hasNextPage ? "" : "disable-button"} onClick={() => switchPage(queryPage+1)}>
                         <FontAwesomeIcon icon={['fas', 'chevron-right']} />
                     </button>
                 </div>

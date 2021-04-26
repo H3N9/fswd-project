@@ -4,7 +4,7 @@ import { useQuery, useMutation } from '@apollo/client'
 import { PRODUCT_BY_ID } from '../../graphql/productQuey'
 import { UPDATE_PRODUCT } from '../../graphql/productMutation'
 import ProductForm from '../../components/adminProduct/productForm'
-import ModelResult from '../../components/modalResult'
+import ModalResult from '../../components/modalResult'
 
 const UpdateProduct = () => {
     const { productId } = useParams()
@@ -18,12 +18,12 @@ const UpdateProduct = () => {
     const UpdateResponse = () => {
         if(isUpdate === "Success"){
             return (
-                <ModelResult title="Success" icon="check" color="#22aa4b" setIsCreate={setIsUpdate} />
+                <ModalResult title="Success" icon="check" color="#22aa4b" setIsCreate={setIsUpdate} />
             )
         }
         else if(isUpdate === "Fail"){
             return (
-                <ModelResult title="Fail to Update" icon="times" setIsCreate={setIsUpdate} color="#a82626" />
+                <ModalResult title="Fail to Update" icon="times" setIsCreate={setIsUpdate} color="#a82626" />
             )
         }
         else{
@@ -106,7 +106,8 @@ const UpdateProduct = () => {
         <div>
             <UpdateResponse />
             {product !== null && (
-                <ProductForm title={`แก้ไขสินค้า`} product={product} image={image} inputHandle={inputHandle} submitForm={submitForm} />
+                <ProductForm title={`แก้ไขสินค้า`} product={product} image={image} 
+                inputHandle={inputHandle} submitForm={submitForm} />
             )}
         </div>
     )

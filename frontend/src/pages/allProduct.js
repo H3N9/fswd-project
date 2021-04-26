@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { PRODUCT_PAGINATION_QUERY } from '../graphql/productPaginationQuery'
 import { useQuery } from '@apollo/client'
@@ -9,14 +9,16 @@ import Pagination from "../components/pagination"
 import {Input} from '../styles/styleComponents'
 
 const AllProducts = () => {
-    const [ queryPage, setQueryPage ] = useState(1)
+    const query = new URLSearchParams(useLocation().search)
+    const initPage = Number(query.get("page")) || 1
+    const [ queryPage, setQueryPage ] = useState(initPage)
     const [ filter, setFilter ] = useState({
         name: "",
         sortBy: "",
         date: "",
         types: "",
     })
-    const { data, count } = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:queryPage, perPageNum: 20}})
+    const { data, count } = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:queryPage, perPageNum: 5}})
     const pageData = data?.productsWithPagination.pageInfo || {}
     const products = data?.productsWithPagination.items || []
 

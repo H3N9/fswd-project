@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import {Input} from '../../styles/styleComponents'
+import ModalResult from '../modalResult'
 
 const ProductForm = ({ title, product, image, inputHandle, submitForm }) => {
 
     return (
         <Container>
-            
             <Flex>
                 <FormFlex>
                     <FormContainer onSubmit={(e) => submitForm(e)}>

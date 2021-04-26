@@ -24,11 +24,13 @@ export const adminPermission = async (resolve, source, args, context, info) => {
 export const productValid = async (resolve, source, args, context, info) => {
     const { title } = args.record
     const productByTitle = await ProductModel.findOne({ title })
-    if (productByTitle){
-        throw new Error('title is already taken')
+    const isUpdate = (args?._id === String(productByTitle?._id))
+
+    if ((productByTitle === null) || isUpdate){
+        return resolve(source, args, context, info)
     }
     else{
-        return resolve(source, args, context, info)
+        throw new Error('title is already taken')
     }
 }
 

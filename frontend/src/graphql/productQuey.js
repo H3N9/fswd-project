@@ -12,6 +12,7 @@ export const PRODUCT_QUERY = gql`
             quantity
             types
             netPrice
+            image
             promotion {
                 _id
                 method
