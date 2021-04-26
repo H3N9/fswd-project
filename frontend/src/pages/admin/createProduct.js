@@ -124,6 +124,10 @@ const CreateProduct = () => {
                         </Input>
                         <button><FontAwesomeIcon icon={['fas', 'check']} /> ยืนยัน</button>
                     </FormContainer>
+
+
+
+
                     <ImageFormContainer>
                         <Image>
                             <FontAwesomeIcon icon={['fas', 'image']} size="9x" /> 
@@ -179,7 +183,7 @@ const FormContainer = styled.form`
         :before{
             content: "";
             position: absolute;
-            width: 80%;
+            width: 100%;
             height: 4px;
             background: #111;
             bottom: -10px;

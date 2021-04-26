@@ -6,6 +6,7 @@ import { UPDATE_PRODUCT } from '../../graphql/productMutation'
 import ProductForm from '../../components/adminProduct/productForm'
 import ModalResult from '../../components/modalResult'
 import Response from '../../components/response'
+import {CREATEDISCOUNT_MUTATION} from '../../graphql/createDiscountMutation'
 
 const UpdateProduct = () => {
     const { productId } = useParams()
@@ -15,6 +16,12 @@ const UpdateProduct = () => {
     const [isImageChange, setIsImageChange] = useState(false)
     const [ updateProduct, {error} ] = useMutation(UPDATE_PRODUCT)
     const [ isUpdate, setIsUpdate ] = useState(undefined)
+    const [createDiscount, {error: errorDiscount}] = useMutation(CREATEDISCOUNT_MUTATION)
+    const [discount, setDiscount] = useState({
+        discountValue: 0,
+        method: "DISCOUNT",
+        descriptionDiscount: ""
+    })
 
     const UpdateResponse = () => {
         if(isUpdate === "Success"){
@@ -40,6 +47,14 @@ const UpdateProduct = () => {
             setImage('http://localhost:3001/image/'+data?.productById?.image)
         }
     }, [data])
+
+    const discountHandle = (e) => {
+        const { name, value } = e.target
+        setDiscount({
+            ...discount,
+            [name]: value
+        })
+    }
 
     const inputHandle = useCallback((event) =>{
         const {name, value, files} = event.target
@@ -73,11 +88,18 @@ const UpdateProduct = () => {
             publisher: product.publisher,
             quantity: product.quantity,
             title: product.title,
-            tpyes: product.tpyes,
+            types: product.types,
             image: product.image,
             description: product.description,
             author: product.author
         }
+        const discountRestruct = {
+            productId: _id,
+            discountValue: Number(discount.discountValue),
+            method: discount.method,
+            description: discount.descriptionDiscount
+        }
+        console.log(discountRestruct)
         let filename = ''
 
         if (isImageChange){
@@ -95,10 +117,11 @@ const UpdateProduct = () => {
 
         try {
             const response = await updateProduct({variables: {id: _id, object: reStruct}})
+            await createDiscount({variables: {record: discountRestruct}})
             setIsUpdate("Success")
             console.log(response)
         } catch (e) {
-            console.log(error)
+            console.log(error, e.message)
             setIsUpdate("Fail")
         }
     }
@@ -107,7 +130,7 @@ const UpdateProduct = () => {
         <div>
             <Response state={isUpdate} setState={setIsUpdate} />
             {product !== null && (
-                <ProductForm title={`แก้ไขสินค้า`} product={product} image={image} 
+                <ProductForm title={`แก้ไขสินค้า`} product={product} discount={discount} discountHandle={discountHandle} image={image} 
                 inputHandle={inputHandle} submitForm={submitForm} />
             )}
         </div>

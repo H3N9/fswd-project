@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {Input} from '../../styles/styleComponents'
 import ModalResult from '../modalResult'
 
-const ProductForm = ({ title, product, image, inputHandle, submitForm }) => {
+const ProductForm = ({ title, product, image, inputHandle, submitForm, discountHandle, discount }) => {
 
     return (
         <Container>
@@ -13,30 +13,30 @@ const ProductForm = ({ title, product, image, inputHandle, submitForm }) => {
                         <h1>{title}</h1>
                         <Input>       
                             <input type="text" name="title" id="title" value={product.title} required onChange={(e) => inputHandle(e)}/>
-                            <label for="title">ชื่อ</label>
+                            <label htmlFor="title">ชื่อ</label>
                         </Input>
                       
                         
                         <FromInline>
                             <Input>                           
                                 <input id="publisher" type="text" name="publisher" required value={product.publisher} onChange={(e) => inputHandle(e)}/>
-                                <label for="publisher">สำนักพิมพ์</label>
+                                <label htmlFor="publisher">สำนักพิมพ์</label>
                             </Input>
                             <Input>                      
                                 <input id="author" type="text" name="author" required value={product.author} onChange={(e) => inputHandle(e)}/>
-                                <label for="author">ผู้เขียน</label>
+                                <label htmlFor="author">ผู้เขียน</label>
                             </Input>   
                         </FromInline>
                        
                        <Input>       
                             <input type="text" name="types" id="types" value={product.types} required onChange={(e) => inputHandle(e)}/>                    
-                            <label for="types">ประเภท</label>
+                            <label htmlFor="types">ประเภท</label>
                        </Input>
                         
                         <FromInline>
                             <Input>                           
                                 <input type="number" min="0" name="price" id="price" value={product.price} required onChange={(e) => inputHandle(e)}/>
-                                <label for="price">ราคา (บาท)</label>
+                                <label htmlFor="price">ราคา (บาท)</label>
                             </Input>
                             <Input>
                                 <input type="number" min="0" name="quantity" value={product.quantity} required onChange={(e) => inputHandle(e)}/> 
@@ -45,7 +45,25 @@ const ProductForm = ({ title, product, image, inputHandle, submitForm }) => {
                         </FromInline>
                                    
                         <Input>
-                            <textarea name="" id="" cols="20" rows="5" name="description" value={product.description} onChange={(e) => inputHandle(e)}></textarea>
+                            <textarea id="" cols="20" rows="5" name="description" value={product.description} onChange={(e) => inputHandle(e)}></textarea>
+                            <label htmlFor="">คำอธิบาย</label>
+                        </Input>
+
+
+                        <h1>Create Discount</h1>
+                       <Input>
+                            <select type="text" name="method" id="method" value={discount.method} required onChange={(e) => discountHandle(e)}>
+                                <option value="DISCOUNT">Discount</option>
+                                <option value="PERCENT">Percent</option>
+                            </select>               
+                            <label htmlFor="method">ประเภท</label>
+                        </Input>
+                        <Input>       
+                            <input type="number" name="discountValue" id="discountValue" value={discount.discountValue} required onChange={(e) => discountHandle(e)}/>                    
+                            <label htmlFor="discountValue">Value</label>
+                       </Input>
+                        <Input>       
+                            <textarea id="" cols="20" rows="5" name="descriptionDiscount" value={discount.descriptionDiscount} onChange={(e) => discountHandle(e)}></textarea>
                             <label htmlFor="">คำอธิบาย</label>
                         </Input>
                         <button>ยืนยัน</button>
@@ -104,7 +122,7 @@ const FormContainer = styled.form`
         :before{
             content: "";
             position: absolute;
-            width: 80%;
+            width: 100%;
             height: 3px;
             background: #111;
             bottom: -10px;
