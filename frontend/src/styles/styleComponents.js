@@ -217,7 +217,7 @@ export const Table = styled.table`
     }
     tr{
         &.dim-row{
-            background:#F1F1F1;
+            background:#ececec;
         }
     }
     td{

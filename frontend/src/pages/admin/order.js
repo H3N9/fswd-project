@@ -24,6 +24,13 @@ const Orders = () => {
                     <p><b>สร้างเมื่อ :</b> </p>
                     <p><b>อัปเดทล่าสุดเมื่อ :</b> </p>
                     <p><b>ส่วนลด :</b> </p>
+                    <p className="address-header"><b>ที่อยู่สำหรับจัดส่ง</b> </p>
+                    <Address>
+                        <p>Cecilia Chapman
+                        711-2880 Nulla St.
+                        Mankato Mississippi 96522
+                        (257) 563-7401</p>
+                    </Address>
                 </Content>
                 <Table>
                     <thead>                
@@ -63,14 +70,35 @@ const Flex = styled.div`
 
 const Content = styled.div`
     max-width: 750px;
+    padding-right: 10px;
     width: 100%;
     p{
         font-size: 1.2rem;
         b{
             font-weight: bold;
         }
+        &.address-header{
+            margin: 50px 0 5px 0;
+        }
     }
 ` 
+const Address = styled.div`
+    background: #e2e2e2;
+    border-radius: 5px;
+    width: 60%;
+    min-height: 150px;
+    padding: 5px 7px;
+    margin-bottom: 25px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    p{
+        margin: 0;
+        color: #222;
+    }
+    @media (max-width: 1200px){
+        max-width: 1200px;
+        width: 98%;
+    }
 
+`
 
 export default Orders;                    
