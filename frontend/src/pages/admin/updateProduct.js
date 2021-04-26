@@ -84,9 +84,9 @@ const UpdateProduct = () => {
         e.preventDefault()
         const { _id } = product
         const reStruct  = {
-            price: product.price,
+            price: Number(product.price),
             publisher: product.publisher,
-            quantity: product.quantity,
+            quantity: Number(product.quantity),
             title: product.title,
             types: product.types,
             image: product.image,

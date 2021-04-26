@@ -163,7 +163,6 @@ const Detail = () => {
 const SecondImageBox = styled.div`
     width: 100%;
     display: flex;
-    background: white;
 `
 const SecondImage = styled.img`
     width: 17%;
@@ -174,7 +173,6 @@ const MainImageBox = styled.div`
     width: 100%;
     padding: 10px 0;
     text-align: center;
-    background: #ececec;
     
 `
 const MainImage = styled.img`
@@ -193,7 +191,6 @@ const TitleDetialText = styled.h1`
 const NormalDetailBox = styled.div`
     width: 90%;
     padding: 0% 5% 3% 5%;
-    background-color: white;
 `
 const NormalDetailText = styled.h3`
     margin: 0;
@@ -208,7 +205,6 @@ const DetailBox = styled.div`
 `
 const ImageBox = styled.div`
     width: clamp(500px, 40%, 1000px);
-    background-color: white;
     display: flex;
     flex-direction: column;
 `
@@ -218,7 +214,7 @@ const InfoBox = styled.div`
     overflow: auto;
     flex-direction: column;
     width: clamp(500px, 60%, 1980px);
-    background-color: white;
+
 `
 
 const PriceBox = styled.div`

@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { PRODUCT_PAGINATION_QUERY } from '../graphql/productPaginationQuery'
 import { useQuery } from '@apollo/client'
 import Card from '../components/home/card'
@@ -84,9 +83,9 @@ const SearchBar = styled.div`
     top: 7%;
     z-index: 10;
     padding: 5px 0;
-    background: #FFF;
     display: flex;
     align-items: center;
+    background: #f6f6f6;
     overflow: scroll;
     ::-webkit-scrollbar {
         display: none;
@@ -95,12 +94,14 @@ const SearchBar = styled.div`
         width: fit-content;
         padding: 0 10px;
         input{
+            background: transparent;
             width: 20vw;
             @media (max-width: 510px){
                 width: 100px;
             }
         }
         select{
+            background: transparent;
             @media (max-width: 510px){
                 width: 100px;
             }

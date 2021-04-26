@@ -15,7 +15,7 @@ const ProductSchema = new Schema({
     author: {type: String, required: true},
     price: {type: Number, required: true},
     types: {type: String, required: true, enum: types},
-    quantity: {type: Number, required: true},
+    quantity: {type: Number, required: true, index: true},
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     description: {type: String},

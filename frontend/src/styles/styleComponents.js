@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export const Title = styled.div`
     width: 100%;
     height: 50px;
-    background-color: white;
     padding: 0px 0 25px 0;
 `
 
@@ -14,6 +13,15 @@ export const Catgories = styled.div`
     flex-direction: row;
     padding : 20px 0 50px 0px;
     position: relative;
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    @media (max-width: 768px){
+        ::-webkit-scrollbar {
+            display: initial;
+        }
+    }
+
 `
 
 export const SpaceBox = styled.div`
@@ -162,7 +170,6 @@ export const Input = styled.div`
         textarea{
             background: #f2f2f2
         }
-    
 `
 
 export const Header = styled.div`
@@ -173,6 +180,7 @@ export const Header = styled.div`
     padding-bottom: 50px;
     h1{
         margin: 0;
+        letter-spacing: -1px;
         font-size: clamp(2rem, 5vmin, 2.5rem);
     }
     a, button{
@@ -209,7 +217,7 @@ export const Table = styled.table`
     }
     tr{
         &.dim-row{
-            background:#F1F1F1;
+            background:#ececec;
         }
     }
     td{

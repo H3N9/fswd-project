@@ -73,14 +73,14 @@ OrderTC.addFields({
 
     totalPrice: {
         type: 'Float',
-        resolve: async (source) => await source.totalPrice(),
+        resolve: async (source) => await source.getTotalPrice(),
         projection: { orderId: 1 }
     },
 
     netTotalPrice: {
         type: 'Float',
         resolve: async (source) => {
-            const netTotalPrice = await source.netTotalPrice()
+            const netTotalPrice = await source.getNetTotalPrice()
 
             return netTotalPrice
         },
