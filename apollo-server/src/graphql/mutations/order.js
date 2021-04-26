@@ -1,5 +1,5 @@
 import { schemaComposer } from 'graphql-compose'
-
+import { UserInputError } from 'apollo-server-express'
 import { OrderProductModel, OrderTC, OrderModel, OrderPromotionModel, ProductModel, ShippingModel } from '../../models'
 import { authCreateMiddleware } from './middleware'
 
@@ -142,6 +142,7 @@ export const confirmOrder = schemaComposer.createResolver({
                 await product.save()
             }
             order.status = 'COMPLETE'
+            order.netTotalPrice = await order.getNetTotalPrice()
             await order.save()
 
             return order
@@ -149,3 +150,24 @@ export const confirmOrder = schemaComposer.createResolver({
         throw new Error('You must be authorized');
     }
 })
+
+const closeOrderHandleMiddleware = async (resolve, source, args, context, info) => {
+    if (args?.record?.status === 'PROCESSING')
+        throw new UserInputError('order status can not be set to PROCESSING ')
+    if (context?.user?.isAdmin){
+        const newArgs = {
+            ...args,
+            record: {
+                status: args?.record?.status || 'CLOSED',
+                updatedAt: Date.now()
+            }
+        }
+
+        return resolve(source, newArgs, context, info);
+    }
+    else{
+        throw new Error('You must be authorized');
+    }
+}
+
+export const closeOrder = OrderTC.getResolver('updateById', [closeOrderHandleMiddleware])

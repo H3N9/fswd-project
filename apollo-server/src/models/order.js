@@ -21,6 +21,7 @@ const OrderSchema = new Schema({
         index: true
     },
     userId: { type: String, require: true, ref: 'User' },
+    netTotalPrice: { type: Number },
     shippingId: {type: String, ref: 'Shipping'}
 })
 
@@ -60,7 +61,7 @@ OrderSchema.method('totalProductDiscount', async function(){
     return totalDiscount
 })
 
-OrderSchema.method('totalPrice', async function(){
+OrderSchema.method('getTotalPrice', async function(){
     const orderProducts = await OrderProductModel.find({ orderId: this._id }).populate('productId')
     const totalPriceRaw = orderProducts.reduce((acc, curr) => acc+(curr.productId.price*curr.quantity), 0)
     const totalProductDiscount = await this.totalProductDiscount()
@@ -69,7 +70,7 @@ OrderSchema.method('totalPrice', async function(){
 })
 
 OrderSchema.method('getCouponDiscount', async function(){
-    const totalPrice = await this.totalPrice()
+    const totalPrice = await this.getTotalPrice()
     const coupons = await OrderPromotionModel.find({ orderId: this._id }).populate('promotionId')
 
     const couponDiscount = coupons.reduce((acc, curr) => {
@@ -98,11 +99,16 @@ OrderSchema.method('totalCouponDiscount', async function(){
     return totalDiscount
 })
 
-OrderSchema.method('netTotalPrice', async function(){
-    const totalPrice = await this.totalPrice()
-    const totalCouponDiscount = await this.totalCouponDiscount()
+OrderSchema.method('getNetTotalPrice', async function(){
+    if (this.netTotalPrice){
+        return this.netTotalPrice
+    }
+    else{
+        const totalPrice = await this.getTotalPrice()
+        const totalCouponDiscount = await this.totalCouponDiscount()
 
-    return totalPrice - totalCouponDiscount
+        return totalPrice - totalCouponDiscount
+    }
 })
 
 export const OrderModel = mongoose.model('Order', OrderSchema)
