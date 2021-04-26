@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import {Box9p, SpaceBox} from '../styles/styleComponents'
 import CatgoriesProducts from '../components/home/catgoriesProducts'
@@ -8,7 +8,7 @@ import { useQuery } from '@apollo/client'
 
 
 const Home = () => {
-    const { loading, error, data } = useQuery(PRODUCT_QUERY)
+    const { data } = useQuery(PRODUCT_QUERY, {fetchPolicy: 'network-only'})
     const products = data?.products || []
 
     return (

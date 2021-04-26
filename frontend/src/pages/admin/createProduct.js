@@ -4,8 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {useMutation} from '@apollo/client'
 import {CREATE_PRODUCT} from '../../graphql/productMutation'
 import {Input} from '../../styles/styleComponents'
-import ModalResult from '../../components/modalResult'
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom"
+import Response from '../../components/response'
+
+
 const CreateProduct = () => {
     const [ product, setProduct ] = useState({
         title: "",
@@ -66,17 +68,17 @@ const CreateProduct = () => {
         try {
             const response = await createProduct({variables: {object: objInput}})
             console.log(response)
-            setIsCreate("success")
+            setIsCreate("Success")
             setTimeout(() => history.push("/admin/products"), 3000);
         } catch (error) {
             console.log(error)
-            setIsCreate("fail")
+            setIsCreate("Fail")
         }
     }
 
     return (
         <Container>
-            {isCreate === "success" ? <ModalResult title="เพิ่มสินค้าสำเร็จ" icon="check" color="#22aa4b" setIsCreate={setIsCreate}/> : isCreate === "fail" ? <ModalResult title="เพิ่มสินค้าไม่สำเร็จ" icon="times" color="#a82626" setIsCreate={setIsCreate}/> : null}
+            <Response state={isCreate} setState={setIsCreate} />
             <Flex>
                 <FormFlex>
                     <FormContainer onSubmit={submitForm}>

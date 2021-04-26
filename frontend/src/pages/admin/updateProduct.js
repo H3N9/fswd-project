@@ -5,6 +5,7 @@ import { PRODUCT_BY_ID } from '../../graphql/productQuey'
 import { UPDATE_PRODUCT } from '../../graphql/productMutation'
 import ProductForm from '../../components/adminProduct/productForm'
 import ModalResult from '../../components/modalResult'
+import Response from '../../components/response'
 
 const UpdateProduct = () => {
     const { productId } = useParams()
@@ -12,8 +13,26 @@ const UpdateProduct = () => {
     const [ product, setProduct ] = useState(null)
     const [image, setImage] = useState();
     const [isImageChange, setIsImageChange] = useState(false)
-    const [isSuccess, setIsSuccess] = useState(undefined);
-    const [ updateProduct ] = useMutation(UPDATE_PRODUCT)
+    const [ updateProduct, {error} ] = useMutation(UPDATE_PRODUCT)
+    const [ isUpdate, setIsUpdate ] = useState(undefined)
+
+    const UpdateResponse = () => {
+        if(isUpdate === "Success"){
+            return (
+                <ModalResult title="Success" icon="check" color="#22aa4b" setIsCreate={setIsUpdate} />
+            )
+        }
+        else if(isUpdate === "Fail"){
+            return (
+                <ModalResult title="Fail to Update" icon="times" setIsCreate={setIsUpdate} color="#a82626" />
+            )
+        }
+        else{
+            return (
+                <></>
+            )
+        }
+    }
 
     useEffect(() => {
         if (data?.productById){
@@ -48,7 +67,7 @@ const UpdateProduct = () => {
 
     const submitForm = async (e) => {
         e.preventDefault()
-        const { _id, quantity, price } = product
+        const { _id } = product
         const reStruct  = {
             price: product.price,
             publisher: product.publisher,
@@ -59,7 +78,6 @@ const UpdateProduct = () => {
             description: product.description,
             author: product.author
         }
-        //const objInput = {...product, quantity: Number(quantity), price: Number(price) }
         let filename = ''
 
         if (isImageChange){
@@ -77,16 +95,17 @@ const UpdateProduct = () => {
 
         try {
             const response = await updateProduct({variables: {id: _id, object: reStruct}})
-            setIsSuccess("success")
-        } catch (error) {
+            setIsUpdate("Success")
+            console.log(response)
+        } catch (e) {
             console.log(error)
-            setIsSuccess("fail")
+            setIsUpdate("Fail")
         }
     }
 
     return (
         <div>
-            {isSuccess === "success" ? <ModalResult title="แก้ไขสินค้าสำเร็จ" icon="check" color="#22aa4b" setIsCreate={setIsSuccess}/> : isSuccess === "fail" ? <ModalResult title="แก้ไขสินค้าไม่สำเร็จ" icon="times" color="#a82626" setIsCreate={setIsSuccess}/> : null}
+            <Response state={isUpdate} setState={setIsUpdate} />
             {product !== null && (
                 <ProductForm title={`แก้ไขสินค้า`} product={product} image={image} 
                 inputHandle={inputHandle} submitForm={submitForm} />
