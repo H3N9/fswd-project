@@ -8,8 +8,10 @@ import Home from './home'
 import Login from './login'
 import Detail from './detail'
 import Payment from './payment'
+import MyOrder from './myOrder'
 import Register from './register'
 import AllProducts from './allProduct'
+
 import DiscountPage from './discountPage'
 import UpdateProduct from './admin/updateProduct'
 import PromotionDetail from './admin/promotionDetail'
@@ -64,6 +66,11 @@ const Index = () => {
                             <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                             <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <AllProducts />
+                        </Route>
+                        <Route path="/customer/orders">
+                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                            <MyOrder />
                         </Route>
 
 {/* --------------------------------------------- For Admin ----------------------------------------------------  */}

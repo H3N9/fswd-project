@@ -40,3 +40,7 @@ html{
     transform: rotate(360deg);
   }
 }
+
+b{
+  font-weight: 500;
+}
