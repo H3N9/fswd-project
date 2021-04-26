@@ -1,14 +1,14 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { PRODUCT_QUERY } from '../../graphql/productQuey'
+import { ORDER_QUERY } from '../../graphql/orderQuery'
 import { useQuery } from '@apollo/client'
 import {Header, Table} from '../../styles/styleComponents'
 const Orders = () => {
-    const { loading, error, data } = useQuery(PRODUCT_QUERY)
+    const { loading, error, data } = useQuery(ORDER_QUERY)
     const products = data?.products || []
-    console.log(products.map((value) => value._id))
+    console.log(products)
     return (
         <Container>         
             <Header>

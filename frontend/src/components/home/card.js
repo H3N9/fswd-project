@@ -80,6 +80,7 @@ const BoxCard = styled.div`
     height: 475px;
     overflow: hidden;
     padding: 25px 15px;
+    background: #FFF;
     margin: 20px 15px;
     transition: 0.35s;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -96,7 +97,7 @@ const BoxCard = styled.div`
 
 const ImageBox = styled.div`
     height: 54%;
-    background: white;
+
     padding: 0 5% 0 5%;
     justify-content: center;
     display: flex;
