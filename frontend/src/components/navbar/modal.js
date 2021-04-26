@@ -119,6 +119,14 @@ const Order = styled.div`
     margin: 10px 0 10px 0;
     display: flex;
     flex-direction: column;
+    ::-webkit-scrollbar-track {
+        background: rgba(20,20,20,0);
+        
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #AAA; 
+        border-radius :0; 
+    }
 `
 
 
