@@ -144,6 +144,7 @@ export const confirmOrder = schemaComposer.createResolver({
             order.status = 'COMPLETE'
             order.netTotalPrice = await order.getNetTotalPrice()
             await order.save()
+            await OrderModel.create({ userId: user._id })
 
             return order
         }

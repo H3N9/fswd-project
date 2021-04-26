@@ -3,8 +3,8 @@ import {gql} from '@apollo/client'
 
 
 export const MYORDER_QUERY = gql`
-    query {
-        myOrders {
+    query MyOrders($object: FilterFindManyOrderInput!){
+        myOrders(filter: $object){
         orderProducts {
             productId
             quantity
