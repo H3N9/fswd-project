@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useRef, useState } from 'react'
 import {Box9p, SpaceBox} from '../styles/styleComponents'
 import CatgoriesProducts from '../components/home/catgoriesProducts'
 import { PRODUCT_QUERY } from '../graphql/productQuey'
 import { useQuery } from '@apollo/client'
+import SlideShow from '../components/home/slideShow'
 
 
 
@@ -15,10 +15,7 @@ const Home = () => {
         <>
             <SpaceBox />
             <Box9p> 
-                <MainImage>
-
-                </MainImage>
-
+                <SlideShow />
                 <CatgoriesProducts products={products} title={"All"}/>
                 <CatgoriesProducts products={products} title={"Save Price"}/>
             </Box9p>
@@ -26,16 +23,6 @@ const Home = () => {
         </>
     )
 }
-
-const MainImage = styled.div`
-    background-image: url('https://www.harveyawards.org/wp-content/uploads/2020/03/new-book.jpg');
-    background-size: cover;
-    background-position: center center;
-    width: 100%;
-    height: 40vh;
-    margin-bottom: 5vh;
-    background-color: #f1f1f1;
-`
 
 
 export default Home

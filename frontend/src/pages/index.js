@@ -23,6 +23,7 @@ import Products from './admin/products'
 import Dashboard from './admin/dashboard'
 import Promotions from './admin/promotions'
 import CreateProduct from './admin/createProduct'
+import CreatePromotion from './admin/createPromotion.js'
 
 const Index = () => {
     const [isShowMenu, setIsShowMenu] = useState(false)
@@ -89,6 +90,11 @@ const Index = () => {
                             <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <Promotions />
                         </Route>
+                        <Route path="/admin/promotion/create">
+                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                                <CreatePromotion />
+                            </Route> 
                         <Route path="/admin/promotion/:promotionId">
                             <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                             <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>

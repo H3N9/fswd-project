@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import {Input} from '../../styles/styleComponents'
 import ModalResult from '../modalResult'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-const ProductForm = ({ title, product, image, inputHandle, submitForm }) => {
+
+const ProductForm = ({ title, product, image, inputHandle, submitForm, discountHandle, discount }) => {
 
     return (
         <Container>
@@ -14,7 +15,10 @@ const ProductForm = ({ title, product, image, inputHandle, submitForm }) => {
                         <Input>       
                             <input type="text" name="title" id="title" value={product.title} required onChange={(e) => inputHandle(e)}/>
                             <label htmlFor="title">ชื่อ</label>
-                        </Input>                
+                        </Input>
+                      
+                        
+
                         <FromInline>
                             <Input>                           
                                 <input id="publisher" type="text" name="publisher" required value={product.publisher} onChange={(e) => inputHandle(e)}/>
@@ -47,7 +51,25 @@ const ProductForm = ({ title, product, image, inputHandle, submitForm }) => {
                         </FromInline>
                                    
                         <Input>
-                            <textarea name="" id="" cols="20" rows="5" name="description" value={product.description} onChange={(e) => inputHandle(e)}></textarea>
+                            <textarea id="" cols="20" rows="5" name="description" value={product.description} onChange={(e) => inputHandle(e)}></textarea>
+                            <label htmlFor="">คำอธิบาย</label>
+                        </Input>
+
+
+                        <h1>Create Discount</h1>
+                       <Input>
+                            <select type="text" name="method" id="method" value={discount.method} required onChange={(e) => discountHandle(e)}>
+                                <option value="DISCOUNT">Discount</option>
+                                <option value="PERCENT">Percent</option>
+                            </select>               
+                            <label htmlFor="method">ประเภท</label>
+                        </Input>
+                        <Input>       
+                            <input type="number" name="discountValue" id="discountValue" value={discount.discountValue} required onChange={(e) => discountHandle(e)}/>                    
+                            <label htmlFor="discountValue">Value</label>
+                       </Input>
+                        <Input>       
+                            <textarea id="" cols="20" rows="5" name="descriptionDiscount" value={discount.descriptionDiscount} onChange={(e) => discountHandle(e)}></textarea>
                             <label htmlFor="">คำอธิบาย</label>
                         </Input>
                         <button><FontAwesomeIcon icon={['fas', 'check']} /> ยืนยัน</button>
@@ -106,7 +128,7 @@ const FormContainer = styled.form`
         :before{
             content: "";
             position: absolute;
-            width: 80%;
+            width: 100%;
             height: 3px;
             background: #111;
             bottom: -10px;
