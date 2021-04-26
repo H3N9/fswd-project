@@ -1,43 +1,57 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { PRODUCT_QUERY } from '../../graphql/productQuey'
+import { PRODUCT_PAGINATION_QUERY } from '../../graphql/productPaginationQuery'
+import { ORDERS_COUNT_QUERY } from '../../graphql/orderQuery'
 import { useQuery } from '@apollo/client'
 import {Header, Table} from '../../styles/styleComponents'
 const Dashboard = () => {
-    const { orderId } = useParams();
-    const { loading, error, data } = useQuery(PRODUCT_QUERY)
-    const products = data?.products || []
-    console.log(products.map((value) => value._id))
+    const [products, setProducts] = useState([])
+    const productQuery = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:1, perPageNum: 10}})
+    const ordersCountQuery = useQuery(ORDERS_COUNT_QUERY)
+    const { completeCount, shippedCount } = ordersCountQuery?.data?.ordersCount || { 
+        completeCount: 0,
+        shippedCount: 0
+    }
+
+    useEffect(() => {
+        if (productQuery?.data){
+            const newProducts = [...productQuery?.data?.productsWithPagination.items]
+            newProducts.sort((item1, item2) => item2.orderQuantityCount - item1.orderQuantityCount)
+            setProducts(newProducts)
+        }
+    }, [productQuery])
+
     return (
         <Container>
             <Flex> 
                 <Link style={{textDecoration: "none"}} to={`/admin/orders`}>
                     <DataBox>
                         <FontAwesomeIcon icon={['fas', 'clipboard-list']} size="3x" />
-                        <h3>จำนวนออเดอร์</h3> 
-                        <h2>50</h2>
+                        <h3>จำนวนออเดอร์ที่สั่ง</h3> 
+                        <h2>{completeCount}</h2>
                     </DataBox>
                 </Link>
                 <Link style={{textDecoration: "none"}}>
                     <DataBox>
                         <FontAwesomeIcon icon={['fas', 'shipping-fast']} size="3x" />
                         <h3>จำนวนออเดอร์ที่รอจัดส่ง</h3> 
-                        <h2>50</h2>
+                        <h2>{shippedCount}</h2>
                     </DataBox>
                 </Link>
                 <Link style={{textDecoration: "none"}} to={`/admin/products`}>
                     <DataBox>
                         <FontAwesomeIcon icon={['fas', 'book']} size="3x" />
-                        <h3>จำนวนสินค้า</h3> 
+                        <h3>จำนวนสินค้าคงเหลือ</h3> 
                         <h2>50</h2>
                     </DataBox>
                 </Link>
                 <Link style={{textDecoration: "none"}} to={`/admin/promotions`}>
                     <DataBox>
                         <FontAwesomeIcon icon={['fas', 'tag']} size="3x" />
-                        <h3>จำนวนโปรโมชั่น</h3> 
+                        <h3>จำนวนคูปองส่วนลดคงเหลือ</h3> 
                         <h2>50</h2>
                     </DataBox>
                 </Link>
@@ -50,8 +64,8 @@ const Dashboard = () => {
                         <tr className="table-header">
                             <th>อันดับ</th>
                             <th>ชื่อสินค้า</th>
-                            <th>ราคา</th>
-                            <th>จำนวนการสั่งซื้อ</th>
+                            <th>ราคา (บาท)</th>
+                            <th>จำนวนการสั่งซื้อ (ชิ้น)</th>
                         </tr>
                     </thead>
                     {products.map((value, index) => 
@@ -59,7 +73,7 @@ const Dashboard = () => {
                         <td>{index+1}</td>
                         <td>{value.title}</td>
                         <td>{value.price}</td>
-                        <td>{value.quantity} x</td>
+                        <td>{value.orderQuantityCount}</td>
                     </tr>
                     )}
                     </Table>
@@ -71,7 +85,7 @@ const Dashboard = () => {
                         <tr className="table-header">
                             <th>อันดับ</th>
                             <th>ชื่อคูปอง</th>
-                            <th>จำนวนการใช้งาน</th>
+                            <th>จำนวนการใช้งาน (ครั้ง)</th>
                         </tr>
                     </thead>
                     {products.map((value, index) => 

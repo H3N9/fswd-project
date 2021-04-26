@@ -1,4 +1,4 @@
-import { ProductTC, DiscountPricePromotionTC, DiscountPricePromotionModel } from '../../models'
+import { ProductTC, DiscountPricePromotionTC, DiscountPricePromotionModel, OrderProductModel } from '../../models'
 
 ProductTC.addRelation(
     'promotion',
@@ -27,5 +27,23 @@ ProductTC.addFields({
             return netPrice
         },
         projection: {_id: 1}
+    },
+
+    orderQuantityCount: {
+        type: 'Int',
+        resolve: async (source) => {
+            const orderProducts = await OrderProductModel.find({ productId: source._id }).populate({
+                path: 'orderId',
+                match: { status: {$ne: 'PROCESSING'}}
+            })
+            const sumQuantity = orderProducts.reduce((acc, curr) => {
+                if (curr.orderId)
+                    return acc+curr.quantity
+                else
+                    return acc
+            }, 0)
+
+            return sumQuantity
+        }
     }
 })

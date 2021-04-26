@@ -151,14 +151,14 @@ export const confirmOrder = schemaComposer.createResolver({
     }
 })
 
-const closeOrderHandleMiddleware = async (resolve, source, args, context, info) => {
+const updateOrderHandleMiddleware = async (resolve, source, args, context, info) => {
     if (args?.record?.status === 'PROCESSING')
         throw new UserInputError('order status can not be set to PROCESSING ')
     if (context?.user?.isAdmin){
         const newArgs = {
             ...args,
             record: {
-                status: args?.record?.status || 'CLOSED',
+                status: args?.record?.status || 'COMPLETE',
                 updatedAt: Date.now()
             }
         }
@@ -170,4 +170,4 @@ const closeOrderHandleMiddleware = async (resolve, source, args, context, info) 
     }
 }
 
-export const closeOrder = OrderTC.getResolver('updateById', [closeOrderHandleMiddleware])
+export const updateOrder = OrderTC.getResolver('updateById', [updateOrderHandleMiddleware])

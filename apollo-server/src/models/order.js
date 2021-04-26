@@ -7,6 +7,7 @@ const { Schema } = mongoose
 const enumOrderStatus = {
     PROCESSING: 'Processing',
     COMPLETE: 'Complete',
+    SHIPPED: 'shipped',
     CLOSED: 'Closed',
 }
 

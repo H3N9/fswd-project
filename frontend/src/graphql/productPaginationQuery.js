@@ -27,6 +27,7 @@ export const PRODUCT_PAGINATION_QUERY = gql`
                     _id
                     method
                 }
+                orderQuantityCount
             }
         }
     }
