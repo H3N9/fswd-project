@@ -67,7 +67,7 @@ const DotTrue = styled.div`
     cursor: pointer;
 `
 
-const Text = styled.h1`
+const Text = styled.h2`
     margin: 0;
     margin-left: 10px;
 `

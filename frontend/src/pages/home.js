@@ -16,8 +16,8 @@ const Home = () => {
             <SpaceBox />
             <Box9p> 
                 <SlideShow />
-                <CatgoriesProducts products={products} title={"All"}/>
-                <CatgoriesProducts products={products} title={"Save Price"}/>
+                <CatgoriesProducts products={products} title={"สินค้าทั้งหมด"}/>
+                <CatgoriesProducts products={products} title={"สินค้าโปรโมชั่น"}/>
             </Box9p>
             <SpaceBox />
         </>
