@@ -1,26 +1,51 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import styled from 'styled-components'
 import { Link, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { PRODUCT_QUERY } from '../../graphql/productQuey'
 import { ORDER_QUERY_BY_ID } from '../../graphql/orderQuery'
-import { useQuery } from '@apollo/client'
+import { ORDER_UPDATE_STATUS } from '../../graphql/orderMutation'
+import { useQuery, useMutation } from '@apollo/client'
 import {Header, Table} from '../../styles/styleComponents'
 import ConfirmModal from '../../components/adminOrder/confirmModal'
+import Response from '../../components/response'
+
 const Orders = () => {
     const { orderId } = useParams();
     //const { loading, error, data } = useQuery(PRODUCT_QUERY)
     const { data } = useQuery(ORDER_QUERY_BY_ID, {variables: {id: orderId}})
-    const order = data?.order
     const orderProducts = data?.order?.orderProducts || []
     const address = data?.order?.shipping
     const discounts = data?.order?.discounts || []
+    const [order, setOrder] = useState()
     const [status, setStatus] = useState("");
     const [isModal, setIsModal] = useState(false)
+    const [isUpdate, setIsUpdate] = useState(undefined)
+    const [updateOrderStatus] = useMutation(ORDER_UPDATE_STATUS)
+
+    useEffect(() => {
+        if (data?.order){
+            setOrder(data?.order)
+            setStatus(data?.order.status)
+        }
+    }, data)
+
+    const updateStatusHandle = useCallback(() => {
+        updateOrderStatus({variables: {id: orderId, object: { status }}})
+        .then((response) => {
+            setOrder(response.data.updateOrder.record)
+            setIsUpdate('Success')
+        })
+        .catch((error) => {
+            setIsUpdate('Fail')
+        })
+        setIsModal(false)
+    })
 
     return (
         <>
-        <ConfirmModal status={status} setStatus={setStatus} setIsModal={setIsModal} isModal={isModal}/>
+        <Response state={isUpdate} setState={setIsUpdate} />
+        <ConfirmModal status={status} setStatus={setStatus} setIsModal={setIsModal} isModal={isModal} updateHanle={updateStatusHandle}/>
         <Container>         
             <Header>
                 <h1>ออเดอร์ {orderId}</h1>

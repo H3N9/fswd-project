@@ -4,12 +4,13 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from "prop-types"
 import { useOrderContext } from '../../context/orderContext'
-const ConfirmModal = ({status, setStatus, setIsModal, isModal}) => {
+const ConfirmModal = ({status, setStatus, setIsModal, isModal, updateHanle}) => {
+    console.log(status)
     let disableButton = status === "" ? true : false;
     const handle  = () =>{
-        console.log(status)
         setIsModal(false)
     }
+
     return (
             <Container isModal={isModal}>
                 <Card>
@@ -18,16 +19,16 @@ const ConfirmModal = ({status, setStatus, setIsModal, isModal}) => {
                     </div>
                     <div className="content">
                         <div className="radio-input">
-                            <input type="radio" name="status" id="shipping" value="shipping" checked={status === "shipping" ? true : false} onClick={(e) => setStatus(e.target.value)}/>
+                            <input type="radio" name="status" id="shipping" value="SHIPPED" checked={status === "SHIPPED" ? true : false} onClick={(e) => setStatus(e.target.value)}/>
                             <label htmlFor="shipping">จัดส่ง</label>
                         </div>
                         <div className="radio-input">
-                            <input type="radio" name="status" id="closed" value="closed" checked={status === "closed" ? true : false}  onClick={(e) => setStatus(e.target.value)}/>
+                            <input type="radio" name="status" id="closed" value="CLOSED" checked={status === "CLOSED" ? true : false}  onClick={(e) => setStatus(e.target.value)}/>
                             <label htmlFor="closed">ปิดออร์เดอร์</label>
                         </div>
                     </div>
                     <div className="menu">
-                        <button onClick={() => handle()} disabled={disableButton}> ยืนยัน</button>
+                        <button onClick={() => updateHanle()} disabled={disableButton}> ยืนยัน</button>
                         <button onClick={() => handle()}>ยกเลิก</button>
                     </div>
                 </Card>

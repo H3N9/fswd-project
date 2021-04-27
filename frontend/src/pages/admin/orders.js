@@ -10,7 +10,7 @@ const Orders = () => {
     const { loading, error, data } = useQuery(ORDERS_PAGINATION_QUERY, {variables: {
         page: null,
         perPage: null,
-        object: {_operators: {status: {in: ["COMPLETE", "SHIPPED"]}}},
+        object: {_operators: {status: {in: ["COMPLETE", "SHIPPED", "CLOSED"]}}},
         sort: "STATUS_ASC"
     }})
     const orders = data?.ordersWithPagination?.items || []
