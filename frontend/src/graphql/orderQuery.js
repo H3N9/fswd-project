@@ -41,3 +41,43 @@ export const ORDERS_COUNT_QUERY = gql`
         }
     }
 `
+
+export const ORDER_QUERY_BY_ID = gql`
+    query Order($id: MongoID!){
+        order(_id: $id){
+        _id
+        status
+        createdAtWithFormatDateTime
+        updatedAtWithFormatDateTime
+        user{
+            _id
+            username
+            name
+        }
+        orderProducts{
+            product{
+            title
+            price
+            netPrice
+            }
+            quantity
+        }
+        shipping{
+            address
+            subDistrict
+            district
+            province
+            postalCode
+            phoneNumber
+        }
+        totalPrice
+        discounts{
+            promotionId
+            type
+            description
+            discount
+        }
+        netTotalPrice
+        }
+    }
+`

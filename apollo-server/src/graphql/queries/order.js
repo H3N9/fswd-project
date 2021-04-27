@@ -4,6 +4,7 @@ import { authQueryMiddleware, adminPermission } from './middleware'
 
 export const orders = OrderTC.getResolver('findMany', [adminPermission])
 export const myOrders = OrderTC.getResolver('findMany', [authQueryMiddleware])
+export const order = OrderTC.getResolver('findById', [adminPermission])
 export const ordersWithPagination= OrderTC.getResolver('pagination', [adminPermission])
 
 const orderCountPayload = schemaComposer.createObjectTC({
