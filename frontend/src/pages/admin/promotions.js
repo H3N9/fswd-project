@@ -9,7 +9,7 @@ const Promotions = () => {
         <Container>
             <Header>
                 <h1>จัดการโปรโมชั่น</h1>
-                <Link to={`/login`}><FontAwesomeIcon icon={['fas', 'plus']} /> เพิ่มโปรโมชั่น</Link>
+                <Link to={`/admin/promotion/create`}><FontAwesomeIcon icon={['fas', 'plus']} /> เพิ่มโปรโมชั่น</Link>
             </Header>
             <Flex>
                 <PromotionItem>
