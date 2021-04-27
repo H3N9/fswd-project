@@ -5,16 +5,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { PRODUCT_QUERY } from '../../graphql/productQuey'
 import { useQuery } from '@apollo/client'
 import {Header, Table} from '../../styles/styleComponents'
+import ConfirmModal from '../../components/adminOrder/confirmModal'
 const Orders = () => {
     const { orderId } = useParams();
     const { loading, error, data } = useQuery(PRODUCT_QUERY)
     const products = data?.products || []
+    const [status, setStatus] = useState("");
+    const [isModal, setIsModal] = useState(false)
     console.log(products.map((value) => value._id))
     return (
+        <>
+        <ConfirmModal status={status} setStatus={setStatus} setIsModal={setIsModal} isModal={isModal}/>
         <Container>         
             <Header>
                 <h1>ออเดอร์ {orderId}</h1>
-                <button><FontAwesomeIcon icon={['fas', 'check']} /> ยืนยัน</button>
+                <button onClick={() => setIsModal(true)}><FontAwesomeIcon icon={['fas', 'check']} /> ยืนยัน</button>
             </Header>
             <Flex>
                 <Content>
@@ -50,6 +55,7 @@ const Orders = () => {
                 </Table>    
             </Flex>
         </Container>
+        </>
     )
 }
 
