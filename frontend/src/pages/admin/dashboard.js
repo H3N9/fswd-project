@@ -12,6 +12,7 @@ const Dashboard = () => {
     const [products, setProducts] = useState([])
     const [productQuantity, setProductQuantity] = useState(0)
     const [couponQuantity, setCouponQuantity] = useState(0)
+    const [coupons, setCoupons] = useState([])
 
     const productQuery = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:1, perPageNum: 10}})
     const ordersCountQuery = useQuery(ORDERS_COUNT_QUERY)
@@ -42,7 +43,11 @@ const Dashboard = () => {
     useEffect(() => {
         if (couponQuantityQuery?.data){
             const sumCouponQuantity = couponQuantityQuery.data.CouponPromotionsWithPagination.items.reduce((acc, curr) => acc+curr.quantity, 0)
+            const newCoupons = couponQuantityQuery?.data.CouponPromotionsWithPagination.items.slice(0, 11)
+            newCoupons.sort((item1, item2) => item2.orderQuantityCount - item1.orderQuantityCount)
+
             setCouponQuantity(sumCouponQuantity)
+            setCoupons(newCoupons)
         }
     }, [couponQuantityQuery])
 
@@ -106,15 +111,17 @@ const Dashboard = () => {
                     <thead>                
                         <tr className="table-header">
                             <th>อันดับ</th>
+                            <th>โค้ดส่วนลด</th>
                             <th>ชื่อคูปอง</th>
                             <th>จำนวนการใช้งาน (ครั้ง)</th>
                         </tr>
                     </thead>
-                    {products.map((value, index) => 
+                    {coupons.map((value, index) => 
                     <tr className={index%2 == 0 ? "dim-row" : ""}>
                         <td>{index+1}</td>
-                        <td>{value.title}</td>
-                        <td>{value.price}</td>
+                        <td>{value.promotionCode}</td>
+                        <td>{value.description}</td>
+                        <td>{value.orderQuantityCount}</td>
                     </tr>
                     )}
                 </Table>                     
