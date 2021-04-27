@@ -52,46 +52,57 @@ export const Button = styled.button`
 
 // For login & register Page
 
+export const MainContainer = styled.div`
+    width:100%;
+    height: 100vh;
+    display: flex;
+    background: #EFEFEF;
+    transition: 0.25s;
+`
+export const LogoContainer = styled.div`
+    flex: 1;
+    background-image: linear-gradient(120deg, #5128e6 , #2891e6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media (max-width: 970px){
+        flex: 0;
+    }
+`
+export const LoginContainer = styled.div`
+    background: #FFF;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+`
 export const Form = styled.form`
     display: flex;
     flex-direction: column;
-    flex: 1;
-    padding: 0 30px;
-    div.input{
-        position: relative;
-        label {
-            position: absolute;
-            top: 35%;
-            left: 5px;
-            width: 100%;
-            color: rgba(0,0,0, 0.5);
-            transition: 0.2s all;
-            cursor: text;
-            font-size: 1.1rem;
+    max-width: 450px;
+    width: 100%;
+    min-width: 320px;
+    padding: 0 20px;
+    img{
+        display: none;
+        @media (max-width: 970px){
+            display: initial;
         }
-        input{
-            width: 100%;
-            outline: none;
-            margin: 30px 0;
-            outline: none;
-            border: none;
-            font-size: 1rem;
-            padding: 5px 0 5px 5px;
-            position: relative;
-            border-bottom: 2px solid #5128e6;
-            :focus~label, :valid~label, :-webkit-autofill~label {
-                top: -5px;
-                left: 0;
-                color: #111;
-            }
-        }
+    }
+    h1{
+        font-weight: bold;
+        margin-top: 50px;
     }
     div{
         display: flex;
         justify-content: center;
         align-items: center;
         a{
-            margin: 20px 0;
             text-decoration: none;
             color: #5128e6;
             text-align: center;
@@ -103,7 +114,7 @@ export const Form = styled.form`
             border-radius: 5px;
             border: none;
             margin-right: 25px;
-            background-image: linear-gradient(120deg, #5128e6 , #2891e6, #5128e6 , #2891e6);
+            background: #222;
             background-size: 300% 100%;
             color: #FFF;
             transition: 0.55s;
@@ -112,26 +123,6 @@ export const Form = styled.form`
             }
         }
     }
-`
-
-export const MainContainer = styled.div`
-    width:100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #EFEFEF;
-    transition: 0.25s;
-`
-export const LoginContainer = styled.div`
-    background: #FFF;
-    padding: 150px 0;
-    width: 1000px;
-    display: flex;
-    flex-wrap: wrap;
-    border-radius: 5px;
-    align-items: center;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 `
 
 
@@ -155,6 +146,7 @@ export const Input = styled.div`
             width: 100%;
             outline: none;
             margin: 30px 0;
+            background: transparent;
             outline: none;
             border: none;
             font-size: 1rem;
@@ -168,7 +160,7 @@ export const Input = styled.div`
             }
         }
         textarea{
-            background: #f2f2f2
+            background: #e2e2e2
         }
 `
 
@@ -179,7 +171,8 @@ export const Header = styled.div`
     align-items: center;
     padding-bottom: 50px;
     h1{
-        margin: 0;
+        margin: 5px 0;
+        font-weight: bold;
         letter-spacing: -1px;
         font-size: clamp(2rem, 5vmin, 2.5rem);
     }
@@ -239,6 +232,15 @@ export const Table = styled.table`
         }
     }
 `
+export const FromInline = styled.div`
+    display: flex;
+    width:100%;
+    flex: 1;
+    justify-content: space-between;
+    div{
+        width: 48%;
+    }
+`
 
 export const FormContainer = styled.form`
     width: 500px;
@@ -249,17 +251,19 @@ export const FormContainer = styled.form`
     h1{
         align-self: flex-start;
         letter-spacing: -2px;
-        font-size: 50px;
         margin: 40px 0 30px 0;
         line-height: 100%;
         position: relative;
-        :before{
-            content: "";
-            position: absolute;
-            width: 80%;
-            height: 3px;
-            background: #111;
-            bottom: -10px;
+        &:first-child{
+            font-size: 50px;
+            :before{
+                content: "";
+                position: absolute;
+                width: 80%;
+                height: 3px;
+                background: #111;
+                bottom: -10px;
+            }
         }
     }
     input, textarea{
@@ -285,12 +289,3 @@ export const FormContainer = styled.form`
     }
 `
 
-export const FromInline = styled.div`
-    display: flex;
-    width:100%;
-    flex: 1;
-    justify-content: space-between;
-    div{
-        width: 48%;
-    }
-`

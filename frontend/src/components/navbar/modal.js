@@ -5,11 +5,11 @@ import {Link} from 'react-router-dom'
 import {useOrderContext} from '../../context/orderContext'
 import CardOrder from './cardOrder'
 
-const Modal = () => {
+const Modal = ({modal}) => {
     const { orders } = useOrderContext()
 
     return (
-        <BoxModal>
+        <BoxModal modalHeight={modal ? "330px": "0"}>
             <BoxCover>
                 <TitleBox>
                     <Title>ตระกร้าของฉัน</Title>
@@ -55,11 +55,14 @@ const BoxModal = styled.div`
     width: 320px;
     display: flex;
     position: fixed;
+    transition: 0.25s;
+    overflow: hidden;
+    height: ${(props) => props.modalHeight};
     top: 80px;
     right: -10px;
     z-index: 30;
     margin-right: 5%;
-    padding: 10px 0;
+    padding: 0px 0;
     flex-direction: column;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     border-radius: 5px;

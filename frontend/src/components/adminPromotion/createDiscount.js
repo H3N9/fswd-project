@@ -9,7 +9,7 @@ const CreateDiscount = ({discountHandle, setIsDiscountCreate, discount, isDiscou
         <>
             <ContainerText>
                 {isDiscountCreate? (<DotTrue onClick={() => setIsDiscountCreate(false)} />):(<Dot onClick={() => setIsDiscountCreate(true)}  />)}
-                <h1 >Create Discount</h1>
+                <h1>เพิ่มโปรโมชั่น</h1>
             </ContainerText>
             <div style={{...styleForm, height: heightSet}}>
                 <Input>
@@ -21,7 +21,7 @@ const CreateDiscount = ({discountHandle, setIsDiscountCreate, discount, isDiscou
                 </Input>
                 <Input>       
                     <input type="number" name="discountValue" id="discountValue" value={discount.discountValue} required onChange={(e) => discountHandle(e)}/>                    
-                    <label htmlFor="discountValue">Value</label>
+                    <label htmlFor="discountValue">จำนวน</label>
                 </Input>
                 <Input>       
                     <textarea id="" cols="20" rows="5" name="descriptionDiscount" value={discount.descriptionDiscount} onChange={(e) => discountHandle(e)}></textarea>
@@ -35,7 +35,7 @@ const CreateDiscount = ({discountHandle, setIsDiscountCreate, discount, isDiscou
 const styleForm = {
     width: "100%",
     overflow: "hidden",
-    transition: "all 0.5s ease-in-out",
+    transition: "all 0.3s ease-in-out",
 }
 
 const ContainerText = styled.div`

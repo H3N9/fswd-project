@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import {REGISTER_MUTATION} from '../graphql/registerMutation'
 import { validate } from 'graphql'
-import {Form, MainContainer, LoginContainer} from '../styles/styleComponents'
+import whiteLogo from '../images/logo-white.webp'
+import logo from '../images/logo.png'
+import {Form, MainContainer, LoginContainer, Input, LogoContainer} from '../styles/styleComponents'
 
 const Register = () =>{
     const [username, setUsername] = useState("")
@@ -62,31 +64,36 @@ const Register = () =>{
     }
     return(
         <MainContainer>
-            <LoginContainer>
+            <LogoContainer>
                 <Logo>
-                    <h1>Register</h1>
-                </Logo>      
+                    <img src={whiteLogo} alt="" width="390px"/>
+                </Logo>
+            </LogoContainer>
+            <LoginContainer>
+                       
                 <Form onSubmit={Validate}>
+                    <img src={logo} alt="" width="250px"/>
+                    <h1>ลงทะเบียน</h1>  
                     {error}
-                    <div className="input">                     
+                    <Input>                     
                         <input type="text" id="username" value={username} required name="username" onChange={handleUsername}/>
-                        <label for="username">Username</label>
-                    </div>
-                    <div className="input">
+                        <label htmlFor="username">ชื่่อผู้ใช้</label>
+                    </Input>
+                    <Input>
                         <input type="text"  id="name" value={name} required name="name" onChange={handleName}/>
-                        <label for="name">Name</label>
-                    </div>
-                    <div className="input">
+                        <label htmlFor="name">ชื่อ นามสกุล</label>
+                    </Input>
+                    <Input>
                         <input type="password"  id="password" value={password} required name="password" onChange={handlePassword}/>
-                        <label for="password">Password</label>
-                    </div>
-                    <div className="input">
+                        <label htmlFor="password">รหัสผ่าน</label>
+                    </Input>
+                    <Input>
                         <input type="password"  id="confirm-password" value={confirm} required name="confirm" onChange={handleConfirm}/>
-                        <label for="confirm-password">Confirm Password</label>
-                    </div>
+                        <label htmlFor="confirm-password">ยืนยันรหัสผ่าน</label>
+                    </Input>
                     <div>
-                        <button>Register</button>
-                        <Link to={`/login`}>Back to login</Link>
+                        <button>ลงทะเบียน</button>
+                        <Link to={`/login`}>ไปหน้าเข้าสู่ระบบ</Link>
                     </div>
                 </Form>            
             </LoginContainer>
@@ -112,20 +119,10 @@ const Logo = styled.div`
     margin-bottom: 5vmin;
     display: flex;
     justify-content: center;
-    h1{
-        letter-spacing: -1px;
-        font-size: 4rem;
-        position: relative;
-        width: fit-content;
-        color: #222;
-        :before{
-            content: "";
-            position: absolute;
-            width: 70%;
-            bottom: -5px;
-            height: 4px;
-            background: #222;
-        }
+    img{
+        width: 100%;
+        max-width: 400px;
+        border-radius: 10px;
     }
 `
 
