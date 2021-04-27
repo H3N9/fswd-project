@@ -38,6 +38,8 @@ export const PRODUCT_BY_ID = gql`
             promotion {
                 _id
                 method
+                discountValue
+                description
             }
         }
     }
