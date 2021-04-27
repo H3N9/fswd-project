@@ -11,6 +11,7 @@ const PromotionItem = () => {
             </div>
             <div className="promotion-value">
                 <h1><b>50 บาท</b></h1> 
+                <h3>คงเหลือ <b>2</b> ครั้ง</h3> 
                 </div>
         </PromoItem>
     )
@@ -56,6 +57,21 @@ const PromoItem = styled.div`
             margin-left: 10px;
             font-size: 1.3rem;
             font-weight: 500;
+            
+        }
+    }
+    .promotion-value{
+        h1{
+            text-align: right;
+        }
+        h3{
+            margin: 0;
+            font-size: 1.3rem;
+            padding: 0 25px; 
+            text-align: center;
+            background: #FFF;
+            color:#fa8d45;
+            border-radius: 5px;
         }
     }
     &:hover{
