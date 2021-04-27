@@ -45,6 +45,9 @@ const PromoFlex = styled.div`
     margin-bottom: 50px;
     margin: 0 auto;
     flex-wrap: wrap;
+    @media (max-width: 1800px){
+        justify-content: center;
+    }
 `
 
 
