@@ -67,7 +67,6 @@ const AddCart = styled.div`
     display: flex;
     width: 100%;
     height: 10%;
-    padding: 5px 0 5px 0;
     justify-content: center;
 `
 
@@ -81,7 +80,7 @@ const BoxCard = styled.div`
     overflow: hidden;
     padding: 25px 15px;
     background: #FFF;
-    margin: 20px 15px;
+    margin: 20px 10px;
     transition: 0.35s;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     :hover{
@@ -89,7 +88,7 @@ const BoxCard = styled.div`
         z-index: 1;
     }
     @media (max-width: 420px){
-        width: 36.25%;
+        width: 45%;
         height: 325px;
         margin: 5px;
     }
@@ -129,6 +128,7 @@ const Button = styled.button`
     display: flex;
     align-items: center;
     justify-content:center;
+
     @media (max-width: 420px){
         width:100%;
     }

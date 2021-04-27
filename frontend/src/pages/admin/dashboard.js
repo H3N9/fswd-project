@@ -182,8 +182,8 @@ const TableFlex = styled.div`
 
 const DataBox = styled.a`
     background: #FFF;
-    width: 170px;
-    height: 170px;
+    width: 220px;
+    height: 220px;
     border-radius: 45px;
     padding: 25px;
     margin: 20px;

@@ -28,7 +28,7 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                     <BoxButton>
                         <FontAwesomeIcon icon={['fas', 'search']} />
                     </BoxButton>
-                    <BoxButton onClick={() => setModal(!modal)}>
+                    <BoxButton className="cart" onClick={() => setModal(!modal)}>
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                         <Circle>{amount}</Circle>
                     </BoxButton>
@@ -38,9 +38,7 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                     <MobileMenuButton onClick={() => setIsShowMenu(!isShowMenu)} className={isShowMenu ? "active" : ""} />
                 </AccountBox>        
         </Package>
-        {modal && (
-            <Modal />
-        )}
+            <Modal modal={modal}/>
         </>
     )
 }
@@ -60,7 +58,11 @@ const AccountBox = styled.div`
     display: flex;
     align-items: center;
     padding-right: 2.5vmin;
-
+    .cart{
+        @media (max-width: 960px) {
+            display: none;
+        }
+    }
 `
 
 const BoxBtn = styled.div`

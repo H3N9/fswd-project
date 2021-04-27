@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import {Route, Switch} from 'react-router-dom'
 import NavBar from '../components/navbar/navbar'
+import MobileNavbar from '../components/navbar/mobileNavbar'
 
 import Cart from './cart'
 import Home from './home'
@@ -11,11 +12,13 @@ import Payment from './payment'
 import MyOrder from './myOrder'
 import Register from './register'
 import AllProducts from './allProduct'
+import MyOrderDetail from './myOrderDetail'
+
 
 import DiscountPage from './discountPage'
 import UpdateProduct from './admin/updateProduct'
 import PromotionDetail from './admin/promotionDetail'
-import MobileNavbar from '../components/navbar/mobileNavbar'
+
 
 import Order from './admin/order'
 import Orders from './admin/orders'
@@ -72,6 +75,11 @@ const Index = () => {
                             <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                             <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <MyOrder />
+                        </Route>
+                        <Route path="/customer/order/:orderId">
+                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                            <MyOrderDetail />
                         </Route>
 
 {/* --------------------------------------------- For Admin ----------------------------------------------------  */}

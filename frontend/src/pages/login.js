@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 import {useSession} from '../context/session'
 import {useHistory} from 'react-router-dom'
 import logo from '../images/logo.png'
-import {Form, MainContainer, LoginContainer} from '../styles/styleComponents'
+import whiteLogo from '../images/logo-white.webp'
+import {Form, MainContainer, LoginContainer, Input, LogoContainer} from '../styles/styleComponents'
 
 const Login = () =>{
     const [username, setUsername] = useState("")
@@ -43,23 +44,27 @@ const Login = () =>{
 
     return(
         <MainContainer>
-            <LoginContainer>
+            <LogoContainer>
                 <Logo>
-                    <img src={logo} alt="" width="200px"/>
+                    <img src={whiteLogo} alt="" width="390px"/>
                 </Logo>
-                <Form  onSubmit={handleLogin}>
-                        <div className="input">                     
+            </LogoContainer>
+            <LoginContainer>   
+                <Form onSubmit={handleLogin}>
+                    <img src={logo} alt="" width="250px"/>
+                    <h1>เข้าสู่ระบบ</h1>
+                        <Input>                     
                             <input type="text" id="username" value={username}  onChange={usernameHandle} required/>
-                            <label htmlFor="username">Username</label>
-                        </div>
+                            <label htmlFor="username">ชื่อผู้ใช้</label>
+                        </Input>
 
-                        <div className="input">    
+                        <Input>    
                             <input type="password" id="password" value={password} onChange={passwordHandle} required/>
-                            <label htmlFor="password">Password</label>
-                        </div>
+                            <label htmlFor="password">รหัสผ่าน</label>
+                        </Input>
                         <div>
-                            <button>Login</button>
-                            <Link to={`/register`}>Register</Link>
+                            <button>เข้าสู่ระบบ</button>
+                            <Link to={`/register`}>สมัครสมาชิก</Link>
                         </div>
                 </Form>
             </LoginContainer>
@@ -68,14 +73,13 @@ const Login = () =>{
 }
 
 const Logo = styled.div`
-    max-width: 500px;
     width: 100%;
     text-align: center;
     margin: 0 auto;
     margin-bottom: 5vmin;
     img{
-        width: 95%;
-        max-width: 350px;
+        width: 100%;
+        max-width: 400px;
         border-radius: 10px;
     }
 `

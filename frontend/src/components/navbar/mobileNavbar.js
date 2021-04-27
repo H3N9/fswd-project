@@ -8,7 +8,7 @@ const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
         document.body.style.overflow = isShowMenu ? "hidden" : "initial";
     }, [isShowMenu])
     return(
-        <Mainmenu style={{right: isShowMenu ? "0%" : "100%"}}>
+        <Mainmenu right={isShowMenu ? "0" : "100%"} opacity={isShowMenu ? "1" : "0"} duration={isShowMenu ? "0s" : "0.95s"}>
             <MenuContainer>
                 <Link to={`/new`} onClick={() => setIsShowMenu(false)}>สินค้าใหม่</Link>
                 <Link to={`/best`} onClick={() => setIsShowMenu(false)}>สินค้าขายดี</Link>
@@ -22,15 +22,16 @@ const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
 const Mainmenu = styled.div`
     width: 100%;
     height: 100vh;
-    padding-left :50px;
+    padding-left :20px;
     background: rgba(0,0,0,0.8);
     backdrop-filter: blur(10px);
     position: fixed;
-    overflow: scroll;
     padding-top: 100px;
-    right: 100%;
     z-index: 8;
-    transition: 0.65s;
+    right: ${(props) => props.right};
+    opacity: ${(props) => props.opacity};
+    transition: opacity 0.25s, right ${(props) => props.duration};
+
     @media (min-width: 960px) {
        display: none;
     }
