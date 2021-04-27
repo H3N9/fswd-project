@@ -8,6 +8,7 @@ import { ORDERS_COUNT_QUERY } from '../../graphql/orderQuery'
 import { COUPON_PAGINATION_QUERY } from '../../graphql/promotionQuery'
 import { useQuery } from '@apollo/client'
 import {Header, Table} from '../../styles/styleComponents'
+
 const Dashboard = () => {
     const [products, setProducts] = useState([])
     const [productQuantity, setProductQuantity] = useState(0)
@@ -61,7 +62,7 @@ const Dashboard = () => {
                         <h2>{completeCount}</h2>
                     </DataBox>
                 </Link>
-                <Link style={{textDecoration: "none"}}>
+                <Link style={{textDecoration: "none"}} to={`/admin/orders`}>
                     <DataBox>
                         <FontAwesomeIcon icon={['fas', 'shipping-fast']} size="3x" />
                         <h3>จำนวนออเดอร์ที่รอจัดส่ง</h3> 

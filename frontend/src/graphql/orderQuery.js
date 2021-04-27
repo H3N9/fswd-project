@@ -11,9 +11,22 @@ export const ORDER_QUERY = gql`
 `
 
 export const ORDERS_PAGINATION_QUERY = gql`
-    query OrdersWithPagination($object: FilterFindManyOrderInput!){
-        ordersWithPagination(page: 1 perPage: 1 filter: $object){
+    query OrdersWithPagination($page: Int $perPage: Int 
+        $object: FilterFindManyOrderInput! $sort: SortFindManyOrderInput){
+        ordersWithPagination(page: $page perPage: $perPage
+            filter: $object sort: $sort
+            ){
             count
+            items{
+                _id
+                status
+                user{
+                    username
+                    name
+                }
+                netTotalPrice
+                updatedAtWithFormatDateTime
+            }
         }
     }
 `

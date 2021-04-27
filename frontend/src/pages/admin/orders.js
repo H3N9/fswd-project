@@ -2,13 +2,18 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ORDER_QUERY } from '../../graphql/orderQuery'
+import { ORDERS_PAGINATION_QUERY } from '../../graphql/orderQuery'
 import { useQuery } from '@apollo/client'
 import {Header, Table} from '../../styles/styleComponents'
+
 const Orders = () => {
-    const { loading, error, data } = useQuery(ORDER_QUERY)
-    const products = data?.products || []
-    console.log(products)
+    const { loading, error, data } = useQuery(ORDERS_PAGINATION_QUERY, {variables: {
+        page: null,
+        perPage: null,
+        object: {_operators: {status: {in: ["COMPLETE", "SHIPPED"]}}},
+        sort: "STATUS_ASC"
+    }})
+    const orders = data?.ordersWithPagination?.items || []
     return (
         <Container>         
             <Header>
@@ -25,15 +30,15 @@ const Orders = () => {
                         <th></th>
                     </tr>                              
                 </thead>
-                {products.map((value, index) => 
+                {orders.map((value, index) => 
                 <tr className={index%2 == 0 ? "dim-row" : ""}>
                     <td>{index+1}</td>
-                    <td>{value.title}</td>
-                    <td>{value.types}</td>
-                    <td>{value.price}</td>
-                    <td>{value.quantity}</td>
+                    <td>{value.user.name}</td>
+                    <td>{value.netTotalPrice}</td>
+                    <td>{value.status}</td>
+                    <td>{value.updatedAtWithFormatDateTime}</td>
                     <td>
-                        <Link to={`/admin/product/${value._id}`} ><button className="edit-button"><FontAwesomeIcon icon={['fas', 'edit']} /> แก้ไข</button></Link>
+                        <Link to={`/admin/order/${value._id}`} ><button className="edit-button"><FontAwesomeIcon icon={['fas', 'edit']} /> แก้ไข</button></Link>
                         <button className="delete-button"><FontAwesomeIcon icon={['fas', 'trash']} /> ลบ</button>
                     </td>
                 </tr>
