@@ -12,7 +12,9 @@ import Payment from './payment'
 import MyOrder from './myOrder'
 import Register from './register'
 import AllProducts from './allProduct'
+import AllPromotion from './allPromotion'
 import MyOrderDetail from './myOrderDetail'
+
 
 
 import DiscountPage from './discountPage'
@@ -70,6 +72,11 @@ const Index = () => {
                             <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                             <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <AllProducts />
+                        </Route>
+                        <Route path="/promotions">
+                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
+                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+                            <AllPromotion />
                         </Route>
                         <Route path="/customer/orders">
                             <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
