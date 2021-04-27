@@ -34,7 +34,7 @@ const BoxCheck = styled.div`
     display: flex;
     height: 80px;
     align-items: center;
-    padding: 20px;
+    padding: 60px 20px;
     border: solid 3px #f1f1f1;
     margin: 10px 0 10px 0;
 `
@@ -53,7 +53,7 @@ const BoxCheckTrue = styled.div`
     display: flex;
     height: 80px;
     align-items: center;
-    padding: 20px;
+    padding: 60px 20px;
     border: solid 3px #003cff;
     margin: 10px 0 10px 0;
 `

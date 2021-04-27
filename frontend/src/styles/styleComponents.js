@@ -256,14 +256,7 @@ export const FormContainer = styled.form`
         position: relative;
         &:first-child{
             font-size: 50px;
-            :before{
-                content: "";
-                position: absolute;
-                width: 80%;
-                height: 3px;
-                background: #111;
-                bottom: -10px;
-            }
+            font-weight: bold;
         }
     }
     input, textarea{

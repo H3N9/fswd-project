@@ -6,6 +6,7 @@ import {CREATE_PRODUCT} from '../../graphql/productMutation'
 import {Input} from '../../styles/styleComponents'
 import { useHistory } from "react-router-dom"
 import Response from '../../components/response'
+import {FormContainer} from '../../styles/styleComponents'
 
 
 const CreateProduct = () => {
@@ -167,50 +168,7 @@ const FormFlex = styled.div`
     margin-bottom: 30px;
 `
 
-const FormContainer = styled.form`
-    width: 500px;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items:center;
-    h1{
-        align-self: flex-start;
-        letter-spacing: -2px;
-        font-size: 50px;
-        margin: 40px 0 30px 0;
-        line-height: 100%;
-        position: relative;
-        :before{
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 4px;
-            background: #111;
-            bottom: -10px;
-        }
-    }
-    input, textarea{
-        outline: none;
-        resize: none;
-    }
-    label{
-        align-self: flex-start;
-    }
-    button{
-        border: none;
-        margin: 10px;
-        background: #3fb161;
-        color: #fff;
-        height: 50px;
-        width: 50%;
-        text-align: center;
-        font-size: 1.3rem;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-        :active{
-            transform: scale(0.9);
-        }
-    }
-`
+
 const ImageFormContainer = styled.div`
     width: 500px;
     display: flex;
