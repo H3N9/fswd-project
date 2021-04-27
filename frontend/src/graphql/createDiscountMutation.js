@@ -9,3 +9,11 @@ export const CREATEDISCOUNT_MUTATION = gql`
     }
 
 `
+
+export const UPDATEPROMOTION_MUTATION = gql`
+    mutation UpdatePromotion($id: MongoID! $record: UpdateByIdPromotionInput!){
+        updatePromotion(_id: $id record: $record){
+        recordId
+        }
+    }
+`

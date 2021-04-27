@@ -40,6 +40,7 @@ export const PRODUCT_BY_ID = gql`
                 method
                 discountValue
                 description
+                type
             }
         }
     }

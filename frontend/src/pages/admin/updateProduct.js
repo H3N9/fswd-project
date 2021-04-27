@@ -4,9 +4,8 @@ import { useQuery, useMutation } from '@apollo/client'
 import { PRODUCT_BY_ID } from '../../graphql/productQuey'
 import { UPDATE_PRODUCT } from '../../graphql/productMutation'
 import ProductForm from '../../components/adminProduct/productForm'
-import ModalResult from '../../components/modalResult'
 import Response from '../../components/response'
-import {CREATEDISCOUNT_MUTATION} from '../../graphql/createDiscountMutation'
+import {CREATEDISCOUNT_MUTATION, UPDATEPROMOTION_MUTATION} from '../../graphql/createDiscountMutation'
 
 const UpdateProduct = () => {
     const { productId } = useParams()
@@ -16,42 +15,32 @@ const UpdateProduct = () => {
     const [isImageChange, setIsImageChange] = useState(false)
     const [ updateProduct, {error} ] = useMutation(UPDATE_PRODUCT)
     const [ isUpdate, setIsUpdate ] = useState(undefined)
-    const [createDiscount, {error: errorDiscount}] = useMutation(CREATEDISCOUNT_MUTATION)
+    const [createDiscount] = useMutation(CREATEDISCOUNT_MUTATION)
+    const [updateDiscount] = useMutation(UPDATEPROMOTION_MUTATION)
     const [isDiscountCreate, setIsDiscountCreate] = useState(false)
     const [discount, setDiscount] = useState({
         discountValue: 0,
         method: "DISCOUNT",
         descriptionDiscount: ""
     })
+    const [promotionExist, setPromotionExist] = useState(false)
     
-
-    const UpdateResponse = () => {
-        if(isUpdate === "Success"){
-            return (
-                <ModalResult title="Success" icon="check" color="#22aa4b" setIsCreate={setIsUpdate} />
-            )
-        }
-        else if(isUpdate === "Fail"){
-            return (
-                <ModalResult title="Fail to Update" icon="times" setIsCreate={setIsUpdate} color="#a82626" />
-            )
-        }
-        else{
-            return (
-                <></>
-            )
-        }
-    }
-
+    console.log(discount)
     useEffect(() => {
         if (data?.productById){
             setProduct(data?.productById)
-            const promotion = data?.productById?.promotion
-            setDiscount({
-                discountValue: promotion?.discountValue || 0,
-                method: promotion?.method || "DISCOUNT",
-                descriptionDiscount: promotion?.descriptionDiscount || ""
-            })
+            if(data?.productById?.promotion){
+                const promotion = data?.productById?.promotion
+                setDiscount({
+                    discountValue: promotion?.discountValue || 0,
+                    method: promotion?.method || "DISCOUNT",
+                    descriptionDiscount: promotion?.description || "",
+                    type: promotion?.type,
+                    id: promotion._id
+                })
+                setIsDiscountCreate(true)
+                setPromotionExist(true)
+            } 
             setImage('http://localhost:3001/image/'+data?.productById?.image)
         }
     }, [data])
@@ -88,7 +77,7 @@ const UpdateProduct = () => {
         }
     })
 
-    const discountPacl = {
+    const discountPack = {
         discountHandle, 
         discount, 
         isDiscountCreate,  
@@ -126,7 +115,7 @@ const UpdateProduct = () => {
         try {
             const response = await updateProduct({variables: {id: _id, object: reStruct}})
             const createDiscountFuc = async () => {
-                if(isDiscountCreate){
+                if(isDiscountCreate && !promotionExist){
                     const discountRestruct = {
                         productId: _id,
                         discountValue: Number(discount.discountValue),
@@ -134,6 +123,15 @@ const UpdateProduct = () => {
                         description: discount.descriptionDiscount
                     }
                     await createDiscount({variables: {record: discountRestruct}})
+                }
+                else if(promotionExist){
+                    const discountRestruct = {
+                        discountValue: Number(discount.discountValue),
+                        method: discount?.method || "DISCOUNT",
+                        description: discount?.descriptionDiscount,
+                        type: discount?.type,
+                    }
+                    await updateDiscount({variables: {record: discountRestruct, id: discount.id}})
                 }
             }
             createDiscountFuc()
@@ -149,7 +147,7 @@ const UpdateProduct = () => {
         <div>
             <Response state={isUpdate} setState={setIsUpdate} />
             {product !== null && (
-                <ProductForm title={`แก้ไขสินค้า`} product={product} discountPack={discountPacl} image={image} 
+                <ProductForm title={`แก้ไขสินค้า`} product={product} discountPack={discountPack} image={image} 
                 inputHandle={inputHandle} submitForm={submitForm} />
             )}
         </div>
