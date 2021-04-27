@@ -17,13 +17,11 @@ const UpdateProduct = () => {
     const [ updateProduct, {error} ] = useMutation(UPDATE_PRODUCT)
     const [ isUpdate, setIsUpdate ] = useState(undefined)
     const [createDiscount, {error: errorDiscount}] = useMutation(CREATEDISCOUNT_MUTATION)
-    const [isDiscountCreate, setIsDiscountCreate] = useState(false)
     const [discount, setDiscount] = useState({
         discountValue: 0,
         method: "DISCOUNT",
         descriptionDiscount: ""
     })
-    
 
     const UpdateResponse = () => {
         if(isUpdate === "Success"){
@@ -46,12 +44,6 @@ const UpdateProduct = () => {
     useEffect(() => {
         if (data?.productById){
             setProduct(data?.productById)
-            const promotion = data?.productById?.promotion
-            setDiscount({
-                discountValue: promotion?.discountValue || 0,
-                method: promotion?.method || "DISCOUNT",
-                descriptionDiscount: promotion?.descriptionDiscount || ""
-            })
             setImage('http://localhost:3001/image/'+data?.productById?.image)
         }
     }, [data])
@@ -88,13 +80,6 @@ const UpdateProduct = () => {
         }
     })
 
-    const discountPacl = {
-        discountHandle, 
-        discount, 
-        isDiscountCreate,  
-        setIsDiscountCreate
-    }
-
     const submitForm = async (e) => {
         e.preventDefault()
         const { _id } = product
@@ -108,6 +93,13 @@ const UpdateProduct = () => {
             description: product.description,
             author: product.author
         }
+        const discountRestruct = {
+            productId: _id,
+            discountValue: Number(discount.discountValue),
+            method: discount.method,
+            description: discount.descriptionDiscount
+        }
+        console.log(discountRestruct)
         let filename = ''
 
         if (isImageChange){
@@ -125,18 +117,7 @@ const UpdateProduct = () => {
 
         try {
             const response = await updateProduct({variables: {id: _id, object: reStruct}})
-            const createDiscountFuc = async () => {
-                if(isDiscountCreate){
-                    const discountRestruct = {
-                        productId: _id,
-                        discountValue: Number(discount.discountValue),
-                        method: discount.method,
-                        description: discount.descriptionDiscount
-                    }
-                    await createDiscount({variables: {record: discountRestruct}})
-                }
-            }
-            createDiscountFuc()
+            await createDiscount({variables: {record: discountRestruct}})
             setIsUpdate("Success")
             console.log(response)
         } catch (e) {
@@ -149,7 +130,7 @@ const UpdateProduct = () => {
         <div>
             <Response state={isUpdate} setState={setIsUpdate} />
             {product !== null && (
-                <ProductForm title={`แก้ไขสินค้า`} product={product} discountPack={discountPacl} image={image} 
+                <ProductForm title={`แก้ไขสินค้า`} product={product} discount={discount} discountHandle={discountHandle} image={image} 
                 inputHandle={inputHandle} submitForm={submitForm} />
             )}
         </div>
