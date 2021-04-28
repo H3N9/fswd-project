@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {Route, Switch} from 'react-router-dom'
 import NavBar from '../components/navbar/navbar'
 import MobileNavbar from '../components/navbar/mobileNavbar'
+import NavBarPack from '../components/navbarPack'
 
 import Cart from './cart'
 import Home from './home'
@@ -32,109 +33,82 @@ import CreatePromotion from './admin/createPromotion.js'
 
 const Index = () => {
     const [isShowMenu, setIsShowMenu] = useState(false)
+    const ignorePath = [
+        "/login",
+        '/register'
+    ]
+
+
     return (
             <>             
                 <ContentBox >   
+                    <NavBarPack setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} ignorePath={ignorePath} />
                     <Switch>
 {/* --------------------------------------------- For User ----------------------------------------------------  */}
-                        <Route exact path="/">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
-                            <Home />
-                        </Route>
                         <Route path="/register">
                             <Register />
                         </Route>
                         <Route path="/login">
                             <Login />
                         </Route>
+                        
+                        <Route exact path="/">
+                            <Home />
+                        </Route>
+                        
                         <Route path="/discount">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <DiscountPage />
                         </Route>
                         <Route path="/product/:productSlug">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <Detail />
                         </Route>
                         <Route path="/cart">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <Cart />
                         </Route>
                         <Route path="/payment">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <Payment />
                         </Route>
                         <Route path="/products">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <AllProducts />
                         </Route>
                         <Route path="/promotions">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <AllPromotion />
                         </Route>
                         <Route path="/customer/orders">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <MyOrder />
                         </Route>
                         <Route path="/customer/order/:orderId">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <MyOrderDetail />
                         </Route>
 
 {/* --------------------------------------------- For Admin ----------------------------------------------------  */}
                           
                         <Route path="/admin/product/create">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <CreateProduct />
                         </Route>
                         <Route path="/admin/orders">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <Orders />                  
                         </Route> 
                         <Route path="/admin/promotions">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <Promotions />
                         </Route>
                         <Route path="/admin/promotion/create">
-                                <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                                <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                                 <CreatePromotion />
                             </Route> 
                         <Route path="/admin/promotion/:promotionId">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <PromotionDetail />
                         </Route>
                         <Route path="/admin/products">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <Products />
                         </Route>
                         <Route path="/admin/product/:productId">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <UpdateProduct />
                         </Route>
  
                         <Route path="/admin/order/:orderId">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <Order />
                         </Route>  
                         <Route exact path="/admin">
-                            <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
-                            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <Dashboard />
                         </Route>                        
                     </Switch>

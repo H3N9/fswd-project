@@ -6,6 +6,7 @@ import { UPDATE_PRODUCT } from '../../graphql/productMutation'
 import ProductForm from '../../components/adminProduct/productForm'
 import Response from '../../components/response'
 import {CREATEDISCOUNT_MUTATION, UPDATEPROMOTION_MUTATION} from '../../graphql/createDiscountMutation'
+import {REMOVEDISCOUNT_MUTATION} from '../../graphql/removeDiscount'
 
 const UpdateProduct = () => {
     const { productId } = useParams()
@@ -17,6 +18,7 @@ const UpdateProduct = () => {
     const [ isUpdate, setIsUpdate ] = useState(undefined)
     const [createDiscount] = useMutation(CREATEDISCOUNT_MUTATION)
     const [updateDiscount] = useMutation(UPDATEPROMOTION_MUTATION)
+    const [removeDiscount] = useMutation(REMOVEDISCOUNT_MUTATION)
     const [isDiscountCreate, setIsDiscountCreate] = useState(false)
     const [discount, setDiscount] = useState({
         discountValue: 0,
@@ -76,6 +78,20 @@ const UpdateProduct = () => {
             setIsImageChange(true)
         }
     })
+
+    const removeDiscountHandle = () => {
+        try{
+            if(promotionExist){
+                removeDiscount({variables: {id:discount.id}})
+                setIsUpdate("Success")
+            }
+            
+        }
+        catch(e){
+            console.log(e.message)
+            setIsUpdate("Fail")
+        }
+    }
 
     const discountPack = {
         discountHandle, 
