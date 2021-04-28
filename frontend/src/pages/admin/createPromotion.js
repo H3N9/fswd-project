@@ -44,7 +44,7 @@ const CreatePromotion = () => {
         <Box9p>
             <SpaceBox />
             <FormBox>
-                <CouponForm coupon={coupon} setCoupon={setCoupon} submitHandle={submitHandle} />
+                <CouponForm title={"สร้างคูปอง"} coupon={coupon} setCoupon={setCoupon} submitHandle={submitHandle} />
             </FormBox>
             <Response state={response} setState={setResponse} />
             <SpaceBox />

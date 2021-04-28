@@ -99,3 +99,17 @@ export const PROMOTIONS_PAGINATION_QUERY = gql`
         }
     }
 `
+
+export const COUPON_QUERY_BY_ID = gql`
+    query CouponPromotionById($id: MongoID!){
+        couponPromotionById(_id: $id){
+            _id
+            type
+            method
+            discountValue
+            promotionCode
+            quantity
+            description
+        }
+    }
+`

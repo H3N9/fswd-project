@@ -1,7 +1,7 @@
 import React from 'react'
 import {FormContainer, Input} from '../../styles/styleComponents'
 
-const CouponForm = ({setCoupon, submitHandle, coupon}) => {
+const CouponForm = ({title, setCoupon, submitHandle, coupon}) => {
 
     const inputHandle = (e) => {
         const {value, name} = e.target
@@ -13,7 +13,7 @@ const CouponForm = ({setCoupon, submitHandle, coupon}) => {
 
     return (
         <FormContainer onSubmit={(e) => submitHandle(e)}>
-            <h1>สร้างคูปอง</h1>
+            <h1>{title}</h1>
                 <Input>                           
                     <select type="text" id="method" name="method" value={coupon.method} required onChange={inputHandle}>
                         <option value="DISCOUNT">Discount</option>

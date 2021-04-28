@@ -1,62 +1,106 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import { Link, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { PRODUCT_QUERY } from '../../graphql/productQuey'
-import { useQuery } from '@apollo/client'
-import {Header, Table, Input} from '../../styles/styleComponents'
+import { COUPON_QUERY_BY_ID } from '../../graphql/promotionQuery'
+import { UPDATE_COUPON_BY_ID } from '../../graphql/promotionMutation'
+import { useQuery, useMutation } from '@apollo/client'
+import {Header, Table, Input, FormContainer} from '../../styles/styleComponents'
+import Response from '../../components/response'
+
 const Orders = () => {
-    const [promo, setPromo] = useState({
+    const [ coupon, setCoupon ] = useState({
         type: "",
         method: "",
         description: "",
-        createAt: "",
-        updateAt: ""
+        discountValue: 0,
+        quantity: 0,
+        promotionCode: ""
     });
+    const [ response, setResponse ] = useState(null)
     const { promotionId } = useParams();
-    const { loading, error, data } = useQuery(PRODUCT_QUERY)
-    const products = data?.products || []
+    const { loading, error, data } = useQuery(COUPON_QUERY_BY_ID, {variables: {id: promotionId}})
+    const [ updateCoupon ] = useMutation(UPDATE_COUPON_BY_ID)
+
+    useEffect(() => {
+        if (data?.couponPromotionById){
+            setCoupon(data?.couponPromotionById)
+        }
+    }, [data])
     
     const inputHandle = (event) =>{
         const {name, value} = event.target
-            setPromo({
-                ...promo,
+            setCoupon({
+                ...coupon,
                 [name]: value
             })
     }
+
+    const submitHandle = async (e) => {
+        e.preventDefault()
+        const inputCoupon = {
+            method: coupon.method,
+            description: coupon.description,
+            discountValue: Number(coupon.discountValue),
+            quantity: Number(coupon.quantity),
+            promotionCode: coupon.promotionCode
+        }
+
+        try {
+            const newCoupon = await updateCoupon({variables: {id: promotionId, object: inputCoupon}})
+            setCoupon(newCoupon?.data?.updateCouponById?.record)
+            setResponse("Success")
+
+        } catch (error) {
+            console.log(error.message)
+            setResponse("Fail")
+        }
+    }
+
     return (
         <Container>         
             <Header>
-                <h1>โปรโมชั่น {promotionId}</h1>
+                <h1>แก้ไขคูปอง</h1>
                 
             </Header>
-            <Content>
+            <FormContainer onSubmit={submitHandle}>
                 <p><b>รหัสโปรโมชั่น :</b> {promotionId}</p>
                 <Input>                           
-                    <input id="type" type="text" name="type" required value={promo.type} onChange={(e) => inputHandle(e)} />
-                    <label htmlFor="type">ประเภทโปรโมชั่น</label>
+                    <select type="text" id="method" name="method" value={coupon.method} required onChange={inputHandle}>
+                        <option value="DISCOUNT">Discount</option>
+                        <option value="PERCENT">Percent</option>
+                    </select>
+                    <label htmlFor="method">ประเภท</label>
                 </Input>
                 <Input>                           
-                    <input id="method" type="text" name="method" required value={promo.method} onChange={(e) => inputHandle(e)} />
-                    <label htmlFor="method">รูปแบบส่วนลด</label>
+                    <input id="discountValue" type="number" name="discountValue" required value={coupon.discountValue} onChange={inputHandle} />
+                    <label htmlFor="discountValue">value</label>
                 </Input>
                 <Input>                           
-                    <input id="createAt" type="text" name="createAt" required value={promo.createAt} onChange={(e) => inputHandle(e)} />
-                    <label htmlFor="createAt">สร้างเมื่อ</label>
+                    <input id="promotionCode" type="text" name="promotionCode" required value={coupon.promotionCode} onChange={inputHandle}/>
+                    <label htmlFor="promotionCode">Code</label>
                 </Input>
-                <Input>                           
-                    <input id="updateAt" type="text" name="updateAt" required value={promo.updateAt} onChange={(e) => inputHandle(e)} />
-                    <label htmlFor="updateAt">อัปเดทล่าสุดเมื่อ</label>
+                <Input>                      
+                    <input id="quantity" type="number" name="quantity" required value={coupon.quantity} onChange={inputHandle}/>
+                    <label htmlFor="quantity">จำนวน</label>
                 </Input>
-                <Input>                           
-                    <textarea id="description" rows="5" type="text" name="description" required value={promo.description} onChange={(e) => inputHandle(e)} />
-                    <label htmlFor="description">คำอธิบายโปรโมชั่น</label>
+                <Input>       
+                    <textarea id="" cols="20" rows="5" name="description" value={coupon.description} onChange={inputHandle}></textarea>
+                    <label htmlFor="">คำอธิบาย</label>
                 </Input>
-                <button onClick={() => console.log(promo)}><FontAwesomeIcon icon={['fas', 'save']} /> บันทึก</button>
-            </Content>     
+                <button><FontAwesomeIcon icon={['fas', 'save']} /> บันทึก</button>
+            </FormContainer>
+            <Response state={response} setState={setResponse} />     
         </Container>
     )
 }
+
+const FormBox = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+`
 
 const Container = styled.div`
     padding: 100px 5%;
