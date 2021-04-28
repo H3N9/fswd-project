@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
-import { useQuery, useMutation } from '@apollo/client'
+import { useQuery, useMutation, useLazyQuery } from '@apollo/client'
 import { PRODUCT_BY_ID } from '../../graphql/productQuey'
 import { UPDATE_PRODUCT } from '../../graphql/productMutation'
 import ProductForm from '../../components/adminProduct/productForm'
@@ -10,7 +10,8 @@ import {REMOVEDISCOUNT_MUTATION} from '../../graphql/removeDiscount'
 
 const UpdateProduct = () => {
     const { productId } = useParams()
-    const { data } = useQuery(PRODUCT_BY_ID, {variables: {id: productId}})
+    //const { data } = useQuery(PRODUCT_BY_ID, {variables: {id: productId}})
+    const [loadProduct, { data }] = useLazyQuery(PRODUCT_BY_ID, {variables: {id: productId}, fetchPolicy: 'no-cache'})
     const [ product, setProduct ] = useState(null)
     const [image, setImage] = useState();
     const [isImageChange, setIsImageChange] = useState(false)
@@ -20,15 +21,16 @@ const UpdateProduct = () => {
     const [updateDiscount] = useMutation(UPDATEPROMOTION_MUTATION)
     const [removeDiscount] = useMutation(REMOVEDISCOUNT_MUTATION)
     const [isDiscountCreate, setIsDiscountCreate] = useState(false)
+    const [isRemove, setIsRemove] = useState(false)
     const [discount, setDiscount] = useState({
         discountValue: 0,
         method: "DISCOUNT",
         descriptionDiscount: ""
     })
     const [promotionExist, setPromotionExist] = useState(false)
-    
-    console.log(discount)
+
     useEffect(() => {
+        console.log(data)
         if (data?.productById){
             setProduct(data?.productById)
             if(data?.productById?.promotion){
@@ -42,10 +44,26 @@ const UpdateProduct = () => {
                 })
                 setIsDiscountCreate(true)
                 setPromotionExist(true)
-            } 
+            }
+            else{
+                setDiscount({
+                    discountValue: 0,
+                    method: "DISCOUNT",
+                    descriptionDiscount: ""
+                })
+                setIsDiscountCreate(false)
+                setPromotionExist(false)
+            }
             setImage('http://localhost:3001/image/'+data?.productById?.image)
         }
     }, [data])
+
+    useEffect(() => {
+        const load = async () => {
+            await loadProduct()
+        }
+        load()
+    }, [])
 
     const discountHandle = (e) => {
         const { name, value } = e.target
@@ -79,25 +97,13 @@ const UpdateProduct = () => {
         }
     })
 
-    const removeDiscountHandle = () => {
-        try{
-            if(promotionExist){
-                removeDiscount({variables: {id:discount.id}})
-                setIsUpdate("Success")
-            }
-            
-        }
-        catch(e){
-            console.log(e.message)
-            setIsUpdate("Fail")
-        }
-    }
-
     const discountPack = {
         discountHandle, 
         discount, 
         isDiscountCreate,  
-        setIsDiscountCreate
+        setIsDiscountCreate,
+        promotionExist,
+        setIsRemove,
     }
 
     const submitForm = async (e) => {
@@ -139,8 +145,9 @@ const UpdateProduct = () => {
                         description: discount.descriptionDiscount
                     }
                     await createDiscount({variables: {record: discountRestruct}})
+                    console.log("create discount")
                 }
-                else if(promotionExist){
+                else if(promotionExist && !isRemove){
                     const discountRestruct = {
                         discountValue: Number(discount.discountValue),
                         method: discount?.method || "DISCOUNT",
@@ -148,11 +155,16 @@ const UpdateProduct = () => {
                         type: discount?.type,
                     }
                     await updateDiscount({variables: {record: discountRestruct, id: discount.id}})
+                    console.log("update discount")
+                }
+                else if(promotionExist && isRemove){
+                    await removeDiscount({variables: {id:discount.id}})
+                    console.log("del discount")
                 }
             }
             createDiscountFuc()
             setIsUpdate("Success")
-            console.log(response)
+            loadProduct()
         } catch (e) {
             console.log(error, e.message)
             setIsUpdate("Fail")
