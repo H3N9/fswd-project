@@ -1,4 +1,5 @@
-import { DiscountPricePromotionTC, ProductTC, CouponPromotionTC, OrderPromotionModel } from '../../models'
+import moment from 'moment'
+import { PromotionTC, DiscountPricePromotionTC, ProductTC, CouponPromotionTC, OrderPromotionModel } from '../../models'
 
 DiscountPricePromotionTC.addRelation(
     'product',
@@ -20,5 +21,19 @@ CouponPromotionTC.addFields({
 
             return newOrderCoupons.length
         }
+    }
+})
+
+PromotionTC.addFields({
+    createdAtWithFormatDateTime: {
+        type: 'String',
+        resolve: (source) => moment(source.createdAt).format("YYYY-MM-DD HH:mm:ss"),
+        projection: { createdAt: 1 },
+    },
+
+    updatedAtWithFormatDateTime: {
+        type: 'String',
+        resolve: (source) => moment(source.updatedAt).format("YYYY-MM-DD HH:mm:ss"),
+        projection: { updatedAt: 1 },
     }
 })

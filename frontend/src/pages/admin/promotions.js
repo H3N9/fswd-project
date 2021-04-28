@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {Header} from '../../styles/styleComponents'
-import {COUPON_PAGINATION_QUERY} from '../../graphql/promotionQuery'
+import {COUPON_PAGINATION_QUERY, PROMOTIONS_PAGINATION_QUERY} from '../../graphql/promotionQuery'
 import { useQuery} from '@apollo/client'
 import PromotionCard from '../../components/adminPromotion/promotionCard'
 import Pagination from "../../components/pagination"
@@ -15,11 +15,11 @@ const Promotions = () => {
     const initPage = Number(query.get("page")) || 1
     const [page, setPage] = useState(initPage)
     const perPage = 5
-    const {data} = useQuery(COUPON_PAGINATION_QUERY, {variables:{page:initPage, perPage}, fetchPolicy: 'network-only'})
-    const promotions = data?.CouponPromotionsWithPagination?.items || []
-    const pageData = data?.CouponPromotionsWithPagination?.pageInfo || {}
+    //const {data} = useQuery(COUPON_PAGINATION_QUERY, {variables: {page:initPage, perPage}, fetchPolicy: 'network-only'})
+    const {data} = useQuery(PROMOTIONS_PAGINATION_QUERY, {variables: {page:initPage, perPage}, fetchPolicy: 'network-only'})
+    const promotions = data?.promotionsWithPagination?.items || []
+    const pageData = data?.promotionsWithPagination?.pageInfo || {}
     const countPage = (page - 1)*perPage
-    
 
     return (
         <Container>
