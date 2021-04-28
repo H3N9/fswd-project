@@ -35,7 +35,7 @@ const BoxCheck = styled.div`
     height: 80px;
     align-items: center;
     padding: 60px 20px;
-    border: solid 3px #f1f1f1;
+    border: solid 3px #BFBFBF;
     margin: 10px 0 10px 0;
 `
 
@@ -54,7 +54,7 @@ const BoxCheckTrue = styled.div`
     height: 80px;
     align-items: center;
     padding: 60px 20px;
-    border: solid 3px #003cff;
+    border: solid 3px #5128e6;
     margin: 10px 0 10px 0;
 `
 
@@ -62,7 +62,7 @@ const DotTrue = styled.div`
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    border: solid 10px #003cff;
+    border: solid 10px #5128e6;
     background: white;
     cursor: pointer;
 `

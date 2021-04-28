@@ -35,7 +35,11 @@ const AllPromotion = () => {
                 <h1>คูปองส่วนลด</h1>
             </Header>
             <PromoFlex>
-                {coupons.map((item) => <PromotionItem key={item._id} promotion={item} />)}
+                {coupons.map((item) => (
+                    <div className="item-wrapper">
+                        <PromotionItem key={item._id} promotion={item} />
+                    </div>
+                ))}
             </PromoFlex>
             <CatgoriesProducts products={products} title={"สินค้าโปรโมชั่น"}/>  
         </Container>
@@ -47,15 +51,24 @@ const Container = styled.div`
 `
 
 const PromoFlex = styled.div`
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat( auto-fill, minmax(500px, 1fr) );
+
+    margin-bottom: 50px;
     max-height: 500px;
     overflow-y: scroll;
-    justify-content: flex-start;
-    margin-bottom: 50px;
-    margin: 0 auto;
-    flex-wrap: wrap;
-    @media (max-width: 1800px){
+    .item-wrapper{
+        display: flex;
+        justify-content:center;
+    }
+    
+    @media (max-width: 580px){
+        display: flex;
+        flex-wrap: wrap;
         justify-content: center;
+    }
+    @media (max-width: 414px){
+        max-height: 280px;
     }
 `
 
