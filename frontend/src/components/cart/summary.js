@@ -13,18 +13,18 @@ const Summary = ({totle}) => {
             </TitleHead>
             <TextBox>
                 <NormalText>ยอดรวม</NormalText>
-                <NormalText>THB{totle || 0}</NormalText>
+                <NormalText>{totle || 0} บาท</NormalText>
             </TextBox>
             <TextBox>
                 <NormalText>ค่าส่ง</NormalText>
-                <NormalText>THB{shipping}</NormalText>
+                <NormalText>{shipping} บาท</NormalText>
             </TextBox>
             <BreakBetween />
             <Linebreak />
             <BreakBetween />
             <TextBox>
                 <NormalText>ยอดสุทธิ</NormalText>
-                <NormalText>THB{result}</NormalText>
+                <NormalText>{result} บาท</NormalText>
             </TextBox>
             <BreakBetween />
             <Link to="/payment">
@@ -35,15 +35,20 @@ const Summary = ({totle}) => {
 }
 
 const SummaryBox = styled.div`
-    width: 300px;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    background: #f1f1f1;
+    position: sticky;
+    top: 20%;
+    padding: 10px 20px 40px 20px;
+    background: #FFF;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
 `
 const TitleHead = styled.h1`
     margin: 30px 10% 30px 10%;
     display: flex;
+    font-weight: bold;
 `
 const TextBox = styled.div`
     display: flex;

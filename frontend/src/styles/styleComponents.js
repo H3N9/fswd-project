@@ -131,6 +131,7 @@ export const Form = styled.form`
 
 export const Input = styled.div`
         position: relative;
+        overflow: hidden;
         width: 100%;
         label {
             position: absolute;
@@ -153,10 +154,12 @@ export const Input = styled.div`
             padding: 5px 0 5px 5px;
             position: relative;
             border-bottom: 2px solid #5128e6;
+            z-index: 3;
             :focus~label, :valid~label, :-webkit-autofill~label{
                 top: -5px;
                 left: 0;
                 color: #111;
+                font-weight: 500;
             }
         }
         textarea{
@@ -174,7 +177,7 @@ export const Header = styled.div`
         margin: 5px 0;
         font-weight: bold;
         letter-spacing: -1px;
-        font-size: clamp(2rem, 5vmin, 2.5rem);
+        font-size: clamp(2.3rem, 5vmin, 2.5rem);
     }
     a, button{
         border: none;
