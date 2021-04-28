@@ -192,6 +192,7 @@ export const Table = styled.table`
     border-collapse:collapse;  
     width:100%;
     border-radius: 10px;
+
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     thead{
         background-image: linear-gradient(120deg, #5128e6 , #2891e6);

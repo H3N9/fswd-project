@@ -5,7 +5,7 @@ import { PRODUCT_PAGINATION_QUERY } from '../graphql/productPaginationQuery'
 import { useQuery } from '@apollo/client'
 import Card from '../components/home/card'
 import Pagination from "../components/pagination"
-import {Input} from '../styles/styleComponents'
+import {Input, Header} from '../styles/styleComponents'
 
 const AllProducts = () => {
     const query = new URLSearchParams(useLocation().search)
@@ -32,8 +32,10 @@ const AllProducts = () => {
 
     return (
         <Container>      
+           <Header>
             <h1>สินค้าทั้งหมด</h1>
-            <SearchBar>
+           </Header>
+            {/* <SearchBar>
                 <Input>
                     <input type="text" name="name" id="name" placeholder="ค้นหาชื่อหนังสือ" value={filter.name}  onChange={(e) => inputHandle(e)}/>
                 </Input>
@@ -56,7 +58,7 @@ const AllProducts = () => {
                         <option value="Oldest">เก่าสุด</option>
                     </select>
                 </Input>
-            </SearchBar>
+            </SearchBar> */}
             <Flex>
                 {products?.map((product, index) => (<Card key={index} product={product} />))} 
             </Flex>
@@ -66,7 +68,7 @@ const AllProducts = () => {
 }
 
 const Container = styled.div`
-    padding: 100px 4%;
+    padding: 100px 4% 30px 4%;
 `
 
 const Flex = styled.div`

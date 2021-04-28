@@ -61,48 +61,53 @@ const Orders = () => {
                     <p className="address-header"><b>ที่อยู่สำหรับจัดส่ง</b> </p>
                     <Address>
                         <p>{address?.address}</p>
-                        <p><b>ตำบล/แขวง:</b> {address?.subDistrict || '-'}</p>
-                        <p><b>อำเภอ/เขต: </b>{address?.district || '-'}</p>
-                        <p><b>จังหวัด: </b>{address?.province}</p>
-                        <p><b>รหัสไปรษณีย์: </b>{address?.postalCode}</p>
-                        <p><b>เบอร์โทรศัพท์: </b>{address?.phoneNumber}</p>
+                        <p><b>ตำบล/แขวง :</b> {address?.subDistrict || '-'}</p>
+                        <p><b>อำเภอ/เขต : </b>{address?.district || '-'}</p>
+                        <p><b>จังหวัด : </b>{address?.province}</p>
+                        <p><b>รหัสไปรษณีย์ : </b>{address?.postalCode}</p>
+                        <p><b>เบอร์โทรศัพท์ : </b>{address?.phoneNumber}</p>
                     </Address>
+                    <Total>
+                        <h2>โปรโมชั่น : </h2>
+                        <h2>ราคาสุทธิ : {order?.netTotalPrice} บาท</h2>    
+                    </Total>
                 </Content>
-                <Table>
-                    <thead>                
-                        <tr className="table-header">
-                            <th>ชื่อสินค้า</th>
-                            <th>ราคา (บาท)</th>
-                            <th>จำนวนที่สั่งซื้อ (ชิ้น)</th>
-                        </tr>
-                    </thead>
-                    {orderProducts.map((value, index) => 
-                    <tr className={index%2 == 0 ? "dim-row" : ""}>
-                        <td>{value.product.title}</td>
-                        <td>{value.product.price}</td>
-                        <td>{value.quantity}</td>
-                    </tr>
-                    )}
-                    <h2>โปรโมชั่น</h2>
-                    <thead>                
-                        <tr className="table-header">
-                            <th>ประเภท</th>
-                            <th>รายละเอียดโปรโมชั่น</th>
-                            <th>ส่วนลด (บาท)</th>
-                        </tr>
-                    </thead>
-                    {discounts.map((value, index) => 
-                    <tr className={index%2 == 0 ? "dim-row" : ""}>
-                        <td>{value.type}</td>
-                        <td>{value.description}</td>
-                        <td>{value.discount}</td>
-                    </tr>
-                    )}
-                    <Header>
-                        <h2>ราคาสุทธิ: {order?.netTotalPrice} บาท</h2>
-                    </Header>
-                </Table>
+                <TableContainer>
+                    <Table>
+                            <thead>                
+                            <tr className="table-header">
+                                <th>ชื่อสินค้า</th>
+                                <th>ราคา (บาท)</th>
+                                <th>จำนวนที่สั่งซื้อ (ชิ้น)</th>
+                            </tr>
+                        </thead>
+                        {orderProducts.map((value, index) => 
+                            <tr className={index%2 == 0 ? "dim-row" : ""}>
+                                <td>{value.product.title}</td>
+                                <td>{value.product.price}</td>
+                                <td>{value.quantity}</td>
+                            </tr>
+                        )}
+                    </Table>
+                    <Table>
+                        <thead>                
+                            <tr className="table-header">
+                                <th>ประเภท</th>
+                                <th>รายละเอียดโปรโมชั่น</th>
+                                <th>ส่วนลด (บาท)</th>
+                            </tr>
+                        </thead>
+                        {discounts.map((value, index) => 
+                            <tr className={index%2 == 0 ? "dim-row" : ""}>
+                                <td>{value.type}</td>
+                                <td>{value.description}</td>
+                                <td>{value.discount}</td>
+                            </tr>
+                        )}
+                    </Table>
+                </TableContainer>
             </Flex>
+            
         </Container>
         </>
     )
@@ -116,13 +121,32 @@ const Flex = styled.div`
     display: flex;
     table{
         width: 100%;
+        margin-bottom: 20px;
     }
     @media (max-width: 1200px){
         flex-direction: column;
     }
-
 `
 
+const TableContainer = styled.div`
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+`
+const Total = styled.div`
+    padding: 10px;
+    margin: 0 auto;
+    width: 90%;
+    margin-bottom: 20px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    background-image: linear-gradient(120deg, #000000 , #555);
+    border-radius: 10px;
+    color: #FFF;
+    h2{
+        font-weight: bold;
+    }
+
+`
 const Content = styled.div`
     max-width: 750px;
     padding-right: 10px;
@@ -133,21 +157,20 @@ const Content = styled.div`
             font-weight: bold;
         }
         &.address-header{
+            font-size: 1.7rem;
             margin: 50px 0 5px 0;
         }
     }
 ` 
 const Address = styled.div`
-    background: #e2e2e2;
     border-radius: 5px;
     width: 60%;
     min-height: 150px;
     padding: 5px 7px;
     margin-bottom: 25px;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    margin-left: 20px;
     p{
-        margin: 0;
-        color: #222;
+        margin: 5px 0;
     }
     @media (max-width: 1200px){
         max-width: 1200px;

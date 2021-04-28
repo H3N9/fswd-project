@@ -90,6 +90,7 @@ const Index = () => {
                         </Route>
 
 {/* --------------------------------------------- For Admin ----------------------------------------------------  */}
+                          
                         <Route path="/admin/product/create">
                             <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                             <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
@@ -130,12 +131,12 @@ const Index = () => {
                             <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                             <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <Order />
-                        </Route>     
-                        <Route path="/admin/">
+                        </Route>  
+                        <Route exact path="/admin">
                             <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu}/>
                             <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
                             <Dashboard />
-                        </Route>             
+                        </Route>                        
                     </Switch>
                 </ContentBox>
              </>
