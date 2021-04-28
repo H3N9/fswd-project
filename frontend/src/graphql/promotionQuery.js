@@ -27,3 +27,39 @@ export const COUPON_PAGINATION_QUERY = gql`
         }
     }
 `
+
+export const PROMOTIONS_QUERY = gql`
+    query{
+        promotions{
+            _id
+            type
+            method
+            description
+            discountValue
+            ... on Coupon{
+                orderQuantityCount
+                promotionCode
+                quantity
+            }
+            ... on DiscountPrice{
+                productId
+                product{
+                    _id
+                    title
+                    author
+                    publisher
+                    description
+                    price
+                    quantity
+                    types
+                    netPrice
+                    image
+                    promotion {
+                        _id
+                        method
+                    }
+                }
+            }
+        }
+    }
+`

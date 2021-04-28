@@ -2,18 +2,18 @@ import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const PromotionItem = () => {
+const PromotionItem = ({ promotion }) => {
     return (
-        <PromoItem name="Promotion Description">
+        <PromoItem name={`${promotion.description} เมื่อใส่รหัส ${promotion.promotionCode}`}>
             <div className="promotion-detail" >
                 <div className="promotion-name">
                     <FontAwesomeIcon icon={['fas', 'tag']} size="2x" />
-                    <p>Promotion Name</p>
+                    <p>{promotion.promotionCode}</p>
                 </div>
-                <h1><b>50 บาท</b></h1> 
+                <h1><b>ลด {promotion.discountValue} {(promotion.method === 'DISCOUNT'?'บาท':'%')}</b></h1> 
             </div>
             <div className="promotion-value">
-                <h3>คงเหลือ <b>2</b> ครั้ง</h3> 
+                <h3>คงเหลือ <b>{promotion.quantity}</b> ครั้ง</h3> 
             </div>
         </PromoItem>
     )
