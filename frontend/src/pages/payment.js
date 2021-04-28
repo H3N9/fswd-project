@@ -207,19 +207,20 @@ const BoxPayment = styled.div`
     }
 `
 const PaymentInputBox = styled.div`
-    width: clamp(600px, 70%, 850px);
-    
-    @media (max-width: 1600px){
-        margin: 0 auto;
-    }
+    flex: 1;
+    max-width: 850px;
     display: flex;
     flex-direction: column;
+    /* @media (max-width: 1600px){
+        margin: 0 auto;
+    } */
+    
 `
 const CartSummary = styled.div`
-    width: 500px;
+    width: clamp(320px, 25vw, 500px);
     margin: 15px 25px;
     position: relative;
-    @media (max-width: 1600px){
+    @media (max-width: 896px){
         width: 100%;
         margin: 15px 0px;
     }  

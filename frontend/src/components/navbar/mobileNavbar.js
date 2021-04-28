@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import BoxLink from './btnNav'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
     
     useEffect(() => {
@@ -10,10 +10,10 @@ const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
     return(
         <Mainmenu right={isShowMenu ? "0" : "100%"} opacity={isShowMenu ? "1" : "0"} duration={isShowMenu ? "0s" : "0.95s"}>
             <MenuContainer>
-                <Link to={`/new`} onClick={() => setIsShowMenu(false)}>สินค้าใหม่</Link>
-                <Link to={`/best`} onClick={() => setIsShowMenu(false)}>สินค้าขายดี</Link>
-                <Link to={`/discount`} onClick={() => setIsShowMenu(false)}>สินค้าลดราคา</Link>
-                <Link to={`/recommend`} onClick={() => setIsShowMenu(false)}>สินค้าแนะนำ</Link>  
+                <NavLink to={`/new`} onClick={() => setIsShowMenu(false)}>สินค้าใหม่</NavLink>
+                <NavLink to={`/best`} onClick={() => setIsShowMenu(false)}>สินค้าขายดี</NavLink>
+                <NavLink to={`/discount`} onClick={() => setIsShowMenu(false)}>สินค้าลดราคา</NavLink>
+                <NavLink to={`/recommend`} onClick={() => setIsShowMenu(false)}>สินค้าแนะนำ</NavLink>  
             </MenuContainer>
         </Mainmenu>
     );

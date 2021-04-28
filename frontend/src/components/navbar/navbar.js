@@ -73,6 +73,7 @@ const BoxBtn = styled.div`
 
 const Logo = styled.div`
     padding-top: 5px;
+    margin-right: 20px;
     img{
         width: 100%;
         max-width: 62px;
