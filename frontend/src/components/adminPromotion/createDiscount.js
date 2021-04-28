@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Input } from '../../styles/styleComponents'
 
-const CreateDiscount = ({discountHandle, setIsDiscountCreate, discount, isDiscountCreate}) => {
+const CreateDiscount = ({discountHandle, setIsDiscountCreate, discount, isDiscountCreate, removeDiscountHandle, discountExist}) => {
     const heightSet = isDiscountCreate? "400px":"0"
     
     return (
@@ -10,6 +10,7 @@ const CreateDiscount = ({discountHandle, setIsDiscountCreate, discount, isDiscou
             <ContainerText>
                 {isDiscountCreate? (<DotTrue onClick={() => setIsDiscountCreate(false)} />):(<Dot onClick={() => setIsDiscountCreate(true)}  />)}
                 <h1>เพิ่มโปรโมชั่น</h1>
+                {discountExist && <button className="delBut" onClick={() => removeDiscountHandle()}>ลบ</button>}
             </ContainerText>
             <div style={{...styleForm, height: heightSet}}>
                 <Input>

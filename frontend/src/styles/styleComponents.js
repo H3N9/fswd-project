@@ -284,5 +284,10 @@ export const FormContainer = styled.form`
             transform: scale(0.9);
         }
     }
+    button.delBut{
+        background-color: red;
+        width: 20%;
+        height: 40px;
+    }
 `
 

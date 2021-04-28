@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
 import { PRODUCT_QUERY } from '../graphql/productQuey'
+import { PROMOTIONS_QUERY } from '../graphql/promotionQuery'
 import { useQuery } from '@apollo/client'
 import {Input, Header} from '../styles/styleComponents'
 import CatgoriesProducts from '../components/home/catgoriesProducts'
@@ -11,29 +12,34 @@ import PromotionItem from "../components/promotion/promotionItem"
 const AllPromotion = () => {
     const query = new URLSearchParams(useLocation().search)
     const initPage = Number(query.get("page")) || 1
-    const { data, count } = useQuery(PRODUCT_QUERY)
+    const { data, count } = useQuery(PROMOTIONS_QUERY)
     console.log(data)
-    const products = data?.products || []
 
+    const destructPromotion = (acc, curr) => {
+        if (curr.product){
+            return {...acc, products: [...acc.products, curr.product]}
+        }
+        else if (curr.type === 'Coupon'){
+            return {...acc, coupons: [...acc.coupons, curr]}
+        }
+        else
+            return acc
+    }
+
+    const {coupons, products} = data?.promotions.reduce(destructPromotion, 
+        {coupons: [], products: []}) || {coupons: [], products: []}
 
     return (
         <Container>      
             <Header>
-                <h1>โปรโมชั่น</h1>
+                <h1>คูปองส่วนลด</h1>
             </Header>
             <PromoFlex>
-                <div className="item-wrapper">
-                    <PromotionItem />
-                </div>
-                <div className="item-wrapper">
-                    <PromotionItem />
-                </div>
-                <div className="item-wrapper">
-                    <PromotionItem />
-                </div>
-                <div className="item-wrapper">
-                    <PromotionItem />
-                </div>
+                {coupons.map((item) => (
+                    <div className="item-wrapper">
+                        <PromotionItem key={item._id} promotion={item} />
+                    </div>
+                ))}
             </PromoFlex>
             <CatgoriesProducts products={products} title={"สินค้าโปรโมชั่น"}/>  
         </Container>
