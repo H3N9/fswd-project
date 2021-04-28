@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
-import { useQuery, useMutation, useLazyQuery } from '@apollo/client'
+import { useMutation, useLazyQuery } from '@apollo/client'
 import { PRODUCT_BY_ID } from '../../graphql/productQuey'
 import { UPDATE_PRODUCT } from '../../graphql/productMutation'
 import ProductForm from '../../components/adminProduct/productForm'
@@ -10,7 +10,6 @@ import {REMOVEDISCOUNT_MUTATION} from '../../graphql/removeDiscount'
 
 const UpdateProduct = () => {
     const { productId } = useParams()
-    //const { data } = useQuery(PRODUCT_BY_ID, {variables: {id: productId}})
     const [loadProduct, { data }] = useLazyQuery(PRODUCT_BY_ID, {variables: {id: productId}, fetchPolicy: 'no-cache'})
     const [ product, setProduct ] = useState(null)
     const [image, setImage] = useState();
