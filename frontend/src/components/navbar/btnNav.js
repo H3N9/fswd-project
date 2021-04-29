@@ -37,21 +37,6 @@ const BoxLink = styled.div`
         :hover{
             color: #FFF;
         }
-        .active{
-            ::before{
-            content: "";
-            position: absolute;
-            width: 0%;
-            height: 25px;
-            border-radius: 5px;
-            background: #222;
-            z-index: -1;
-            transition: 0.32s;
-        }
-            :before{
-                width: 95%;
-            }
-        }
     }
     @media (max-width: 960px) {
         display: none;
