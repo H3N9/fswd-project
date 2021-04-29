@@ -37,18 +37,18 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                                 <p>จัดการ <FontAwesomeIcon icon={['fas', 'sort-down']} style={{marginBottom: 2}}/></p>
                                 <div className="menu">
                                     <div className="menu-items">
-                                        <NavLink exact activeStyle={{ background: "#222", color: "#FFF", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin/orders`}>ออเดอร์</NavLink>
+                                        <NavLink exact activeStyle={{ background: "#FFF", color: "#222", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin/orders`}>ออเดอร์</NavLink>
                                     </div>
                                     <div className="menu-items">
-                                        <NavLink exact activeStyle={{ background: "#222", color: "#FFF", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin/products`}>สินค้า</NavLink>
+                                        <NavLink exact activeStyle={{ background: "#FFF", color: "#222", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin/products`}>สินค้า</NavLink>
                         
                                     </div>
                                     <div className="menu-items">
-                                        <NavLink exact activeStyle={{ background: "#222", color: "#FFF", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin/promotions`}>โปรโมชั่น</NavLink>
+                                        <NavLink exact activeStyle={{ background: "#FFF", color: "#222", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin/promotions`}>โปรโมชั่น</NavLink>
             
                                     </div>
                                     <div className="menu-items">
-                                        <NavLink exact activeStyle={{ background: "#222", color: "#FFF", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin`}>Dashboard</NavLink>
+                                        <NavLink exact activeStyle={{ background: "#FFF", color: "#222", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin`}>Dashboard</NavLink>
                                     </div>             
                                 </div>
                             </Dropdown>
@@ -277,7 +277,9 @@ const Dropdown = styled.div`
     .menu{
         padding: 20px;
         border-radius: 10px;
-        background: #FFF;
+        background: rgba(0,0,0,0.75);
+        -webkit-backdrop-filter-: blur(5px); 
+        backdrop-filter: blur(5px); 
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         transition: 0.25s;
         position: absolute;
@@ -288,7 +290,7 @@ const Dropdown = styled.div`
             a{
                 width: 100%;
                 text-decoration: none;
-                color: #111;
+                color: #FFF;
                 border-radius: 5px;
                 font-weight: 500;
                 font-size: 1.2rem;
@@ -296,8 +298,8 @@ const Dropdown = styled.div`
                 padding: 0 10px;
                 position: relative;
                 :hover{
-                    background: #222;
-                    color: #FFF;
+                    background: #FFF;
+                    color: #222;
                 }     
             }      
         }
