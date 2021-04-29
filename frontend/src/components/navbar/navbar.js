@@ -3,14 +3,20 @@ import styled from 'styled-components'
 import BoxLink from './btnNav'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Stephen from '../../images/stephen.jpg'
+import { useQuery } from '@apollo/client'
+import { ME_QUERY } from '../../graphql/meQuery'
 import logo from '../../images/logo.webp'
 import Modal from './modal'
 import {useOrderContext} from '../../context/orderContext'
-import { Link } from 'react-router-dom'
+import { Link, Route, Switch } from 'react-router-dom'
 
+import Orders from '../../pages/admin/orders'
 const Navbar = ({setIsShowMenu, isShowMenu}) => {
+    const { data, loading, error } = useQuery(ME_QUERY)
     const [modal, setModal] = useState(false)
     const { orders } = useOrderContext()
+    const user = data === undefined ? {me:{name: ""}} : data
+    const isAdmin =  loading ? false : data.me === null ? false : data.me.isAdmin
     const amount = orders.reduce((val1, val2) => val1 + (val2.quantity || 0), 0)
 
     return (
@@ -22,7 +28,20 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                             <img src={logo} alt="" width="10px"/>
                         </Link>
                     </Logo>    
-                    <BoxLink title={"สินค้าลดราคา"} link={"promotions"} main={""}  /> 
+                    { isAdmin ? 
+                        <>
+                            <BoxLink title={"ออเดอร์"} link={`admin/orders`} main={""}  /> 
+                            <BoxLink title={"สินค้า"} link={`admin/products`} main={""}  /> 
+                            <BoxLink title={"โปรโมชั่น"} link={`admin/promotions`} main={""}  /> 
+                            <BoxLink title={"Dashboard"} link={`admin`} main={""}  />
+                        </>
+                    :
+                        <>
+                            <BoxLink title={"โปรโมชั่น"} link={"promotions"} main={""}  /> 
+                            <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  /> 
+                            <BoxLink title={"ตะกร้าสินค้า"} link={"cart"} main={""}  /> 
+                        </>
+                    }
                 </BoxBtn>  
                 <AccountBox>
                     <BoxButton>
@@ -32,13 +51,17 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                         <Circle>{amount}</Circle>
                     </BoxButton>
-                    <BoxButton>
-                        <Image src={Stephen} />
+                    <BoxButton className="img-profile">
+                        {user.me.name.charAt(0).toUpperCase()}
+                        {/* <Image src={Stephen} /> */}
                     </BoxButton>
                     <MobileMenuButton onClick={() => setIsShowMenu(!isShowMenu)} className={isShowMenu ? "active" : ""} />
                 </AccountBox>        
         </Package>
-            <Modal modal={modal}/>
+        <Modal modal={modal}/>    
+        <Switch>
+            <Route path="admin/orders" render={() => <Orders/>}/>
+        </Switch>
         </>
     )
 }
@@ -69,6 +92,7 @@ const BoxBtn = styled.div`
     padding-left: 20px;
     display: flex;
     align-items:center;
+    
 `
 
 const Logo = styled.div`
@@ -131,6 +155,20 @@ const BoxButton = styled.div`
     align-items: center;
     cursor: pointer;
     position: relative;
+    &.img-profile{
+        background-image: linear-gradient(120deg, #5128e6 , #2891e6);
+        border-radius: 50%;
+        display: flex;
+        color: rgba(255,255,255, 0.9);
+        font-weight: 500;
+        justify-content: center;
+        align-items: center;
+        font-size: 32px;
+        margin: 0 7px;
+    }
+    img{
+        position: absolute;
+    }
 `
 const Image = styled.img`
     border-radius: 50%;

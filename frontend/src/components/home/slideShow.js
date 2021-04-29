@@ -43,6 +43,7 @@ const MainImage = styled.div`
     background-color: #f1f1f1;
     display: flex;
     justify-content: center;
+    overflow: hidden;
 `
 const slide = keyframes`
     0% {transform: translateX(0)}
