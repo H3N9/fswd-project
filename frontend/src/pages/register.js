@@ -54,7 +54,7 @@ const Register = () =>{
 
             setError(
                 <ErrorContainer>
-                    <p>Password not match with confirm password</p>
+                    <p>รหัสผ่านกับ ยืนยันรหัสผ่านไม่ตรงกัน</p>
                 </ErrorContainer>
             )
         }
@@ -107,6 +107,7 @@ const ErrorContainer = styled.div`
     margin-bottom: 25px;
     background: #d43434;
     color: #FFF;
+    font-weight: 500;
     border-radius: 5px;
 
 `
