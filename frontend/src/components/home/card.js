@@ -16,12 +16,7 @@ const Card = ({product}) => {
     const ignoreClick = createRef()
 
     const addCart = (e) => {
-        const svgTag = ignoreClick.current.firstChild
-        const path = ignoreClick.current.firstChild.firstChild
-        const pText = ignoreClick.current.lastChild
-        const buttonAdd = ignoreClick.current
-        console.log(e.target == svgTag)
-        if(e.target !== svgTag && e.target !== buttonAdd && e.target !== pText && e.target !== path){
+        if(!ignoreClick.current.contains(e.target)){
             const productSlug = title.replace(/ /gi, '-')
             const location = {
                 pathname: `/product/${productSlug}`,

@@ -1,15 +1,30 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import {Button} from '../../styles/styleComponents'
 import {Link} from 'react-router-dom'
 import {useOrderContext} from '../../context/orderContext'
 import CardOrder from './cardOrder'
 
-const Modal = ({modal}) => {
+const Modal = ({modal, setModal, parent}) => {
     const { orders } = useOrderContext()
+    const modalElement = useRef()
+    
+
+    const isOutside = (e) => {
+        if(!parent.current.contains(e.target) && !modalElement.current.contains(e.target)){
+            setModal(false)
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('click', isOutside)
+        return () => {
+            window.removeEventListener('click', isOutside)
+        }
+    }, [modal])
 
     return (
-        <BoxModal modalHeight={modal ? "330px": "0"}>
+        <BoxModal modalHeight={modal ? "330px": "0"} ref={modalElement}>
             <BoxCover>
                 <TitleBox>
                     <Title>ตระกร้าของฉัน</Title>
