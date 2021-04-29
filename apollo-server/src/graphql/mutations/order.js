@@ -135,6 +135,10 @@ export const confirmOrder = schemaComposer.createResolver({
             if (orderProducts.length === 0){
                 throw new Error('There are no items in the cart');
             }
+            if (!order.shippingId){
+                throw new Error(`order don't have shipping`);
+            }
+
             for (const orderProduct of orderProducts) {
                 const product = await ProductModel.findById(orderProduct.productId)
                 const newQuantity = product.quantity - orderProduct.quantity
@@ -144,7 +148,7 @@ export const confirmOrder = schemaComposer.createResolver({
                     if (product.quantity <= 0){
                         await orderProduct.delete()
                     }
-                    throw new Error(`product ${product.title} (id=${product._id}) quantity is not enough`);
+                    throw new Error(`product ${product.title} (id=${product._id}) quantity is not enough.`);
                 }
                 product.quantity = newQuantity
                 product.updatedAt = Date.now()

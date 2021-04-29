@@ -6,7 +6,10 @@ import { MYORDER_QUERY } from '../graphql/myOrderQuery'
 import OrderCard from '../components/order/orderCard'
 
 const MyOrder = () => {
-    const { data } = useQuery(MYORDER_QUERY, {variables: {object: {}}})
+    const { data } = useQuery(MYORDER_QUERY, {variables: {
+        object: {_operators: {status: {in: ["COMPLETE", "SHIPPED", "CLOSED"]}}},
+        sort: "UPDATEDAT_DESC"
+    }})
     const orders = data?.myOrders || []
 
     return (

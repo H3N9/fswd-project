@@ -1,0 +1,1 @@
+export const main = 'http://localhost:3001'

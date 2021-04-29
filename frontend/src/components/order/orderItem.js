@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { main } from '../../path'
 
 const OrderItem = ({ orderProduct }) => {
     const { product } = orderProduct
@@ -7,7 +8,8 @@ const OrderItem = ({ orderProduct }) => {
     return (
         <Item>
             <div className="image">
-                <img src="" alt=""/>
+                {/* <img src={`${main}/image/${product.image}`} alt=""/> */}
+                <img src={``} alt=""/>
             </div>
             <div className="detail">
                 <p className="product-name">{product.title}</p>

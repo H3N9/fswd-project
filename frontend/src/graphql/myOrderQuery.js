@@ -3,8 +3,8 @@ import {gql} from '@apollo/client'
 
 
 export const MYORDER_QUERY = gql`
-    query MyOrders($object: FilterFindManyOrderInput!){
-        myOrders(filter: $object){
+    query MyOrders($object: FilterFindManyOrderInput! $sort: SortFindManyOrderInput){
+        myOrders(filter: $object sort: $sort){
             _id
             status
             orderProducts {
@@ -21,6 +21,7 @@ export const MYORDER_QUERY = gql`
                     quantity
                     types
                     netPrice
+                    image
                     promotion {
                         _id
                         method
@@ -53,6 +54,7 @@ export const MYORDER_QUERY_BY_ID = gql`
                     price
                     netPrice
                     quantity
+                    image
                 }
                 quantity
             }
