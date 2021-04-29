@@ -8,9 +8,10 @@ import { ME_QUERY } from '../../graphql/meQuery'
 import logo from '../../images/logo.webp'
 import Modal from './modal'
 import {useOrderContext} from '../../context/orderContext'
-import { Link, Route, Switch } from 'react-router-dom'
-
+import { Link, Route, Switch, NavLink } from 'react-router-dom'
+import { Border } from '../../styles/styleComponents'
 import Orders from '../../pages/admin/orders'
+
 const Navbar = ({setIsShowMenu, isShowMenu}) => {
     const { data, loading, error } = useQuery(ME_QUERY)
     const [modal, setModal] = useState(false)
@@ -30,10 +31,28 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                     </Logo>    
                     { isAdmin ? 
                         <>
-                            <BoxLink title={"ออเดอร์"} link={`admin/orders`} main={""}  /> 
-                            <BoxLink title={"สินค้า"} link={`admin/products`} main={""}  /> 
-                            <BoxLink title={"โปรโมชั่น"} link={`admin/promotions`} main={""}  /> 
-                            <BoxLink title={"Dashboard"} link={`admin`} main={""}  />
+                            <BoxLink title={"โปรโมชั่น"} link={"promotions"} main={""}  /> 
+                            <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />  
+                            <Dropdown>
+                                <p>จัดการ <FontAwesomeIcon icon={['fas', 'sort-down']} style={{marginBottom: 2}}/></p>
+                                <div className="menu">
+                                    <div className="menu-items">
+                                        <NavLink exact activeStyle={{ background: "#222", color: "#FFF", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin/orders`}>ออเดอร์</NavLink>
+                                    </div>
+                                    <div className="menu-items">
+                                        <NavLink exact activeStyle={{ background: "#222", color: "#FFF", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin/products`}>สินค้า</NavLink>
+                        
+                                    </div>
+                                    <div className="menu-items">
+                                        <NavLink exact activeStyle={{ background: "#222", color: "#FFF", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin/promotions`}>โปรโมชั่น</NavLink>
+            
+                                    </div>
+                                    <div className="menu-items">
+                                        <NavLink exact activeStyle={{ background: "#222", color: "#FFF", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin`}>Dashboard</NavLink>
+                                    </div>             
+                                </div>
+                            </Dropdown>
+                            
                         </>
                     :
                         <>
@@ -129,6 +148,7 @@ const MobileMenuButton = styled.button`
     background: transparent;
     width: 50px;
     height: 50px;
+    margin-right: 10px;
     border: none;
     display: none;
     justify-content: center;
@@ -192,7 +212,7 @@ const Circle = styled.div`
     min-width: 24px;
     min-height: 10px;
     position: absolute;
-    background: #2891e6;
+    background: #4447f3;
     color: white;
     padding: 0px 6px 0px 6px;
     display: flex;
@@ -210,18 +230,83 @@ const AuthContainer = styled.div`
         border-radius: 5px;
         font-weight: 500;
         &:first-child{
-            color: #2891e6;
-            border: 2px solid #2891e6;
+            color: #4447f3;
+            border: 2px solid #4447f3;
         }
         &:last-child{
             color: #FFF;
-            background: #2891e6;
-            border: 2px solid #2891e6;
+            background: #4447f3;
+            border: 2px solid #4447f3;
         }
         @media (max-width: 960px) {
             display: none;
 
         }
+    }
+`
+
+const Dropdown = styled.div`
+    position: relative;
+    p{
+        cursor: pointer;
+        margin-left: 0px;
+        padding: 0 10px;
+        transition: 0.25s;
+        font-size: 1.1rem;
+        position: relative;
+        ::before{
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 25px;
+            border-radius: 5px;
+            background: #222;
+            z-index: -100;
+            transition: 0.25s;
+        }
+        :hover::before{
+            width: 100%;
+        }
+        :hover{
+            color: #FFF;
+        }     
+    }
+    .menu{
+        padding: 20px;
+        border-radius: 10px;
+        background: #FFF;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        transition: 0.25s;
+        position: absolute;
+        display: none;
+        opacity: 1;
+        .menu-items{
+            padding: 10px 0;
+            a{
+                width: 100%;
+                text-decoration: none;
+                color: #111;
+                border-radius: 5px;
+                font-weight: 500;
+                font-size: 1.2rem;
+                transition: 0.25s;
+                padding: 0 10px;
+                position: relative;
+                :hover{
+                    background: #222;
+                    color: #FFF;
+                }     
+            }      
+        }
+    }
+    &:hover .menu{
+        display: initial;
+    }
+    &:hover{
+        display: initial;
     }
 `
 export default Navbar

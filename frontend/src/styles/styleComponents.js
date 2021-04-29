@@ -291,3 +291,8 @@ export const FormContainer = styled.form`
     }
 `
 
+export const Border = styled.div`
+    width: 100%;
+    height: 1px;
+    background: #888;
+`

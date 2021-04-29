@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { ME_QUERY } from '../../graphql/meQuery'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Border } from '../../styles/styleComponents'
 
 const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
     const { data, loading, error } = useQuery(ME_QUERY)
@@ -12,7 +13,7 @@ const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
     const isAdmin =  loading ? false : data.me === null ? false : data.me.isAdmin
     console.log(user)
     useEffect(() => {
-        document.body.style.overflow = isShowMenu ? "hidden" : "initial";
+        document.body.style.overflow = isShowMenu ? "hidden" : "overlay";
     }, [isShowMenu])
     return(
         <Mainmenu right={isShowMenu ? "0" : "100%"} opacity={isShowMenu ? "1" : "0"} duration={isShowMenu ? "0s" : "0.95s"}>
@@ -197,12 +198,6 @@ const AuthContainer = styled.div`
             color: #FFF;
         }
     }    
-`
-
-const Border = styled.div`
-    width: 100%;
-    height: 1px;
-    background: #888;
 `
 
 export default MobileNavbar;
