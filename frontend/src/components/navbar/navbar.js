@@ -1,23 +1,57 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import BoxLink from './btnNav'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import Stephen from '../../images/stephen.jpg'
-import { useQuery } from '@apollo/client'
-import { ME_QUERY } from '../../graphql/meQuery'
 import logo from '../../images/logo.webp'
 import Modal from './modal'
 import {useOrderContext} from '../../context/orderContext'
 import { Link, Route, Switch } from 'react-router-dom'
 
 import Orders from '../../pages/admin/orders'
-const Navbar = ({setIsShowMenu, isShowMenu}) => {
-    const { data, loading, error } = useQuery(ME_QUERY)
+const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
     const [modal, setModal] = useState(false)
     const { orders } = useOrderContext()
-    const user = data === undefined ? {me:{name: "u"}} : data
-    const isAdmin =  loading ? false : data.me === null ? false : data.me.isAdmin
     const amount = orders.reduce((val1, val2) => val1 + (val2.quantity || 0), 0)
+
+    const IsAdmin = () => {
+        if(isAdmin){
+            return(
+                <>
+                    <BoxLink title={"ออเดอร์"} link={`admin/orders`} main={""}  /> 
+                    <BoxLink title={"สินค้า"} link={`admin/products`} main={""}  /> 
+                    <BoxLink title={"โปรโมชั่น"} link={`admin/promotions`} main={""}  /> 
+                    <BoxLink title={"Dashboard"} link={`admin`} main={""}  />
+                </>
+            )
+        }
+        else{
+            return (
+                <>
+                    <BoxLink title={"โปรโมชั่น"} link={"promotions"} main={""}  /> 
+                     <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />  
+                </>
+            )
+        }
+    }
+
+    const IsUser = () => {
+        if(user){
+            return (
+                <BoxButton className="img-profile">
+                    <FontAwesomeIcon icon={['fas', 'user']} />
+                    {/* <Image src={Stephen} /> */}
+                </BoxButton>
+            )
+        }
+        else{
+            return (
+                <AuthContainer>
+                    <Link to={`/login`} >เข้าสู่ระบบ</Link>
+                    <Link to={`/register`}>ลงทะเบียน</Link>
+                </AuthContainer>  
+            )
+        }
+    }
 
     return (
         <>
@@ -28,19 +62,7 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                             <img src={logo} alt="" width="10px"/>
                         </Link>
                     </Logo>    
-                    { isAdmin ? 
-                        <>
-                            <BoxLink title={"ออเดอร์"} link={`admin/orders`} main={""}  /> 
-                            <BoxLink title={"สินค้า"} link={`admin/products`} main={""}  /> 
-                            <BoxLink title={"โปรโมชั่น"} link={`admin/promotions`} main={""}  /> 
-                            <BoxLink title={"Dashboard"} link={`admin`} main={""}  />
-                        </>
-                    :
-                        <>
-                            <BoxLink title={"โปรโมชั่น"} link={"promotions"} main={""}  /> 
-                            <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />  
-                        </>
-                    }
+                    <IsAdmin />
                 </BoxBtn>  
                 <AccountBox>
                     <BoxButton>
@@ -50,17 +72,7 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                         <Circle>{amount}</Circle>
                     </BoxButton>
-                    {user.me === null ?
-                            <AuthContainer>
-                                <Link to={`/login`} >เข้าสู่ระบบ</Link>
-                                <Link to={`/register`}>ลงทะเบียน</Link>
-                            </AuthContainer>
-                        :
-                        <BoxButton className="img-profile">
-                            <FontAwesomeIcon icon={['fas', 'user']} />
-                            {/* <Image src={Stephen} /> */}
-                        </BoxButton>
-                    }
+                    <IsUser />
                     
                     <MobileMenuButton onClick={() => setIsShowMenu(!isShowMenu)} className={isShowMenu ? "active" : ""} />
                 </AccountBox>        

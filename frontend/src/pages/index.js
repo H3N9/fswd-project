@@ -1,8 +1,6 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
-import {Route, Switch} from 'react-router-dom'
-import NavBar from '../components/navbar/navbar'
-import MobileNavbar from '../components/navbar/mobileNavbar'
+import {Route, Switch, useLocation} from 'react-router-dom'
 import NavBarPack from '../components/navbarPack'
 
 import Cart from './cart'
@@ -33,16 +31,21 @@ import CreatePromotion from './admin/createPromotion.js'
 
 const Index = () => {
     const [isShowMenu, setIsShowMenu] = useState(false)
+    const location = useLocation()
     const ignorePath = [
         "/login",
         '/register'
     ]
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [location])
+
 
     return (
             <>             
                 <ContentBox >   
-                    <NavBarPack setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} ignorePath={ignorePath} />
+                    <NavBarPack setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} ignorePath={ignorePath} isAdmin={true} user={true} />
                     <Switch>
 {/* --------------------------------------------- For User ----------------------------------------------------  */}
                         <Route path="/register">
