@@ -7,7 +7,7 @@ import '../../styles/styleUniversal.css'
 const BtnNav = ({title, link,}) => {
     return (
         <BoxLink>
-            <NavLink activeStyle={{ background: "#222", color: "#FFF", padding: "0 10px", borderRadius: 5, transition: 0 }} className={`btnLink`} to={`/${link}`}>{title}</NavLink>
+            <NavLink exact activeStyle={{ background: "#222", color: "#FFF", padding: "0 10px", borderRadius: 5, transition: 0 }} className={`btnLink`} to={`/${link}`}>{title}</NavLink>
         </BoxLink>
     )
 }

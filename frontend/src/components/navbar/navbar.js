@@ -3,14 +3,20 @@ import styled from 'styled-components'
 import BoxLink from './btnNav'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Stephen from '../../images/stephen.jpg'
+import { useQuery } from '@apollo/client'
+import { ME_QUERY } from '../../graphql/meQuery'
 import logo from '../../images/logo.webp'
 import Modal from './modal'
 import {useOrderContext} from '../../context/orderContext'
-import { Link } from 'react-router-dom'
+import { Link, Route, Switch } from 'react-router-dom'
 
+import Orders from '../../pages/admin/orders'
 const Navbar = ({setIsShowMenu, isShowMenu}) => {
+    const { data, loading, error } = useQuery(ME_QUERY)
     const [modal, setModal] = useState(false)
     const { orders } = useOrderContext()
+    const user = data === undefined ? {me:{name: "u"}} : data
+    const isAdmin =  loading ? false : data.me === null ? false : data.me.isAdmin
     const amount = orders.reduce((val1, val2) => val1 + (val2.quantity || 0), 0)
 
     return (
@@ -22,7 +28,19 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                             <img src={logo} alt="" width="10px"/>
                         </Link>
                     </Logo>    
-                    <BoxLink title={"สินค้าลดราคา"} link={"promotions"} main={""}  /> 
+                    { isAdmin ? 
+                        <>
+                            <BoxLink title={"ออเดอร์"} link={`admin/orders`} main={""}  /> 
+                            <BoxLink title={"สินค้า"} link={`admin/products`} main={""}  /> 
+                            <BoxLink title={"โปรโมชั่น"} link={`admin/promotions`} main={""}  /> 
+                            <BoxLink title={"Dashboard"} link={`admin`} main={""}  />
+                        </>
+                    :
+                        <>
+                            <BoxLink title={"โปรโมชั่น"} link={"promotions"} main={""}  /> 
+                            <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />  
+                        </>
+                    }
                 </BoxBtn>  
                 <AccountBox>
                     <BoxButton>
@@ -32,13 +50,25 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                         <Circle>{amount}</Circle>
                     </BoxButton>
-                    <BoxButton>
-                        <Image src={Stephen} />
-                    </BoxButton>
+                    {user.me === null ?
+                            <AuthContainer>
+                                <Link to={`/login`} >เข้าสู่ระบบ</Link>
+                                <Link to={`/register`}>ลงทะเบียน</Link>
+                            </AuthContainer>
+                        :
+                        <BoxButton className="img-profile">
+                            <FontAwesomeIcon icon={['fas', 'user']} />
+                            {/* <Image src={Stephen} /> */}
+                        </BoxButton>
+                    }
+                    
                     <MobileMenuButton onClick={() => setIsShowMenu(!isShowMenu)} className={isShowMenu ? "active" : ""} />
                 </AccountBox>        
         </Package>
-            <Modal modal={modal}/>
+        <Modal modal={modal}/>    
+        <Switch>
+            <Route path="admin/orders" render={() => <Orders/>}/>
+        </Switch>
         </>
     )
 }
@@ -69,6 +99,7 @@ const BoxBtn = styled.div`
     padding-left: 20px;
     display: flex;
     align-items:center;
+    
 `
 
 const Logo = styled.div`
@@ -131,6 +162,23 @@ const BoxButton = styled.div`
     align-items: center;
     cursor: pointer;
     position: relative;
+    svg{
+        font-size: 20px;
+    }
+    &.img-profile{
+        background-image: linear-gradient(120deg, #5128e6 , #2891e6);
+        border-radius: 50%;
+        display: flex;
+        color: rgba(255,255,255, 0.9);
+        font-weight: 500;
+        justify-content: center;
+        align-items: center;
+        font-size: 32px;
+        margin: 0 7px;
+    }
+    img{
+        position: absolute;
+    }
 `
 const Image = styled.img`
     border-radius: 50%;
@@ -140,10 +188,10 @@ const Image = styled.img`
 `
 const Circle = styled.div`
     border-radius: 50%;
-    min-width: 10px;
+    min-width: 24px;
     min-height: 10px;
     position: absolute;
-    background: #3058db;
+    background: #2891e6;
     color: white;
     padding: 0px 6px 0px 6px;
     display: flex;
@@ -152,5 +200,27 @@ const Circle = styled.div`
     top: -6px;
     right: 0px;
 `
+const AuthContainer = styled.div`
+    display: flex;
+    a{
+        text-decoration: none;
+        margin: 0 7px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: 500;
+        &:first-child{
+            color: #2891e6;
+            border: 2px solid #2891e6;
+        }
+        &:last-child{
+            color: #FFF;
+            background: #2891e6;
+            border: 2px solid #2891e6;
+        }
+        @media (max-width: 960px) {
+            display: none;
 
+        }
+    }
+`
 export default Navbar

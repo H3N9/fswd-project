@@ -5,6 +5,7 @@ export const ME_QUERY = gql`
         me {
             name
             _id
+            isAdmin
         }
     }
 
