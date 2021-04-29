@@ -1,6 +1,6 @@
 import { schemaComposer } from 'graphql-compose'
 import { UserInputError } from 'apollo-server-express'
-import { OrderProductModel, OrderTC, OrderModel, OrderPromotionModel, ProductModel, ShippingModel } from '../../models'
+import { OrderProductModel, OrderTC, OrderModel, OrderPromotionModel, ProductModel, ShippingModel, CouponPromotionModel } from '../../models'
 import { authCreateMiddleware } from './middleware'
 
 //export const createOrder = OrderTC.getResolver('createOne', [authCreateMiddleware]).removeArg('record')
@@ -17,7 +17,8 @@ const setCartInput= schemaComposer.createInputTC({
 const setPromotionInput = schemaComposer.createInputTC({
     name: 'setPromotionInput',
     fields: {
-        promotionId: 'String!'
+        promotionId: 'String',
+        promotionCode: 'String'
     }
 })
 
@@ -45,8 +46,8 @@ export const setCart = schemaComposer.createResolver({
                             quantity: Math.min(product.quantity, curr.quantity)
                         }
                         return [...acc, newObj]
-                }
-                return acc
+                    }
+                    return acc
                 })
             }, Promise.resolve([]))
 
@@ -75,7 +76,16 @@ export const setPromotion = schemaComposer.createResolver({
                 order = await OrderModel.create({ userId: user._id })
             }
 
-            const orderPromotionInput = args.records.map((item1) => ({...item1, orderId: order._id }))
+            const orderPromotionInput = await Promise.all(args.records.map(async (item1) => {
+                if (item1.promotionCode){
+                    const promotion = await CouponPromotionModel.findOne({promotionCode: item1.promotionCode})
+                    return {promotionId: promotion._id, orderId: order._id}
+                }
+                else{
+                    console.log({...item1, orderId: order._id })
+                    return {...item1, orderId: order._id }
+                }
+            }))
             await OrderPromotionModel.deleteMany({ orderId: order._id })
             await OrderPromotionModel.insertMany(orderPromotionInput)
             order.updatedAt = Date.now()
