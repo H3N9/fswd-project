@@ -8,9 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
     const { data, loading, error } = useQuery(ME_QUERY)
-    const user = data === undefined ? {me:{name: ""}} : data
+    const user = data === undefined ? {me:{name: "u"}} : data
     const isAdmin =  loading ? false : data.me === null ? false : data.me.isAdmin
-    // const me = data.me ? {username: "", name: ""} : data.me
     console.log(user)
     useEffect(() => {
         document.body.style.overflow = isShowMenu ? "hidden" : "initial";
@@ -24,7 +23,7 @@ const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
                 :
                     <UserDetail>
                         <div className="user-image">
-                            {user.me.name.charAt(0).toUpperCase()}
+                            <FontAwesomeIcon icon={['fas', 'user']} />
                         </div>
                         <div className="user-text">
                             <h1>{user.me.name}</h1>
@@ -57,7 +56,7 @@ const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
                         <AuthContainer>
                             <NavLink className="login-button" to={`/login`} onClick={() => setIsShowMenu(false)}>
                                 <FontAwesomeIcon icon={['fas', 'sign-in-alt']} size="small" />
-                                {" ลงชื่อเข้าใช้"}
+                                {" เข้าสู่ระบบ"}
                             </NavLink>
                             <NavLink className="register-button" to={`/register`} onClick={() => setIsShowMenu(false)}>
                                 <FontAwesomeIcon icon={['fas', 'user-plus']} size="small" />
