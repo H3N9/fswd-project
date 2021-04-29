@@ -74,7 +74,7 @@ const Navbar = ({setIsShowMenu, isShowMenu}) => {
 }
 
 const Package = styled.div`
-    width: 100%;
+    width: calc(100% + 9px);
     position: fixed;
     top: 0;
     z-index: 12;
@@ -82,6 +82,7 @@ const Package = styled.div`
     justify-content: space-between;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     background: #FFF;
+
 `
 
 const AccountBox = styled.div`

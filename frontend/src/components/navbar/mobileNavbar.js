@@ -178,7 +178,7 @@ const AuthContainer = styled.div`
     a{
         padding: 5px 15px;
         border-radius: 5px;
-        font-size: 22px;
+        font-size: 20px;
         svg{
             font-size: 20px;
         }
