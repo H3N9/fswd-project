@@ -12,7 +12,7 @@ export const SessionProvider = (props) => {
     const { children } = props
     const [ user, setUser ] = useState(null)
     const [, setCookie, removeCookie] = useCookies(['token'])
-    const [loadUser, {loading, data}] = useLazyQuery(ME_QUERY, { fetchPolicy: 'network-only' })
+    const [loadUser, {data}] = useLazyQuery(ME_QUERY, { fetchPolicy: 'network-only' })
     const [login] = useMutation(LOGIN_MUTATION)
     
 
@@ -20,7 +20,7 @@ export const SessionProvider = (props) => {
         try {
             const res = await login({ variables: { username, password } })
             if (res?.data?.login?.token) {
-                setCookie('token', res?.data?.login?.token)
+                setCookie('token', res?.data?.login?.token, {maxAge: 84600})
                 setUser(res?.data?.login?.user)
                 return true
             }

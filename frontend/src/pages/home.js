@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import {Box9p, SpaceBox} from '../styles/styleComponents'
 import CatgoriesProducts from '../components/home/catgoriesProducts'
 import { PRODUCT_QUERY } from '../graphql/productQuey'

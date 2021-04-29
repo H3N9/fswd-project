@@ -2,14 +2,13 @@ import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {Box9p, SpaceBox, Button} from '../styles/styleComponents'
 import {useLocation, useParams} from 'react-router-dom'
-import CatgoriesProducts from '../components/home/catgoriesProducts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import FacebookIcon from '../images/facebook.png'
 import GoogleIcon from '../images/google-plus.png'
 import { useOrderContext } from '../context/orderContext'
 import UpNumber from '../components/detail/upNumber'
-import { PRODUCT_QUERY, PRODUCT_BY_ID, PRODUCT_FIND_ONE } from '../graphql/productQuey'
-import { useQuery, useLazyQuery} from '@apollo/client'
+import { PRODUCT_FIND_ONE } from '../graphql/productQuey'
+import {useLazyQuery} from '@apollo/client'
 
 
 const Detail = () => {
@@ -17,9 +16,9 @@ const Detail = () => {
     const [product, setProduct] = useState({})
     const { productSlug } = useParams()
     const productTitle = productSlug.replace(/-/gi, ' ')
-    const [loadProduct, {loading, error, data}] = useLazyQuery(PRODUCT_FIND_ONE, {variables: {object: {title: productTitle}}})
+    const [loadProduct, {loading, error, data}] = useLazyQuery(PRODUCT_FIND_ONE, {variables: {object: {title: productTitle}}, fetchPolicy: 'network-only'})
 
-
+    
     useEffect(() => {
         if(data?.product){
             setProduct(data?.product)
@@ -40,7 +39,6 @@ const Detail = () => {
     }, [])
     
     const {_id, title = "", price = 0, description = "", image = "", author = "", publisher = "", types = "", netPrice = 0, quantity = 0} = product
-    const { data: products = [] } = useQuery(PRODUCT_QUERY, {fetchPolicy: 'network-only'})
     const discount = netPrice !== price
     const { addOrder, orders } = useOrderContext()
     const indexOfProduct = orders.findIndex((product) => product.productId ===  _id)
@@ -140,9 +138,6 @@ const Detail = () => {
                 <DescriptBox>
                     <DescrtipText >เกี่ยวกับสินค้า</DescrtipText>
                 </DescriptBox>
-                <DescriptBox>
-                    <DescrtipText >รายละเอียด</DescrtipText>
-                </DescriptBox>
             </PackHandle>
             <Underline />
             <Box9p>
@@ -152,9 +147,6 @@ const Detail = () => {
                 </Ptext>
             </Box9p>
             <SpaceBox />
-            <Box9p>
-                <CatgoriesProducts products={products?.products} title={"สินค้าที่เกี่ยวข้อง"} />
-            </Box9p>
             <SpaceBox />
             
         </>

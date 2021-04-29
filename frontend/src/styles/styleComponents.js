@@ -13,6 +13,7 @@ export const Catgories = styled.div`
     flex-direction: row;
     padding : 20px 0 50px 0px;
     position: relative;
+    scroll-behavior: smooth;
     ::-webkit-scrollbar {
         display: none;
     }

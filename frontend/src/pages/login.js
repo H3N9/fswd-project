@@ -10,6 +10,7 @@ import {Form, MainContainer, LoginContainer, Input, LogoContainer} from '../styl
 const Login = () =>{
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState(false)
     const { login, user } = useSession()
     const history = useHistory()
 
@@ -38,6 +39,7 @@ const Login = () =>{
         }
         else{
             console.log("Password Wrong")
+            setError(true)
         }
         
     }, [login, password, username])
@@ -48,11 +50,16 @@ const Login = () =>{
                 <Logo>
                     <img src={whiteLogo} alt="" width="390px"/>
                 </Logo>
+                
             </LogoContainer>
             <LoginContainer>   
                 <Form onSubmit={handleLogin}>
                     <img src={logo} alt="" width="250px"/>
+                   
                     <h1>เข้าสู่ระบบ</h1>
+                    { 
+                    error ? <Error>รหัสผ่านหรือชื่อผู้ใช้ไม่ถูกต้อง</Error>: null
+                    }
                         <Input>                     
                             <input type="text" id="username" value={username}  onChange={usernameHandle} required/>
                             <label htmlFor="username">ชื่อผู้ใช้</label>
@@ -82,6 +89,16 @@ const Logo = styled.div`
         max-width: 400px;
         border-radius: 10px;
     }
+`
+
+const Error = styled.div`
+    width: 100%;
+    background: #d43434;
+    margin: 0px 0 40px 0;
+    font-weight: 500;
+    color: #FFF;
+    padding: 10px 0;
+    border-radius: 5px;
 `
 
 
