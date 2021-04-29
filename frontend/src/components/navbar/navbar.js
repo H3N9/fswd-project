@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import BoxLink from './btnNav'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -12,6 +12,7 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
     const [modal, setModal] = useState(false)
     const { orders } = useOrderContext()
     const amount = orders.reduce((val1, val2) => val1 + (val2.quantity || 0), 0)
+    const cart = useRef()
 
     const IsAdmin = () => {
         if(isAdmin){
@@ -68,7 +69,7 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
                     <BoxButton>
                         <FontAwesomeIcon icon={['fas', 'search']} />
                     </BoxButton>
-                    <BoxButton className="cart" onClick={() => setModal(!modal)}>
+                    <BoxButton ref={cart} className="cart" onClick={() => setModal(!modal)}>
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                         <Circle>{amount}</Circle>
                     </BoxButton>
@@ -77,7 +78,7 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
                     <MobileMenuButton onClick={() => setIsShowMenu(!isShowMenu)} className={isShowMenu ? "active" : ""} />
                 </AccountBox>        
         </Package>
-        <Modal modal={modal}/>    
+        <Modal modal={modal} setModal={setModal} parent={cart}/>    
         <Switch>
             <Route path="admin/orders" render={() => <Orders/>}/>
         </Switch>
