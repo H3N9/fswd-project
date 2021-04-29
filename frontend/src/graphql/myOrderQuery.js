@@ -76,6 +76,10 @@ export const MYORDER_QUERY_BY_ID = gql`
             updatedAtWithFormatDateTime
             shipping{
                 address
+                subDistrict
+                district
+                province
+                postalCode
                 phoneNumber
             }
         }
