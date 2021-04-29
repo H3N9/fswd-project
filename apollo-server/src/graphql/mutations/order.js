@@ -82,7 +82,6 @@ export const setPromotion = schemaComposer.createResolver({
                     return {promotionId: promotion._id, orderId: order._id}
                 }
                 else{
-                    console.log({...item1, orderId: order._id })
                     return {...item1, orderId: order._id }
                 }
             }))
