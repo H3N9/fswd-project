@@ -140,9 +140,6 @@ const Detail = () => {
                 <DescriptBox>
                     <DescrtipText >เกี่ยวกับสินค้า</DescrtipText>
                 </DescriptBox>
-                <DescriptBox>
-                    <DescrtipText >รายละเอียด</DescrtipText>
-                </DescriptBox>
             </PackHandle>
             <Underline />
             <Box9p>

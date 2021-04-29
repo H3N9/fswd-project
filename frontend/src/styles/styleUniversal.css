@@ -34,27 +34,23 @@ button {
     margin: 0 auto;
     padding: 0 20px;
 }
-
 /* width */
 ::-webkit-scrollbar {
-    width: 9px;
-    height: 9px;
-    
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #888; 
-    border-radius: 10px;
-  
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
+  width: 9px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  position: absolute;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 10px;
+  position: absolute;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
