@@ -63,3 +63,53 @@ export const PROMOTIONS_QUERY = gql`
         }
     }
 `
+
+export const PROMOTIONS_PAGINATION_QUERY = gql`
+    query PromotionsWithPagination($page: Int $perPage: Int){
+        promotionsWithPagination(page: $page perPage: $perPage){
+            items{
+                _id
+                type
+                method
+                description
+                discountValue
+                createdAtWithFormatDateTime
+                updatedAtWithFormatDateTime
+                ... on Coupon{
+                    orderQuantityCount
+                    promotionCode
+                    quantity
+                }
+                ... on DiscountPrice{
+                    productId
+                    product{
+                        _id
+                        title
+                    }
+                }
+            }
+            pageInfo{
+                currentPage
+                hasNextPage
+                hasPreviousPage
+                perPage
+                pageCount
+                itemCount
+            }
+        }
+    }
+`
+
+export const COUPON_QUERY_BY_ID = gql`
+    query CouponPromotionById($id: MongoID!){
+        couponPromotionById(_id: $id){
+            _id
+            type
+            method
+            discountValue
+            promotionCode
+            quantity
+            description
+        }
+    }
+`

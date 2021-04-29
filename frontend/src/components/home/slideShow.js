@@ -29,8 +29,7 @@ const SlideShow = () => {
 
     return (
         <MainImage ref={mainImage}>
-            <Image src={Bg2} />
-            <Image src={Bg3} />
+            
         </MainImage>
     )
 }

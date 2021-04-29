@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import {Input} from '../../styles/styleComponents'
-import ModalResult from '../modalResult'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {FormContainer, FromInline} from '../../styles/styleComponents'
 import CreateDiscount from '../../components/adminPromotion/createDiscount'
@@ -57,7 +56,7 @@ const ProductForm = ({ title, product, image, inputHandle, submitForm, discountP
                             <label htmlFor="">คำอธิบาย</label>
                         </Input>
 
-                        <CreateDiscount discountHandle={discountPack.discountHandle} setIsDiscountCreate={discountPack.setIsDiscountCreate} discount={discountPack.discount} isDiscountCreate={discountPack.isDiscountCreate} />
+                        <CreateDiscount promotionExist={discountPack.promotionExist} setIsRemove={discountPack.setIsRemove} discountHandle={discountPack.discountHandle} setIsDiscountCreate={discountPack.setIsDiscountCreate} discount={discountPack.discount} isDiscountCreate={discountPack.isDiscountCreate} />
                         
                         <button><FontAwesomeIcon icon={['fas', 'check']} /> ยืนยัน</button>
                     </FormContainer>

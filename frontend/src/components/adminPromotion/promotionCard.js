@@ -1,11 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const PromotionCard = ({promotion, index, countPage}) => {
-    const {createdAt = "", updatedAt = "", method = "", description = "", promotionCode = ""} = promotion
+    const {_id = "", createdAt = "", updatedAt = "", type = "",
+    method = "", description = "", promotionCode = "",
+    createdAtWithFormatDateTime, updatedAtWithFormatDateTime} = promotion
     const created = new Date(createdAt)
     const updated = new Date(updatedAt)
+    const title = (promotionCode === '')?`${promotion?.description}`:promotionCode
+    //const gradientBackground = (type === 'DiscountPrice')?['#5128e6', '#2891e6']:['#ff9b58', '#fc6d0e']
+    const editLink = (type === 'Coupon')?`/admin/promotion/${_id}`:`/admin/product/${promotion?.product?._id}`
 
     return (
         <PromotionItem>
@@ -14,17 +20,20 @@ const PromotionCard = ({promotion, index, countPage}) => {
             </Id>
             <Info>
                 <Name>
-                    <h2>{promotionCode}</h2>
+                    <h2>{title}</h2>
                 </Name>
                 <Detail>
-                    <p><b>ประเภทโปรโมชั่น :</b> คูปอง</p>
+                    <p><b>ประเภทโปรโมชั่น :</b> {type}</p>
+                    {(type === 'DiscountPrice') && (<p><b>สินค้า : </b> {promotion?.product?.title}</p>)}
                     <p><b>รูปแบบส่วนลด : </b> {method}</p>
-                    <p><b>สร้างเมื่อ :</b> -</p>
-                    <p><b>อัปเดทเมื่อ :</b> -</p>
+                    <p><b>สร้างเมื่อ :</b> {createdAtWithFormatDateTime}</p>
+                    <p><b>อัปเดทเมื่อ :</b> {updatedAtWithFormatDateTime}</p>
                 </Detail>
                 <Option>
+                    <Link to={editLink}>
+                        <button className="edit"  name="แก้ไขโปรโมชั่น"><FontAwesomeIcon icon={['fas', 'edit']} /></button>
+                    </Link>
                     <button className="delete" name="ลบโปรโมชั่น" ><FontAwesomeIcon icon={['fas', 'trash-alt']}/></button>
-                    <button className="edit"  name="แก้ไขโปรโมชั่น"><FontAwesomeIcon icon={['fas', 'edit']} /></button>
                 </Option>
             </Info>
          </PromotionItem>
