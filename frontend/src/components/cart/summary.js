@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import {Button} from '../../styles/styleComponents'
 import {Link} from 'react-router-dom'
 
-const Summary = ({total}) => {
-    const shipping = total? 1:0
-    const result = shipping + total || 0
+const Summary = ({ order, total=0, handle=(e) => {} }) => {
+    const { totalPrice = 0 , netTotalPrice = 0} = order || {totalPrice: total, netTotalPrice: total}
+
     return (
         <SummaryBox>
             <TitleHead>
@@ -13,22 +13,22 @@ const Summary = ({total}) => {
             </TitleHead>
             <TextBox>
                 <NormalText>ยอดรวม</NormalText>
-                <NormalText>{total || 0} บาท</NormalText>
+                <NormalText>{totalPrice} บาท</NormalText>
             </TextBox>
             <TextBox>
-                <NormalText>ค่าส่ง</NormalText>
-                <NormalText>{shipping} บาท</NormalText>
+                <NormalText>ส่วนลดคูปอง</NormalText>
+                <NormalText>-{totalPrice - netTotalPrice} บาท</NormalText>
             </TextBox>
             <BreakBetween />
             <Linebreak />
             <BreakBetween />
             <TextBox>
                 <NormalText>ยอดสุทธิ</NormalText>
-                <NormalText>{result} บาท</NormalText>
+                <NormalText>{netTotalPrice} บาท</NormalText>
             </TextBox>
             <BreakBetween />
-            <Link to="/payment">
-                <ButtonCheck>ชำระเงิน</ButtonCheck>
+            <Link>
+                <ButtonCheck onClick={(e) => { handle(e) }}>ชำระเงิน</ButtonCheck>
             </Link>
         </SummaryBox>
     )

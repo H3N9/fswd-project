@@ -55,7 +55,7 @@ const Modal = ({modal, setModal, parent}) => {
                     </OrderText>
                 </OrderBox>
                 <ButtonBox>
-                    <Link to="/payment">
+                    <Link to="/checkout">
                         <ButtonOrder>ไปชำระเงิน</ButtonOrder>
                     </Link>
                     
