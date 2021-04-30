@@ -27,7 +27,7 @@ const Summary = ({total}) => {
                 <NormalText>{result} บาท</NormalText>
             </TextBox>
             <BreakBetween />
-            <Link to="/payment">
+            <Link to="/checkout">
                 <ButtonCheck>ชำระเงิน</ButtonCheck>
             </Link>
         </SummaryBox>

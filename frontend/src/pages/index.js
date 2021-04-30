@@ -7,7 +7,7 @@ import Cart from './cart'
 import Home from './home'
 import Login from './login'
 import Detail from './detail'
-import Payment from './payment'
+import Checkout from './checkout'
 import MyOrder from './myOrder'
 import Register from './register'
 import AllProducts from './allProduct'
@@ -68,8 +68,8 @@ const Index = () => {
                         <Route path="/cart">
                             <Cart />
                         </Route>
-                        <Route path="/payment">
-                            <Payment />
+                        <Route path="/checkout">
+                            <Checkout />
                         </Route>
                         <Route path="/products">
                             <AllProducts />
