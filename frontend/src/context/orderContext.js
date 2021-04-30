@@ -122,7 +122,7 @@ export const OrderProvider = (props) => {
         })
         if(user){
             try{
-                await setCart({variables:{object: delProduct}})
+                const response = await setCart({variables:{object: delProduct}})
                 console.log("Success save my order")
                 return true
             }

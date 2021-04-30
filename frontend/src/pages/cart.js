@@ -19,20 +19,6 @@ const Cart = () => {
             <CartBox>
 
                 <CartInfo>
-                    <HeadTable>
-                        <HeadTitle>
-                            <TextCartInfo>สินค้า</TextCartInfo>
-                        </HeadTitle>
-                        <HeadText>
-                            <TextCartInfo>ราคา</TextCartInfo>
-                        </HeadText>
-                        <HeadText>
-                            <TextCartInfo>จำนวน</TextCartInfo>
-                        </HeadText>
-                        <HeadText>
-                            <TextCartInfo>ยอดรวม</TextCartInfo>
-                        </HeadText>
-                    </HeadTable>
 
                     <OrderBookBox>
                         {orders.map((product, index) => (<CardCart key={index} addOrder={addOrder} product={product?.product || {}} quantity={product.quantity}/>))}
@@ -44,6 +30,10 @@ const Cart = () => {
                         </Link>
                         <ButtonDel onClick={() => removeCart()}>ล้างตระกร้าสินค้า</ButtonDel>
                     </ButtonBox>
+
+                    <BoxInput>
+
+                    </BoxInput>
 
                 </CartInfo>
 
@@ -62,31 +52,19 @@ const CartBox = styled.div`
     width: 100%;
     flex-wrap: wrap;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 `
 
 const CartInfo = styled.div`
     width: clamp(700px, 70%, 1000px);
 `
-const HeadTable = styled.div`
+const BoxInput = styled.div`
     width: 100%;
-    border-bottom: solid 3px gray;
-    display: flex;
-`
-const HeadTitle = styled.div`
-    width: 40%;
-    padding-bottom: 10px;
-`
-const HeadText = styled.div`
-    width: 20%;
-    padding-bottom: 10px;
+    height: 100px;
 `
 
 const CartSummary = styled.div`
     width: clamp(500px, 30%, 500px);
-`
-const TextCartInfo = styled.h3`
-    margin: 0;
 `
 
 const OrderBookBox = styled.div`
@@ -96,18 +74,23 @@ const OrderBookBox = styled.div`
 `
 
 const ButtonBox = styled.div`
-    border-top: solid 3px gray;
     display: flex;
+    width: 100%;
     padding-top: 20px;
+    min-height: 100px;
+    justify-content: center;
+    flex-wrap: wrap;
     
 `
 const Button = styled.button`
-    padding: 5px 60px 5px 60px;
+    width: 200px;
+    height: 50px;
     border-radius: 20px;
     font-size: 1.2em;
     outline: none;
     cursor: pointer;
     transition: 0.5s;
+    margin: 10px;
 `
 
 const ButtonAdd = styled(Button)`
