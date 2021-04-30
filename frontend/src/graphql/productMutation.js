@@ -16,3 +16,11 @@ export const UPDATE_PRODUCT = gql`
         }
     }
 `
+
+export const DELETE_PRODUCT = gql`
+    mutation RemoveProduct($id: MongoID!){
+        removeProduct(_id: $id){
+            recordId
+        }
+    }
+`
