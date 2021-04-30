@@ -22,7 +22,7 @@ const MyOrderDetail = () => {
             </Header>
             <Flex>
                 <OrderDetail>
-                    <p><b>สถานะออเดอร์ : {status}</b></p>
+                    <p><b>สถานะออเดอร์ : </b> {status}</p>
                     <p><b>ที่อยู่สำหรับการจัดส่ง :</b></p>
                     <Address>
                         <p>{address?.address}</p>
@@ -115,7 +115,7 @@ const OrderCard = styled.div`
 
 const Address = styled.div`
     border-radius: 5px;
-    width: 60%;
+    width: 100%;
     min-height: 150px;
     padding: 5px 7px;
     margin-bottom: 25px;

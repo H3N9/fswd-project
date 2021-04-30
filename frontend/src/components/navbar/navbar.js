@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import BoxLink from './btnNav'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -6,7 +6,6 @@ import logo from '../../images/logo.webp'
 import Modal from './modal'
 import {useOrderContext} from '../../context/orderContext'
 import { Link, Route, Switch, NavLink } from 'react-router-dom'
-import { Border } from '../../styles/styleComponents'
 import Orders from '../../pages/admin/orders'
 const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
     const [modal, setModal] = useState(false)

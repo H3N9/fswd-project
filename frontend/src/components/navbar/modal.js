@@ -44,7 +44,7 @@ const Modal = ({modal, setModal, parent}) => {
 
             <BoxCover>
                 <Order>
-                    {orders.map((product) => (<CardOrder product={product} />))}
+                    {orders.map((product, index) => (<CardOrder product={product} key={index}/>))}
                 </Order>
             </BoxCover>
             <Underline />

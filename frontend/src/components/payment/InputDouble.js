@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import {Input, FromInline} from '../../styles/styleComponents'
 
 const InputDouble = ({text1, text2, name1, name2, value1, value2, handle}) => {
