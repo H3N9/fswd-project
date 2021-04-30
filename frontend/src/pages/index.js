@@ -59,9 +59,8 @@ const Index = () => {
         }
     }, [user])
 
-
-    const AdminRoute = () => {
-        if(user?.usAdmin){
+    const Admin = () => {
+        if(user?.isAdmin){
             return (
                 <>
                     <Route path="/admin/product/create">
@@ -91,17 +90,16 @@ const Index = () => {
                         </Route>  
                         <Route exact path="/admin">
                             <Dashboard />
-                        </Route>  
+                        </Route> 
                 </>
             )
         }
-        else {
+        else{
             return (
                 <></>
             )
         }
     }
-
 
     return (
             <>             
@@ -146,8 +144,8 @@ const Index = () => {
                         </Route>
 
 {/* --------------------------------------------- For Admin ----------------------------------------------------  */}
-                         <AdminRoute /> 
-                                              
+                          <Admin />
+                                               
                     </Switch>
                 </ContentBox>
              </>
