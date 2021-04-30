@@ -45,5 +45,18 @@ ProductTC.addFields({
 
             return sumQuantity
         }
+    },
+
+    isDeleteAble: {
+        type: 'Boolean',
+        resolve: async (source) => {
+            const orderProducts = await OrderProductModel.find({ productId: source._id })
+            if (orderProducts.length === 0){
+                return true
+            }
+            else{
+                return false
+            }
+        }
     }
 })

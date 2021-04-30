@@ -1,4 +1,4 @@
-import { ProductModel, UserModel } from '../../models'
+import { ProductModel, UserModel, OrderProductModel } from '../../models'
 
 export const authCreateMiddleware = async (resolve, source, args, context, info) => {
     if (context?.user) {
@@ -42,6 +42,17 @@ export const createUserValid = async (resolve, source, args, context, info) => {
     }
     else{
         return resolve(source, args, context, info)
+    }
+}
+
+export const productDeleteValid = async (resolve, source, args, context, info) => {
+    const { _id } = args
+    const orderProducts = await OrderProductModel.find({ productId: _id })
+    if (orderProducts.length === 0){
+        return resolve(source, args, context, info)
+    }
+    else{
+        throw new Error('do not delete it')
     }
 }
 

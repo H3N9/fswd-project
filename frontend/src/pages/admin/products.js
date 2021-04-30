@@ -9,20 +9,18 @@ import {Header, Table} from '../../styles/styleComponents'
 
 const Products = () => {
     const { data } = useQuery(PRODUCT_QUERY, {fetchPolicy: 'network-only'})
-    //const products = data?.products || []
     const [ products, setProducts ] = useState([])
     const [ deleteProduct ] = useMutation(DELETE_PRODUCT)
-    const history = useHistory()
 
     const deleteProductHandle = async (id) => {
-        // try{
-        //     const response = await deleteProduct({variables: { id }})
-        //     const newProducts = products.filter((item1) => (item1._id !== response.data.removeProduct.recordId))
-        //     setProducts(newProducts)
-        // }
-        // catch(error){
-        //     console.log(error.message)
-        // }
+        try{
+            const response = await deleteProduct({variables: { id }})
+            const newProducts = products.filter((item1) => (item1._id !== response.data.removeProduct.recordId))
+            setProducts(newProducts)
+        }
+        catch(error){
+            console.log(error.message)
+        }
     }
 
     useEffect(() => {
@@ -57,7 +55,9 @@ const Products = () => {
                     <td>{value.quantity}</td>
                     <td>
                         <Link to={`/admin/product/${value._id}`} ><button className="edit-button"><FontAwesomeIcon icon={['fas', 'edit']} /> แก้ไข</button></Link>
-                        <button className="delete-button" onClick={()=> {deleteProductHandle(value._id)} } ><FontAwesomeIcon icon={['fas', 'trash']} /> ลบ</button>
+                        {value.isDeleteAble && 
+                            <button className="delete-button" onClick={()=> {deleteProductHandle(value._id)} } ><FontAwesomeIcon icon={['fas', 'trash']} /> ลบ</button>
+                        }
                     </td>
                 </tr>
                 )}
