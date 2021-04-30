@@ -53,8 +53,8 @@ export const OrderProvider = (props) => {
         const { productId, quantity } = product
         const limit = product?.product?.quantity
         const index = base.findIndex((object) => object.productId === productId)
-        const totle = index > -1 ? base[index].quantity + quantity:0
-        if( totle > limit){
+        const total = index > -1 ? base[index].quantity + quantity:0
+        if( total > limit){
             return
         }
         if(index > -1){
@@ -87,20 +87,20 @@ export const OrderProvider = (props) => {
     }
 
     const addCarts = (product, index, amount, id, quantity, copyArr) => {
-        const totle = copyArr[index]?.quantity || 0
-        if(index > -1 && amount > 0 && totle < quantity){
+        const total = copyArr[index]?.quantity || 0
+        if(index > -1 && amount > 0 && total < quantity){
             copyArr[index].quantity = copyArr[index].quantity + amount
         }
-        else if(amount > 0 && index < 0 && totle < quantity){
+        else if(amount > 0 && index < 0 && total < quantity){
             copyArr.push(createCart(product, id, amount))
         }
         setOrdersHandle([...copyArr])
     }
 
     const setCarts = (product, index, amount, id, copyArr) => {
-        const totle = product?.quantity || 0
-        console.log(totle)
-        if(index > -1 && amount > 0 && totle >= amount){
+        const total = product?.quantity || 0
+        console.log(total)
+        if(index > -1 && amount > 0 && total >= amount){
             copyArr[index].quantity = amount
             console.log(copyArr[index])
         }

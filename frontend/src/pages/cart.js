@@ -8,7 +8,7 @@ import Summary from '../components/cart/summary'
 
 const Cart = () => {
     const { orders, removeCart, addOrder } = useOrderContext()
-    const totle = orders.length > 0 ? orders.reduce((v1, v2) => v1 + (v2.product.netPrice * v2.quantity) || 0, 0):0
+    const total = orders.length > 0 ? orders.reduce((v1, v2) => v1 + (v2.product.netPrice * v2.quantity) || 0, 0):0
 
     return (
         <Box9p>
@@ -48,7 +48,7 @@ const Cart = () => {
                 </CartInfo>
 
                 <CartSummary>
-                    <Summary totle={totle} />
+                    <Summary total={total} />
                 </CartSummary>
 
 
