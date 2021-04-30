@@ -4,6 +4,7 @@ const multer  = require('multer')
 const GridFsStorage = require('multer-gridfs-storage')
 const Grid = require('gridfs-stream')
 const mongoose = require('./mongoose-connect')
+require('dotenv').config()
 
 const conn = mongoose.connection
 let gfs
@@ -14,7 +15,8 @@ conn.once('open', () => {
 })
 
 const storage = new GridFsStorage({
-  url: 'mongodb://localhost:27017/fswd-project',
+  //url: 'mongodb://localhost:27017/fswd-project',
+  url: process.env.DB_HOST,
   file: (req, file) => {
       return new Promise(
           (resolve, reject) => {

@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { main } from '../../path'
 
 const OrderItem = ({ orderProduct }) => {
     const { product } = orderProduct
