@@ -5,6 +5,8 @@ import CardCart from '../components/cart/cardCart'
 import { useOrderContext } from '../context/orderContext'
 import {Link} from 'react-router-dom'
 import Summary from '../components/cart/summary'
+import {Input} from '../styles/styleComponents'
+
 
 const Cart = () => {
     const { orders, removeCart, addOrder } = useOrderContext()
@@ -24,6 +26,19 @@ const Cart = () => {
                         {orders.map((product, index) => (<CardCart key={index} addOrder={addOrder} product={product?.product || {}} quantity={product.quantity}/>))}
                     </OrderBookBox>
 
+                    <BoxInput>
+                        <BoxInputBut>
+                            <Input>
+                                <input id="coupon" name="coupon" />
+                                <label htmlFor="coupon">คูปอง</label>
+                            </Input>
+                        </BoxInputBut>
+                        
+                        <AddBut>
+                            เพิ่ม
+                        </AddBut>
+                    </BoxInput>
+
                     <ButtonBox>
                         <Link to="/">
                             <ButtonAdd>ซื้อสินค้าต่อไป</ButtonAdd>
@@ -31,9 +46,7 @@ const Cart = () => {
                         <ButtonDel onClick={() => removeCart()}>ล้างตระกร้าสินค้า</ButtonDel>
                     </ButtonBox>
 
-                    <BoxInput>
-
-                    </BoxInput>
+                    
 
                 </CartInfo>
 
@@ -57,11 +70,17 @@ const CartBox = styled.div`
 
 const CartInfo = styled.div`
     width: 850px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     
 `
 const BoxInput = styled.div`
-    width: 100%;
+    width: clamp(150px, 100%, 400px);
     height: 100px;
+    margin: 30px;
+    display: flex;
+    align-items: center;
 `
 
 const CartSummary = styled.div`
@@ -108,6 +127,15 @@ const ButtonAdd = styled(Button)`
         border: solid 2px gray;
         color: white;
     }
+`
+
+const AddBut = styled.button`
+    width: 30%;
+    height: 60px;
+`
+const BoxInputBut = styled.div`
+    width: 70%;
+    height: 100%;
 `
 
 const ButtonDel = styled(Button)`

@@ -43,10 +43,12 @@ export const OrderProvider = (props) => {
             if(orders.length > 0){
                 orders.forEach((product) => combineItems(product, copyOrders))
                 handleSetCart(copyOrders)
+                
             }
             setOrders(copyOrders)
             
         }
+        
     }, [data])
 
     const combineItems = (product, base) => {
@@ -120,9 +122,10 @@ export const OrderProvider = (props) => {
         const delProduct = carts.map((cart) => {
             return {productId:cart.productId, quantity: cart.quantity}
         })
+        
         if(user){
             try{
-                const response = await setCart({variables:{object: delProduct}})
+                await setCart({variables:{object: delProduct}})
                 console.log("Success save my order")
                 return true
             }
