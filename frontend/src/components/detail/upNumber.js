@@ -25,8 +25,8 @@ const UpNumber = ({number, handleNumber}) => {
 const PackNumber = styled.div`
     display: flex;
     margin: 0 10px;
-    min-width: 50px;
-    width: 50%;
+    min-width: 150px;
+    height: 55px;
     padding-bottom: 2px;
     overflow: hidden;
     border-radius: 5px;

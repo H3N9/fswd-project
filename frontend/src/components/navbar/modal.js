@@ -21,7 +21,7 @@ const Modal = ({modal, setModal, parent}) => {
         return () => {
             window.removeEventListener('click', isOutside)
         }
-    }, [modal])
+    }, [])
 
     return (
         <BoxModal modalHeight={modal ? "330px": "0"} ref={modalElement}>
