@@ -36,6 +36,7 @@ const Summary = ({totle}) => {
 
 const SummaryBox = styled.div`
     width: 100%;
+
     display: flex;
     flex-direction: column;
     position: sticky;

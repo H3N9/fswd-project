@@ -24,21 +24,22 @@ const UpNumber = ({number, handleNumber}) => {
 
 const PackNumber = styled.div`
     display: flex;
-    flex-shrink: 0;
-    width: 150px;
-    height: 55px;
+    margin: 0 10px;
+    min-width: 50px;
+    width: 50%;
+    padding-bottom: 2px;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: #cccccc;
     
 `
 const PackText = styled.div`
     width: 80%;
-    height: 100%;
     background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
+
 `
 const PackButton = styled.div`
     display: flex;

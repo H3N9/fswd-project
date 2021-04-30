@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import {Title, TitleText, Box9p, SpaceBox} from '../styles/styleComponents'
+import {Title, TitleText, Box9p, SpaceBox, Header} from '../styles/styleComponents'
 import CardCart from '../components/cart/cardCart'
 import { useOrderContext } from '../context/orderContext'
 import {Link} from 'react-router-dom'
@@ -13,9 +13,9 @@ const Cart = () => {
     return (
         <Box9p>
             <SpaceBox />
-            <Title>
-                <TitleText>ตระกร้าสินค้า</TitleText>
-            </Title>
+            <Header>
+                <h1>ตระกร้าสินค้า</h1>
+            </Header>
             <CartBox>
 
                 <CartInfo>
@@ -63,48 +63,66 @@ const CartBox = styled.div`
     flex-wrap: wrap;
     display: flex;
     justify-content: space-between;
+    @media (max-width: 1278px){
+       justify-content: center;
+    }
+    
+    
 `
 
 const CartInfo = styled.div`
-    width: clamp(700px, 70%, 1000px);
+    width: 850px;
+    
 `
 const HeadTable = styled.div`
     width: 100%;
-    border-bottom: solid 3px gray;
+    border-bottom: solid 2px gray;
     display: flex;
 `
 const HeadTitle = styled.div`
     width: 40%;
-    padding-bottom: 10px;
+    @media (max-width: 375px){
+        width: 30%;
+    }
+    
 `
 const HeadText = styled.div`
     width: 20%;
-    padding-bottom: 10px;
+    &:last-child{
+        flex: 1;
+    }
 `
 
 const CartSummary = styled.div`
-    width: clamp(500px, 30%, 500px);
+    flex: 1;
+    max-width: 500px;
+    width: 100%;
+    min-width: 300px;
+    
+    margin-left: 0px;
+    /* margin: 0 auto; */
 `
 const TextCartInfo = styled.h3`
-    margin: 0;
+    margin: 10px 0;
+    font-weight: 500;
+    font-size: 1.25rem;
+    text-align: center;
 `
 
 const OrderBookBox = styled.div`
-    width: 95%;
-    padding: 2.5%;
-
+    width: 100%;
 `
 
 const ButtonBox = styled.div`
-    border-top: solid 3px gray;
+    border-top: solid 2px gray;
     display: flex;
-    padding-top: 20px;
+    padding: 20px 0;
     
 `
 const Button = styled.button`
-    padding: 5px 60px 5px 60px;
-    border-radius: 20px;
-    font-size: 1.2em;
+    padding: 7px 25px;
+    border-radius: 7px;
+    font-size: clamp(0.9rem, 2vmin, 1.2rem);
     outline: none;
     cursor: pointer;
     transition: 0.5s;

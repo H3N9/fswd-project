@@ -27,13 +27,13 @@ const CardCart = ({product, quantity, addOrder}) => {
                 </TitleBox>
             </ImageTitleBox>
             <TextBox>
-                {`THB${priceWdiscount.toFixed(2)}`}
+                {`฿ ${priceWdiscount.toFixed(2)}`}
             </TextBox>
-            <TextBox>
+            <UpBox>
                 <UpNumber number={quantity} handleNumber={lockClikcing} />
-            </TextBox>
+            </UpBox>
             <TextBox>
-                {`THB${priceWdiscount.toFixed(2)}`}
+                {`฿ ${priceWdiscount.toFixed(2)}`}
             </TextBox>
         </CardCartBox>
     )
@@ -43,26 +43,53 @@ const CardCart = ({product, quantity, addOrder}) => {
 const CardCartBox = styled.div`
     width: 100%;
     display: flex;
-    height: 300px;
-    margin: 5px;
+    align-items: center;
+    padding: 20px 0;
 
 `
 const ImageTitleBox = styled.div`
     width: 40%;
     display: flex;
+    justify-content:center;
+    align-items: center;
+    @media (max-width: 375px){
+        width: 30%;
+    }
 
 `
 const TextBox = styled.div`
     width: 20%;
+    text-align: center;
+    &:last-child{
+        flex: 1;
+    }
     
+`
+
+const UpBox = styled.div`
+    width:20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+
 `
 const TitleBox = styled.div`
     width: 60%;
-    padding: 0 10px 0 10px;
+    margin-left: 7.5px;
+    font-weight: 500;
+    font-size: clamp(1rem, 4vmin, 1.25rem);
+    @media (max-width: 375px){
+        margin-left: 0;
+    }
     
 `
 const ImageBox = styled.div`
-    width: 40%;
+    min-width: 75px;
+    background: #AAA;
+    min-height: 100px;
+    @media (max-width: 375px){
+        display: none;
+    }
     
 `
 
