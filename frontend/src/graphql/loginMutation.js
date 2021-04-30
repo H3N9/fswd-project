@@ -10,6 +10,8 @@ export const LOGIN_MUTATION = gql`
             token
             user {
                 _id
+                isAdmin
+                name
             }
         }
     }
