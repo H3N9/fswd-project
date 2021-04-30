@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import styled from 'styled-components'
 import { useQuery, useMutation } from '@apollo/client'
+import { useHistory } from 'react-router-dom'
 import { MY_SHIPPINGS } from '../graphql/shippingQuery'
-import { CREATE_SHIPPING, UPDATE_SHIPPING } from '../graphql/shippingMutation'
+import { MYORDER_QUERY } from '../graphql/myOrderQuery'
+import { CREATE_SHIPPING, UPDATE_SHIPPING, SET_SHIPPING } from '../graphql/shippingMutation'
 import {SpaceBox, Box9p, Header} from '../styles/styleComponents'
 import Summary from '../components/cart/summary'
 import {useOrderContext} from '../context/orderContext'
@@ -12,12 +14,15 @@ import Select from '../components/payment/select'
 import InputRadio from '../components/payment/InputRadio'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Payment = () => {
-    const { orders } = useOrderContext()
-    const total = orders.length > 0 ? orders.reduce((book1, book2) => book1 + (book2['price'] - book2['discount']), 0):0
+const Checkout = () => {
+    const total = 0
     const { data } = useQuery(MY_SHIPPINGS)
+    const orders = useQuery(MYORDER_QUERY, {variables: {object: {status: 'PROCESSING'}}})
     const [ createShipping ] = useMutation(CREATE_SHIPPING)
     const [ updateShipping ] = useMutation(UPDATE_SHIPPING)
+    const [ setShippingMutation ] = useMutation(SET_SHIPPING)
+    const order = orders?.data?.myOrders[0] || {}
+    const history = useHistory();
 
     const [ address, setAddress ] = useState({
         address: '',
@@ -29,7 +34,6 @@ const Payment = () => {
     })
     const [ addressSelect, setAddressSelect ] = useState(-1)
     const [ addresses, setAddresses ] = useState([])
-    const [ shipping, setShipping ] = useState("")
     const [ paid, setPaid ] = useState("")
 
     useEffect(() => {
@@ -43,14 +47,6 @@ const Payment = () => {
         }
 
     }, [data])
-    
-    const setShipingHandle = (text) => {
-        setShipping(text)
-    }
-
-    const setPaidHandle = (text) => {
-        setPaid(text)
-    }
 
     const addressSelectHandle = useCallback((e) => {
         const index = e.target.value
@@ -83,7 +79,7 @@ const Payment = () => {
         })
     }
 
-    const submitForm = useCallback( async (e) => {
+    const submitAddressForm = async (e) => {
         const objInput = {
             address: address.address,
             subDistrict: address.subDistrict,
@@ -116,14 +112,25 @@ const Payment = () => {
                 console.log(error.message)
             }
         }
-    })
+    }
+
+    const checkoutHandle = async (e) => {
+        console.log(address?._id)
+        try{
+            await setShippingMutation({variables: {shippingId: address?._id}})
+            history.push('/payment')
+        }
+        catch(error){
+            console.log(error.message)
+        }
+    }
 
     return (
         <Box9p>
             <BoxPayment>
                 <PaymentInputBox>
                     <Header>
-                        <h1>ชำระเงิน</h1> 
+                        <h1>รายละเอียดการจัดส่ง</h1> 
                     </Header>
                     <TextWline>
                         {"ที่อยู่ในการจัดส่ง "}
@@ -141,14 +148,14 @@ const Payment = () => {
                     
                     <InputLong text={"เบอร์ติดต่อ"} behind={"(ระบุเฉพาะตัวเลขเท่านั้น)"} type={"text"} name={"phoneNumber"} value={address.phoneNumber} handle={addressHandle} />
                     
-                    <button className="submit-address" onClick={submitForm} >
+                    <button className="submit-address" onClick={submitAddressForm} >
                         <FontAwesomeIcon icon={['fas', addressSelect >= 0?"edit":"plus"]} size="1x" /> 
                         {(addressSelect >= 0?" แก้ไขที่อยู่จัดส่ง":" เพิ่มที่อยู่จัดส่ง")}
                     </button> 
 
                 </PaymentInputBox>
                 <CartSummary>
-                    <Summary total={total} />
+                    <Summary order={order} total={order?.totalPrice || 0} handle={checkoutHandle}/>
                 </CartSummary>
             </BoxPayment>
             
@@ -213,4 +220,4 @@ const TextWline = styled.h3`
     border-bottom: 2px solid #999;
 `
 
-export default Payment
+export default Checkout
