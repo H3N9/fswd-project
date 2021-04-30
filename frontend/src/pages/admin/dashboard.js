@@ -7,7 +7,7 @@ import { PRODUCT_PAGINATION_QUERY } from '../../graphql/productPaginationQuery'
 import { ORDERS_COUNT_QUERY } from '../../graphql/orderQuery'
 import { COUPON_PAGINATION_QUERY } from '../../graphql/promotionQuery'
 import { useQuery } from '@apollo/client'
-import {Header, Table} from '../../styles/styleComponents'
+import { Table } from '../../styles/styleComponents'
 
 const Dashboard = () => {
     const [products, setProducts] = useState([])
@@ -97,7 +97,7 @@ const Dashboard = () => {
                         </tr>
                     </thead>
                     {products.map((value, index) => 
-                    <tr className={index%2 == 0 ? "dim-row" : ""}>
+                    <tr className={index%2 === 0 ? "dim-row" : ""} key={index}>
                         <td>{index+1}</td>
                         <td>{value.title}</td>
                         <td>{value.price}</td>
@@ -118,7 +118,7 @@ const Dashboard = () => {
                         </tr>
                     </thead>
                     {coupons.map((value, index) => 
-                    <tr className={index%2 == 0 ? "dim-row" : ""}>
+                    <tr className={index%2 === 0 ? "dim-row" : ""}>
                         <td>{index+1}</td>
                         <td>{value.promotionCode}</td>
                         <td>{value.description}</td>

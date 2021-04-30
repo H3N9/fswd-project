@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import {Input} from '../../styles/styleComponents'
 
 const InputLong = ({text, behind, command, type, name, value, handle }) => {

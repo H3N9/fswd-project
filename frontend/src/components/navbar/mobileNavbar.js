@@ -35,11 +35,15 @@ const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
                 <MenuRole>
                     { isAdmin ? 
                         <>
-                            <NavLink to={`admin/orders`} onClick={() => setIsShowMenu(false)}>ออเดอร์</NavLink>
+                            <NavLink to={`/products`} onClick={() => setIsShowMenu(false)}>สินค้าทั้งหมด</NavLink>
                             <Border />
-                            <NavLink to={`/best`} onClick={() => setIsShowMenu(false)}>สินค้า</NavLink>
+                            <NavLink to={`/promotions`} onClick={() => setIsShowMenu(false)}>โปรโมชั่น</NavLink> 
                             <Border />
-                            <NavLink to={`admin/products`} onClick={() => setIsShowMenu(false)}>โปรโมชั่น</NavLink>
+                            <NavLink to={`admin/orders`} onClick={() => setIsShowMenu(false)}>จัดการออเดอร์</NavLink>
+                            <Border />
+                            <NavLink to={`/best`} onClick={() => setIsShowMenu(false)}>จัดการสินค้า</NavLink>
+                            <Border />
+                            <NavLink to={`admin/products`} onClick={() => setIsShowMenu(false)}>จัดการโปรโมชั่น</NavLink>
                             <Border />
                             <NavLink to={`admin`} onClick={() => setIsShowMenu(false)}>Dashboard</NavLink> 
                             <Border />
@@ -80,7 +84,7 @@ const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
 const Mainmenu = styled.div`
     width: 100%;
     height: 100vh;
-
+    overflow-y: scroll;
     background: rgba(0,0,0,0.8);
     backdrop-filter: blur(10px);
     position: fixed;

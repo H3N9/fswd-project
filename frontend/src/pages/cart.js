@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import {Title, TitleText, Box9p, SpaceBox} from '../styles/styleComponents'
+import {Title, TitleText, Box9p, SpaceBox, Header} from '../styles/styleComponents'
 import CardCart from '../components/cart/cardCart'
 import { useOrderContext } from '../context/orderContext'
 import {Link} from 'react-router-dom'
@@ -8,14 +8,14 @@ import Summary from '../components/cart/summary'
 
 const Cart = () => {
     const { orders, removeCart, addOrder } = useOrderContext()
-    const totle = orders.length > 0 ? orders.reduce((v1, v2) => v1 + (v2.product.netPrice * v2.quantity) || 0, 0):0
+    const total = orders.length > 0 ? orders.reduce((v1, v2) => v1 + (v2.product.netPrice * v2.quantity) || 0, 0):0
 
     return (
         <Box9p>
             <SpaceBox />
-            <Title>
-                <TitleText>ตระกร้าสินค้า</TitleText>
-            </Title>
+            <Header>
+                <h1>ตระกร้าสินค้า</h1>
+            </Header>
             <CartBox>
 
                 <CartInfo>
@@ -38,7 +38,7 @@ const Cart = () => {
                 </CartInfo>
 
                 <CartSummary>
-                    <Summary totle={totle} />
+                    <Summary total={total} />
                 </CartSummary>
 
 
@@ -56,7 +56,8 @@ const CartBox = styled.div`
 `
 
 const CartInfo = styled.div`
-    width: clamp(700px, 70%, 1000px);
+    width: 850px;
+    
 `
 const BoxInput = styled.div`
     width: 100%;
@@ -64,13 +65,17 @@ const BoxInput = styled.div`
 `
 
 const CartSummary = styled.div`
-    width: clamp(500px, 30%, 500px);
+    flex: 1;
+    max-width: 500px;
+    width: 100%;
+    min-width: 300px;
+    
+    margin-left: 0px;
+    /* margin: 0 auto; */
 `
 
 const OrderBookBox = styled.div`
-    width: 95%;
-    padding: 2.5%;
-
+    width: 100%;
 `
 
 const ButtonBox = styled.div`

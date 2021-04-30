@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Payment = () => {
     const { orders } = useOrderContext()
-    const totle = orders.length > 0 ? orders.reduce((book1, book2) => book1 + (book2['price'] - book2['discount']), 0):0
+    const total = orders.length > 0 ? orders.reduce((book1, book2) => book1 + (book2['price'] - book2['discount']), 0):0
     const { data } = useQuery(MY_SHIPPINGS)
     const [ createShipping ] = useMutation(CREATE_SHIPPING)
     const [ updateShipping ] = useMutation(UPDATE_SHIPPING)
@@ -43,10 +43,6 @@ const Payment = () => {
         }
 
     }, [data])
-
-    useEffect(() => {
-        console.log(addresses)
-    }, [addresses])
     
     const setShipingHandle = (text) => {
         setShipping(text)
@@ -148,26 +144,11 @@ const Payment = () => {
                     <button className="submit-address" onClick={submitForm} >
                         <FontAwesomeIcon icon={['fas', addressSelect >= 0?"edit":"plus"]} size="1x" /> 
                         {(addressSelect >= 0?" แก้ไขที่อยู่จัดส่ง":" เพิ่มที่อยู่จัดส่ง")}
-                    </button>
-                    <TextWline>
-                        เลือกขนส่ง
-                    </TextWline>
-
-                    <InputRadio text={"Free Shipping"} state={shipping} handle={setShipingHandle} />
-                    <InputRadio  text={"Kerry Express"} state={shipping} handle={setShipingHandle} />  
-
-                    <SpaceBox />
-                    <TextWline>
-                        วิธีชำระเงิน
-                    </TextWline>
-
-                    <InputRadio text={"Cash"} state={paid} handle={setPaidHandle} />
-                    <InputRadio  text={"Credit/Debit"} state={paid} handle={setPaidHandle} />  
-
+                    </button> 
 
                 </PaymentInputBox>
                 <CartSummary>
-                    <Summary totle={totle} />
+                    <Summary total={total} />
                 </CartSummary>
             </BoxPayment>
             

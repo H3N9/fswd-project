@@ -12,8 +12,8 @@ const enumOrderStatus = {
 }
 
 const OrderSchema = new Schema({
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
+    createdAt: { type: Date, default: Date.now, index: true },
+    updatedAt: { type: Date, default: Date.now, index: true },
     status: {
         type: String,
         require: true,

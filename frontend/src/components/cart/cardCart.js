@@ -101,15 +101,4 @@ const NormalText = styled.h2`
     margin: 0;
 `
 
-
-/*<TextBox>
-                    {`THB${priceWdiscount.toFixed(2)}`}
-                </TextBox>
-                <TextBox>
-                    <UpNumber number={quantity} handleNumber={lockClikcing} />
-                </TextBox>
-                <TextBox>
-                    {`THB${priceWdiscount.toFixed(2)}`}
-                </TextBox>*/ 
-
 export default CardCart

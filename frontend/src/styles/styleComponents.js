@@ -33,7 +33,7 @@ export const SpaceBox = styled.div`
 export const Box9p = styled.div`
     width: 90%;
     height: 100%;
-    margin: 0 5% 0 5%;
+    margin: 0 4%;
 `
 export const TitleText = styled.h1`
     font-size: 2.5rem;
@@ -176,6 +176,7 @@ export const Header = styled.div`
     padding-bottom: 50px;
     h1{
         margin: 5px 0;
+        padding-right: 20px; 
         font-weight: bold;
         letter-spacing: -1px;
         font-size: clamp(2.3rem, 5vmin, 2.5rem);
