@@ -96,7 +96,7 @@ const CartBox = styled.div`
     width: 100%;
     flex-wrap: wrap;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
 `
 
 const CartInfo = styled.div`
@@ -104,6 +104,7 @@ const CartInfo = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0 20px 0 20px;
     
 `
 const BoxInput = styled.div`

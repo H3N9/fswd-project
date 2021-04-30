@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {Route, Switch, useLocation} from 'react-router-dom'
 import NavBarPack from '../components/navbarPack'
+import {useSession} from '../context/session'
 
 import Cart from './cart'
 import Home from './home'
@@ -32,6 +33,10 @@ import CreatePromotion from './admin/createPromotion.js'
 const Index = () => {
     const [isShowMenu, setIsShowMenu] = useState(false)
     const location = useLocation()
+    const { user } = useSession()
+    const [isUser, setIsUser] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
+
     const ignorePath = [
         "/login",
         '/register'
@@ -41,11 +46,24 @@ const Index = () => {
         window.scrollTo(0, 0)
     }, [location])
 
+    useEffect(() => {
+        if(user?.isAdmin){
+            setIsAdmin(true)
+        }
+        if(user){
+            setIsUser(user)
+        }
+        else{
+            setIsUser(false)
+            setIsAdmin(false)
+        }
+    }, [user])
+
 
     return (
             <>             
                 <ContentBox >   
-                    <NavBarPack setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} ignorePath={ignorePath} isAdmin={true} user={true} />
+                    <NavBarPack setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} ignorePath={ignorePath} isAdmin={isAdmin} user={isUser} />
                     <Switch>
 {/* --------------------------------------------- For User ----------------------------------------------------  */}
                         <Route path="/register">

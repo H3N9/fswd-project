@@ -6,35 +6,39 @@ import { useQuery } from '@apollo/client'
 import { ME_QUERY } from '../../graphql/meQuery'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Border } from '../../styles/styleComponents'
+import {useSession} from '../../context/session'
 
-const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
-    const { data, loading, error } = useQuery(ME_QUERY)
-    const user = data === undefined ? {me:{name: "u"}} : data
-    const isAdmin =  loading ? false : data.me === null ? false : data.me.isAdmin
-    console.log(user)
+const MobileNavbar = ({isShowMenu, setIsShowMenu, user, isAdmin}) =>{
+
+    const { logout } = useSession()
+
     useEffect(() => {
         document.body.style.overflow = isShowMenu ? "hidden" : "overlay";
     }, [isShowMenu])
-    return(
-        <Mainmenu right={isShowMenu ? "0" : "100%"} opacity={isShowMenu ? "1" : "0"} duration={isShowMenu ? "0s" : "0.95s"}>
-            <MenuContainer>
-                {user.me === null ?
-                    <>
-                    </>
-                :
-                    <UserDetail>
+
+    const IsUser = () => {
+        if(user){
+            return (
+                <UserDetail>
                         <div className="user-image">
                             <FontAwesomeIcon icon={['fas', 'user']} />
                         </div>
                         <div className="user-text">
-                            <h1>{user.me.name}</h1>
-                            <h3>{isAdmin ? "ผู้ดูแลระบบ" : "ผูใช้งานทั่วไป"}</h3>
+                            <h1>{user?.name}</h1>
+                            <h3>{isAdmin ? "ผู้ดูแลระบบ" : "ผู้ใช้งานทั่วไป"}</h3>
                         </div>
-                    </UserDetail>
-                }
-                <MenuRole>
-                    { isAdmin ? 
-                        <>
+                </UserDetail>
+            )
+        }
+        else{
+            return <></>
+        }
+    }
+
+    const IsAdmin = () => {
+        if(isAdmin){
+            return (
+                <>
                             <NavLink to={`/products`} onClick={() => setIsShowMenu(false)}>สินค้าทั้งหมด</NavLink>
                             <Border />
                             <NavLink to={`/promotions`} onClick={() => setIsShowMenu(false)}>โปรโมชั่น</NavLink> 
@@ -47,18 +51,38 @@ const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
                             <Border />
                             <NavLink to={`admin`} onClick={() => setIsShowMenu(false)}>Dashboard</NavLink> 
                             <Border />
-                        </>
-                    :
-                        <>
-                            <NavLink to={`/products`} onClick={() => setIsShowMenu(false)}>สินค้าทั้งหมด</NavLink>
-                            <Border />
-                            <NavLink to={`/promotions`} onClick={() => setIsShowMenu(false)}>โปรโมชั่น</NavLink> 
-                            <Border />
-                        </>
-                    }                    
-                </MenuRole>
-                  {user.me === null ?
-                        <AuthContainer>
+                </>
+            )
+        }
+        else{
+            return (
+                <>
+                    <NavLink to={`/products`} onClick={() => setIsShowMenu(false)}>สินค้าทั้งหมด</NavLink>
+                    <Border />
+                    <NavLink to={`/promotions`} onClick={() => setIsShowMenu(false)}>โปรโมชั่น</NavLink> 
+                    <Border />
+                </>
+            )
+        }
+    }
+
+    const IsUserLogin = () => {
+        if(user){
+            return (
+                <AuthContainer>
+                            <NavLink className="logout-button" to={``} onClick={() => {
+                                    setIsShowMenu(false)
+                                    logout()
+                                }}>
+                                <FontAwesomeIcon icon={['fas', 'sign-out-alt']} size="small" />
+                                {" ออกจากระบบ"}
+                            </NavLink>
+                </AuthContainer>
+            )
+        }
+        else{
+            return (
+                    <AuthContainer>
                             <NavLink className="login-button" to={`/login`} onClick={() => setIsShowMenu(false)}>
                                 <FontAwesomeIcon icon={['fas', 'sign-in-alt']} size="small" />
                                 {" เข้าสู่ระบบ"}
@@ -68,14 +92,20 @@ const MobileNavbar = ({isShowMenu, setIsShowMenu}) =>{
                                 {" ลงทะเบียน"}
                             </NavLink>
                         </AuthContainer>
-                    :
-                        <AuthContainer>
-                            <NavLink className="logout-button" to={``} onClick={() => setIsShowMenu(false)}>
-                                <FontAwesomeIcon icon={['fas', 'sign-out-alt']} size="small" />
-                                {" ออกจากระบบ"}
-                            </NavLink>
-                        </AuthContainer>
-                    }
+            )
+        }
+    }
+
+
+
+    return(
+        <Mainmenu right={isShowMenu ? "0" : "100%"} opacity={isShowMenu ? "1" : "0"} duration={isShowMenu ? "0s" : "0.95s"}>
+            <MenuContainer>
+                <IsUser />
+                <MenuRole>
+                   <IsAdmin />                  
+                </MenuRole>
+                <IsUserLogin />
             </MenuContainer>
         </Mainmenu>
     );
