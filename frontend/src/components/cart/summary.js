@@ -24,7 +24,7 @@ const Summary = ({ netPrice, total, handle=(e) => {} }) => {
             <BreakBetween />
             <TextBox>
                 <NormalText>ยอดสุทธิ</NormalText>
-                <NormalText>{netPrice} บาท</NormalText>
+                <NormalText>{Math.max(0, netPrice)} บาท</NormalText>
             </TextBox>
             <BreakBetween />
             <Link>
