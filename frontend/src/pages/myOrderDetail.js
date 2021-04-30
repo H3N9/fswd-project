@@ -18,12 +18,12 @@ const MyOrderDetail = () => {
     return (
         <Container>
             <Header>
-                <h1>รหัสออเดอร์: {orderId}</h1>
+                <h1>รหัสออเดอร์ : {orderId}</h1>
             </Header>
             <Flex>
                 <OrderDetail>
-                    <p><b>สถานะออเดอร์ : </b> {status}</p>
-                    <p><b>ที่อยู่สำหรับการจัดส่ง :</b></p>
+                    <p><b>สถานะออเดอร์ : </b> <Status color={status === "ยืนยันแล้ว" ? "#058f0b" : status === "จัดส่งแล้ว" ? "#d86c06" : "#444"}>{status}</Status></p>
+                    <h2>ที่อยู่สำหรับการจัดส่ง</h2>
                     <Address>
                         <p>{address?.address}</p>
                         <p><b>ตำบล/แขวง :</b> {address?.subDistrict || '-'}</p>
@@ -66,10 +66,20 @@ const OrderDetail = styled.div`
     margin-bottom: 20px;
     p{
         font-size: 1.2rem;
-       
+    }
+    h2{
+        font-weight: 600;
+        margin: 50px 0 0 0;
     }
     
 `
+const Status = styled.span`
+    background: ${(props) => props.color};
+    border-radius: 50px;
+    color: #FFF;
+    padding: 2px 15px;
+`
+
 const OrderCard = styled.div`
     width:900px;
     padding: 10px 20px;
@@ -119,7 +129,7 @@ const Address = styled.div`
     min-height: 150px;
     padding: 5px 7px;
     margin-bottom: 25px;
-    margin-left: 20px;
+    margin-left: 15px;
     p{
         margin: 5px 0;
     }
