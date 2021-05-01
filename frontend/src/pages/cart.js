@@ -14,7 +14,7 @@ const Cart = () => {
     const { orders, removeCart, addOrder } = useOrderContext()
     const total = orders.length > 0 ? orders.reduce((v1, v2) => v1 + (v2.product.netPrice * v2.quantity) || 0, 0):0
     const [setPromotion] = useMutation(SETPROMOTION_MUTATION)
-    const [coupon, setCoupon] = useState(total)
+    const [coupon, setCoupon] = useState(null)
     const [couponInput, setCouponInput] = useState("")
 
     const handleCoupon = (discountValue, method) => {
@@ -38,8 +38,45 @@ const Cart = () => {
         }
     }
 
+    const removeCoupon = async () => {
+        try{
+            await setPromotion({variables:{record:[]}})
+            setCoupon(null)
+        }
+        catch(e){
+            console.log(e.message)
+        }
+    }
+
     const inputHandle = (e) => {
         setCouponInput(e.target.value)
+    }
+
+    const CouponBox = () => {
+        if(coupon){
+            return (
+                <Coupon>
+                    <h1>Coupon:{coupon?.promotionCode}</h1>
+                    <DelCoupon onClick={removeCoupon} />
+                </Coupon>
+            )
+        }
+        else{
+            return (
+                <BoxInput>
+                        <BoxInputBut>
+                            <Input>
+                                <input id="coupon" name="coupon" value={couponInput} onChange={inputHandle} />
+                                <label htmlFor="coupon">คูปอง</label>
+                            </Input>
+                        </BoxInputBut>
+                        
+                        <AddBut onClick={addCoupon}>
+                            เพิ่ม
+                        </AddBut>
+                    </BoxInput>
+            )
+        }
     }
 
 
@@ -57,18 +94,7 @@ const Cart = () => {
                         {orders.map((product, index) => (<CardCart key={index} addOrder={addOrder} product={product?.product || {}} quantity={product.quantity}/>))}
                     </OrderBookBox>
 
-                    <BoxInput>
-                        <BoxInputBut>
-                            <Input>
-                                <input id="coupon" name="coupon" value={couponInput} onChange={inputHandle} />
-                                <label htmlFor="coupon">คูปอง</label>
-                            </Input>
-                        </BoxInputBut>
-                        
-                        <AddBut onClick={addCoupon}>
-                            เพิ่ม
-                        </AddBut>
-                    </BoxInput>
+                    <CouponBox />
 
                     <ButtonBox>
                         <Link to="/">
@@ -181,6 +207,27 @@ const ButtonDel = styled(Button)`
         color: black;
     }
 `
+const Coupon = styled.div`
+    width: clamp(150px, 100%, 400px);
+    height: 100px;
+    margin: 30px;
+    display: flex;
+    align-items: center;
+    background-color: red;
+    border-radius: 15px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    position: relative;
+`
 
+const DelCoupon = styled.div`
+    width: 50px;
+    height: 50px;
+    background: blue;
+    border-radius: 50%;
+    position: absolute;
+    top: -20%;
+    right: -5%;
+    cursor: pointer;
+`
 
 export default Cart
