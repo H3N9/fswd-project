@@ -161,7 +161,7 @@ const Checkout = () => {
 
                 </PaymentInputBox>
                 <CartSummary>
-                    <Summary order={order} total={order?.totalPrice || 0} handle={checkoutHandle}/>
+                    <Summary netPrice={order?.netTotalPrice} total={order?.totalPrice || 0} handle={checkoutHandle}/>
                 </CartSummary>
             </BoxPayment>
             
