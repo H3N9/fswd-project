@@ -191,6 +191,11 @@ export const Header = styled.div`
         border-radius: 5px;
         margin-top: 10px;
         font-size: 1.05rem;
+        border: 2px solid #2fb12f;
+        :hover{
+            background-color: white;
+            color: #2fb12f;
+        }
     }
 `
 

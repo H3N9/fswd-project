@@ -1,6 +1,6 @@
 import React, {useState,} from 'react'
 import styled from 'styled-components'
-import { useHistory } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMutation } from '@apollo/client'
 import { Header, Input, FormContainer } from '../styles/styleComponents'
@@ -66,16 +66,23 @@ const Payment = () => {
                         <img src={image} alt=""/>
                     </Image>
                     <InputWrapper>
-                        <div>
+                        <Box>
                             <input type="file" id="image" name="image" accept="image/jpeg" onChange={(e) => inputHandle(e)}/> 
                             <label htmlFor="image"><FontAwesomeIcon icon={['fas', 'plus']} /> อัปโหลดหลักฐานการชำระ</label>
-                        </div>
+                        </Box>
                     </InputWrapper>     
                 </ImageFormContainer>
             </Flex>
         </Container>
     )
 }
+
+const Box = styled.div`
+    color: white;
+    :hover{
+        color: #5128e6;
+    }
+`
 
 const Container = styled.div`
     padding: 100px 5% 0 5%;
@@ -130,14 +137,12 @@ const InputWrapper = styled.div`
     text-align: center;
     margin-top: 20px;
     p{
-        background: blue;
         width: 100%;
         text-align: center;
     }
     input{
         width:100%;
         height: 50px;
-        background: blue;
         opacity: 1;
         margin: 0;
         padding: 0;
@@ -146,20 +151,25 @@ const InputWrapper = styled.div`
         :before{
             content: "";
             position: absolute;
-            background: #FFF;
             width: 100%;
             height: 100%;
             text-align: center;
             cursor: pointer;
-            background: #5128e6
+            background: #5128e6;
+            transition: 0.5s;
         }
+        :hover::before{
+            background-color: white;
+            color: red;
+        }
+        
         
     }
     label{
         position: relative;
         top: -37px;
-        color: #FFF;
         font-size: 1.1rem;
+        cursor: pointer;
     }
 `
 
