@@ -18,7 +18,8 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
             return(
                 <>
                     <BoxLink title={"โปรโมชั่น"} link={"promotions"} main={""}  /> 
-                    <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />  
+                    <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />
+                    <BoxLink title={"ประวัติการสั่งซื้อ"} link={"customer/orders"} main={""}  />
                     <Dropdown>
                         <p className="menu-button" >จัดการ <FontAwesomeIcon icon={['fas', 'sort-down']} style={{marginBottom: 2}}/></p>
                         <div className="menu">
@@ -43,7 +44,8 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
             return (
                 <>
                     <BoxLink title={"โปรโมชั่น"} link={"promotions"} main={""}  /> 
-                    <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />  
+                    <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />
+                    <BoxLink title={"ประวัติการสั่งซื้อ"} link={"customer/orders"} main={""}  /> 
                 </>
             )
         }

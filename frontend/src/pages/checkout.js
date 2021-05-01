@@ -7,7 +7,6 @@ import { MYORDER_QUERY } from '../graphql/myOrderQuery'
 import { CREATE_SHIPPING, UPDATE_SHIPPING, SET_SHIPPING } from '../graphql/shippingMutation'
 import {SpaceBox, Box9p, Header} from '../styles/styleComponents'
 import Summary from '../components/cart/summary'
-import {useOrderContext} from '../context/orderContext'
 import InputDouble from '../components/payment/InputDouble'
 import InputLong from '../components/payment/InputLong'
 import Select from '../components/payment/select'
@@ -18,7 +17,7 @@ import Response from '../components/response'
 const Checkout = () => {
     const total = 0
     const { data } = useQuery(MY_SHIPPINGS)
-    const orders = useQuery(MYORDER_QUERY, {variables: {object: {status: 'PROCESSING'}}})
+    const orders = useQuery(MYORDER_QUERY, {variables: {object: {status: 'PROCESSING'}}, fetchPolicy: 'network-only'})
     const [ createShipping ] = useMutation(CREATE_SHIPPING)
     const [ updateShipping ] = useMutation(UPDATE_SHIPPING)
     const [ setShippingMutation ] = useMutation(SET_SHIPPING)
@@ -120,7 +119,6 @@ const Checkout = () => {
     }
 
     const checkoutHandle = async (e) => {
-        console.log(address?._id)
         try{
             await setShippingMutation({variables: {shippingId: address?._id}})
             history.push('/payment')

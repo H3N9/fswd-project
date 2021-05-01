@@ -4,15 +4,15 @@ import { NavLink, Link } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { ME_QUERY } from '../../graphql/meQuery'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {useOrderContext} from '../../context/orderContext'
+// import {useOrderContext} from '../../context/orderContext'
 import { Border } from '../../styles/styleComponents'
 import {useSession} from '../../context/session'
 
 const MobileNavbar = ({isShowMenu, setIsShowMenu, user, isAdmin}) =>{
 
     const { logout } = useSession()
-    const { orders } = useOrderContext()
-    const amount = orders.reduce((val1, val2) => val1 + (val2.quantity || 0), 0)
+    // const { orders } = useOrderContext()
+    // const amount = orders.reduce((val1, val2) => val1 + (val2.quantity || 0), 0)
 
     useEffect(() => {
         document.body.style.overflow = isShowMenu ? "hidden" : "overlay";

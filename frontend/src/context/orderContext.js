@@ -19,6 +19,7 @@ export const OrderProvider = (props) => {
 
     const setOrdersHandle = (carts) => {
         setOrders(carts)
+        console.log(13455)
         handleSetCart(carts)
     }
 
@@ -44,14 +45,17 @@ export const OrderProvider = (props) => {
             const copyOrders = data?.myOrders[0]?.orderProducts.map((order) => {
                 return {productId: order.productId, quantity: order.quantity, product:order.product}
             }) || []
+
             if(orders.length > 0){
-                orders.forEach((product) => combineItems(product, copyOrders))
-                handleSetCart(copyOrders)
+                //orders.forEach((product) => combineItems(product, copyOrders))
+                console.log(1111111)
+                //handleSetCart(copyOrders)
                 
             }
             if(data?.myOrders[0]?.discountCoupons[0]?.couponPromotion){
                 setCoupon(data?.myOrders[0]?.discountCoupons[0]?.couponPromotion)
             }
+            console.log(333333333)
             setOrders(copyOrders)
             
         }
@@ -146,7 +150,7 @@ export const OrderProvider = (props) => {
         const delProduct = carts.map((cart) => {
             return {productId:cart.productId, quantity: cart.quantity}
         })
-        
+        console.log(delProduct)
         if(user){
             try{
                 await setCart({variables:{object: delProduct}})
