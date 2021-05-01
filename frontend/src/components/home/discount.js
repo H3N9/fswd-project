@@ -46,7 +46,7 @@ const DiscountBox = styled(Box)`
     background: white;
     height: 10%;
 `
-const PriceText = styled.h2`
+const PriceText = styled.h3`
     margin: 0;
     text-decoration: line-through;
     color: gray;
@@ -55,7 +55,7 @@ const DiscountText = styled.h1`
     margin: 0;
     color: black;
     font-weight: 600;
-    font-size: clamp(21px, 6vmin, 2rem);
+    font-size: clamp(21px, 6vmin, 1.8rem);
 `
 
 export default Discount

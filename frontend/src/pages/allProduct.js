@@ -72,11 +72,16 @@ const Container = styled.div`
 `
 
 const Flex = styled.div`
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat( auto-fill, minmax(270px, 1fr) );
+    justify-items: center;
+    
     justify-content: center;
     margin-bottom: 50px;
-
+    @media (max-width: 415px){
+        display: flex;
+        flex-wrap: wrap;
+    }
 `
 
 const SearchBar = styled.div`

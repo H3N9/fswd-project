@@ -54,10 +54,15 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
     const IsUser = () => {
         if(user){
             return (
-                <BoxButton className="img-profile">
-                    <FontAwesomeIcon icon={['fas', 'user']} />
-                    {/* <Image src={Stephen} /> */}
-                </BoxButton>
+                <>
+                    <BoxButton className="img-profile">
+                        <FontAwesomeIcon icon={['fas', 'user']} />
+                        {/* <Image src={Stephen} /> */}
+                    </BoxButton>
+                    <AuthContainer>
+                        <Link to={`/register`} className="logout-button">ออกจากระบบ</Link>
+                    </AuthContainer>
+                </>
             )
         }
         else{
@@ -244,7 +249,7 @@ const Circle = styled.div`
     min-width: 24px;
     min-height: 10px;
     position: absolute;
-    background: #e62828;
+    background: #ca2828;
     color: white;
     padding: 0px 6px 0px 6px;
     display: flex;
@@ -261,6 +266,7 @@ const AuthContainer = styled.div`
         padding: 5px 10px;
         border-radius: 5px;
         font-weight: 500;
+        transition: 0.25s;
         &:first-child{
             color: #4447f3;
             border: 2px solid #4447f3;
@@ -269,6 +275,15 @@ const AuthContainer = styled.div`
             color: #FFF;
             background: #4447f3;
             border: 2px solid #4447f3;
+        }
+        &.logout-button{
+            color: #b61f1f;
+            background: #FFF;
+            border: 2px solid #b61f1f;
+            :hover{
+                color: #FFF;
+                background: #b61f1f;
+            }
         }
         @media (max-width: 960px) {
             display: none;

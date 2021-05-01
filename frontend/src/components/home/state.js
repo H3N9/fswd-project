@@ -26,7 +26,8 @@ const State = ({quantity}) => {
 
 const StateGoods = styled.div`
     background: white;
-    height: 6%;
+    height: 4%;
+    margin-bottom: 10px;
     display: flex;
     width: 100%;
     align-items: center;

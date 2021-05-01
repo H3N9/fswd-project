@@ -6,6 +6,7 @@ import { useOrderContext } from '../context/orderContext'
 import {Link, useHistory} from 'react-router-dom'
 import Summary from '../components/cart/summary'
 import {Input} from '../styles/styleComponents'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 
 const Cart = () => {
@@ -36,7 +37,9 @@ const Cart = () => {
             return (
                 <Coupon>
                     <h1>Coupon:{coupon?.promotionCode}</h1>
-                    <DelCoupon onClick={() => removeCoupon()} />
+                    <DelCoupon onClick={() => removeCoupon()} >
+                        <FontAwesomeIcon icon={['fas', 'times']}/>
+                    </DelCoupon>
                 </Coupon>
             )
         }
@@ -70,8 +73,8 @@ const Cart = () => {
                     <BoxInput style={{display: coupon? "none":""}}>
                         <BoxInputBut>
                             <Input>
-                                <input id="coupon" name="coupon" value={couponInput} onChange={inputHandle} />
-                                <label htmlFor="coupon">คูปอง</label>
+                                <input id="coupon" name="coupon" value={couponInput} onChange={inputHandle} required />
+                                <label htmlFor="coupon">เพิ่มคูปองส่วนลด</label>
                             </Input>
                         </BoxInputBut>
                         
@@ -107,6 +110,7 @@ const CartBox = styled.div`
     flex-wrap: wrap;
     display: flex;
     justify-content: space-around;
+    
 `
 
 const CartInfo = styled.div`
@@ -143,16 +147,18 @@ const ButtonBox = styled.div`
     display: flex;
     width: 100%;
     padding-top: 20px;
-    min-height: 100px;
     justify-content: center;
-    flex-wrap: wrap;
+    a{
+        width: 150px;
+    }
     
 `
 const Button = styled.button`
-    width: 200px;
+    flex: 1;
+    max-width: 200px;
     height: 50px;
-    border-radius: 20px;
-    font-size: 1.2em;
+    border-radius: 5px;
+    font-size: clamp(1rem, 5vmin,1.2rem);
     outline: none;
     cursor: pointer;
     transition: 0.5s;
@@ -173,8 +179,15 @@ const ButtonAdd = styled(Button)`
 
 const AddBut = styled.button`
     width: 30%;
-    height: 60px;
+    height: 40px;
+    border: none;
+    font-weight: 500;
+    font-size: 17px;
+    color: #FFF;
+    background:#5128e6;
+    margin-left: 10px;
 `
+
 const BoxInputBut = styled.div`
     width: 70%;
     height: 100%;
@@ -197,7 +210,7 @@ const Coupon = styled.div`
     margin: 30px;
     display: flex;
     align-items: center;
-    background-color: red;
+    background-color: white;
     border-radius: 15px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     position: relative;
@@ -206,12 +219,16 @@ const Coupon = styled.div`
 const DelCoupon = styled.div`
     width: 50px;
     height: 50px;
-    background: blue;
+    background: red;
     border-radius: 50%;
     position: absolute;
     top: -20%;
     right: -5%;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
 `
 
 export default Cart
