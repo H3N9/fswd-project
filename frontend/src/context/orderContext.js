@@ -128,10 +128,8 @@ export const OrderProvider = (props) => {
 
     const setCarts = (product, index, amount, id, copyArr) => {
         const total = product?.quantity || 0
-        console.log(total)
         if(index > -1 && amount > 0 && total >= amount){
             copyArr[index].quantity = amount
-            console.log(copyArr[index])
         }
         else if(index > -1 && amount === 0){
             copyArr.splice(index, 1)

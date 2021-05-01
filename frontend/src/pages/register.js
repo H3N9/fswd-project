@@ -1,12 +1,13 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import {REGISTER_MUTATION} from '../graphql/registerMutation'
 import { validate } from 'graphql'
 import whiteLogo from '../images/logo-white.webp'
 import logo from '../images/logo.png'
 import {Form, MainContainer, LoginContainer, Input, LogoContainer} from '../styles/styleComponents'
+import { useSession } from '../context/session'
 
 const Register = () =>{
     const [username, setUsername] = useState("")
@@ -15,6 +16,15 @@ const Register = () =>{
     const [confirm, setConfirm] = useState("")
     const [ error, setError ] = useState(<></>)
     const [register] = useMutation(REGISTER_MUTATION)
+    const history = useHistory()
+    const { user } = useSession()
+
+    useEffect(() => {
+        console.log(user)
+        if(user){
+            history.push('/')
+        }
+    }, [user])
 
     const handleUsername = (e) => {
         setUsername(e.target.value)
