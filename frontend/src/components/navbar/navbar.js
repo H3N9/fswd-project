@@ -62,7 +62,7 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
                         {/* <Image src={Stephen} /> */}
                     </BoxButton>
                     <AuthContainer>
-                        <Link to={`/`} onClick={() => logout()} className="logout-button">ออกจากระบบ</Link>
+                        <Link to={`/login`} onClick={() => logout()} className="logout-button">ออกจากระบบ</Link>
                     </AuthContainer>
                 </>
             )
