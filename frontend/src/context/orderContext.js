@@ -11,15 +11,15 @@ const OrderContext = createContext()
 export const OrderProvider = (props) => {
     const { children } = props
     const [orders, setOrders] = useState([])
+    const [beforeOrders, setBeforeOrders] = useState([])
     const [setCart] = useMutation(SETCART_MUTATION)
     const {user} = useSession()
     const [setPromotion] = useMutation(SETPROMOTION_MUTATION)
     const [coupon, setCoupon] = useState(null)
-    const [loadMyOrder, {data}] = useLazyQuery(MYORDER_QUERY, {variables: {object: {status: 'PROCESSING' }}})
+    const [loadMyOrder, { data }] = useLazyQuery(MYORDER_QUERY, {variables: {object: {status: 'PROCESSING' }}})
 
     const setOrdersHandle = (carts) => {
         setOrders(carts)
-        console.log(13455)
         handleSetCart(carts)
     }
 
@@ -29,6 +29,8 @@ export const OrderProvider = (props) => {
         const loadCart = async () => {
             try {
                 await loadMyOrder()
+                setBeforeOrders(orders)
+                setOrders([])
                 console.log("Load My Order Success")
             }
             catch (e) {
@@ -46,30 +48,30 @@ export const OrderProvider = (props) => {
                 return {productId: order.productId, quantity: order.quantity, product:order.product}
             }) || []
 
-            if(orders.length > 0){
-                //orders.forEach((product) => combineItems(product, copyOrders))
-                console.log(1111111)
-                //handleSetCart(copyOrders)
+            if(beforeOrders.length > 0){
+                beforeOrders.forEach((product) => combineItems(product, copyOrders))
+                handleSetCart(copyOrders)
+                setBeforeOrders([])
                 
             }
             if(data?.myOrders[0]?.discountCoupons[0]?.couponPromotion){
                 setCoupon(data?.myOrders[0]?.discountCoupons[0]?.couponPromotion)
             }
-            console.log(333333333)
             setOrders(copyOrders)
             
         }
-        
     }, [data])
 
     const addCoupon = async (couponInput) => {
-        try{
-            const response = await setPromotion({variables:{record:[{promotionCode: couponInput}]}})
-            setCoupon(response?.data?.setPromotion?.discountCoupons[0]?.couponPromotion)
-        }
-        catch (e){
-            console.log(e.message)
-        }
+        if(couponInput){
+            try{
+                const response = await setPromotion({variables:{record:[{promotionCode: couponInput}]}})
+                setCoupon(response?.data?.setPromotion?.discountCoupons[0]?.couponPromotion)
+            }
+            catch (e){
+                console.log(e.message)
+            }
+        } 
     }
 
     const removeCoupon = async () => {

@@ -6,6 +6,7 @@ import { useOrderContext } from '../context/orderContext'
 import {Link, useHistory} from 'react-router-dom'
 import Summary from '../components/cart/summary'
 import {Input} from '../styles/styleComponents'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 
 const Cart = () => {
@@ -36,7 +37,9 @@ const Cart = () => {
             return (
                 <Coupon>
                     <h1>Coupon:{coupon?.promotionCode}</h1>
-                    <DelCoupon onClick={() => removeCoupon()} />
+                    <DelCoupon onClick={() => removeCoupon()} >
+                        <FontAwesomeIcon icon={['fas', 'times']}/>
+                    </DelCoupon>
                 </Coupon>
             )
         }
@@ -182,6 +185,7 @@ const AddBut = styled.button`
     font-size: 17px;
     color: #FFF;
     background:#5128e6;
+    margin-left: 10px;
 `
 
 const BoxInputBut = styled.div`
@@ -206,7 +210,7 @@ const Coupon = styled.div`
     margin: 30px;
     display: flex;
     align-items: center;
-    background-color: red;
+    background-color: white;
     border-radius: 15px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     position: relative;
@@ -215,12 +219,16 @@ const Coupon = styled.div`
 const DelCoupon = styled.div`
     width: 50px;
     height: 50px;
-    background: blue;
+    background: red;
     border-radius: 50%;
     position: absolute;
     top: -20%;
     right: -5%;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
 `
 
 export default Cart
