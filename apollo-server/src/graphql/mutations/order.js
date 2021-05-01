@@ -158,9 +158,17 @@ export const confirmOrder = schemaComposer.createResolver({
                 product.updatedAt = Date.now()
                 await product.save()
             }
+            const orderPromotions = await OrderPromotionModel.find({ orderId: order._id }).populate('promotionId')
+            for (const orderPromotion of orderPromotions){
+                if (orderPromotion.promotionId.quantity === 0){
+                    await orderPromotion.delete()
+                    throw new Error(`promotion code ${orderPromotion.promotionId.promotionCode} quantity is not enough`)
+                }
+            }
+
             order.imagePayment = imagePayment
             order.status = 'COMPLETE'
-            order.netTotalPrice = await order.getNetTotalPrice()
+            order.netTotalPrice = await order.getNetTo.talPrice()
             await order.save()
             await OrderModel.create({ userId: user._id })
 
