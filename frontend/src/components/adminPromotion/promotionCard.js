@@ -15,47 +15,47 @@ const PromotionCard = ({promotion, index, countPage}) => {
 
     return (
         <PromotionItem>
-            <Id>
-                <h1>{index + countPage + 1}</h1>
-            </Id>
             <Info>
                 <Name>
                     <h2>{title}</h2>
                 </Name>
                 <Detail>
-                    <p><b>ประเภทโปรโมชั่น :</b> {type}</p>
-                    {(type === 'DiscountPrice') && (<p><b>สินค้า : </b> {promotion?.product?.title}</p>)}
-                    <p><b>รูปแบบส่วนลด : </b> {method}</p>
-                    <p><b>สร้างเมื่อ :</b> {createdAtWithFormatDateTime}</p>
-                    <p><b>อัปเดทเมื่อ :</b> {updatedAtWithFormatDateTime}</p>
+                        <p><b>ประเภทโปรโมชั่น :</b> {type}</p>
+                        {(type === 'DiscountPrice') && (<p><b>สินค้า : </b> {promotion?.product?.title}</p>)}
+                        <p><b>รูปแบบส่วนลด : </b> {method}</p>
                 </Detail>
-                <Option>
-                    <Link to={editLink}>
-                        <button className="edit"  name="แก้ไขโปรโมชั่น"><FontAwesomeIcon icon={['fas', 'edit']} /></button>
-                    </Link>
-                    <button className="delete" name="ลบโปรโมชั่น" ><FontAwesomeIcon icon={['fas', 'trash-alt']}/></button>
-                </Option>
+                
             </Info>
+            <Option>
+                <Link to={editLink}>
+                    <button className="edit"  name="แก้ไขโปรโมชั่น"><FontAwesomeIcon icon={['fas', 'edit']} /> แก้ไข</button>
+                </Link>
+                <button className="delete" name="ลบโปรโมชั่น" ><FontAwesomeIcon icon={['fas', 'trash-alt']}/> ลบ</button>
+            </Option>
          </PromotionItem>
     )
 }
 const PromotionItem = styled.div`
-    width: 1000px;
+    width: 500px;
+    max-width: 100%;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     display: flex;
     align-items: center;
-    border-radius: 10px;
+    flex-direction: column;
+    border-radius: 30px;
     color :#FFF;
-    padding: 10px 0;
-    background-image: linear-gradient(120deg, #5128e6 , #2891e6);
+    padding: 20px 25px;
+    background-image: linear-gradient(120deg,  #fa8d45, #fc6d0e);
     margin: 10px;
 `
 
 const Info = styled.div`
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    flex-direction: column;
+    /* flex-wrap: wrap;
+    align-items: center; */
     width:100%;
+    position: relative;
 `
 
 const Id = styled.div`
@@ -67,20 +67,26 @@ const Id = styled.div`
 `
 
 const Name = styled.div`
-    flex: 1;
-    flex-basis: 300px;
     padding-right:10px;
-    height: 100%;
     display:flex;
+    background: #FFF;
+    width: fit-content;
+    border-radius: 5px;
     align-items: center;
+    
+    h2{
+        font-weight: 500;
+        color: #fa8d45;
+        padding: 0 10px;
+        margin: 10px 0;
+        font-size: clamp(1.2rem,8vmin,1.9rem);
+    }
 `
 
 const Detail = styled.div`
-    height: 100%;
-    flex-basis: 300px;
     p{
         margin: 10px 0;
-        font-size: 1.1rem;
+        font-size: clamp(1rem, 5vmin,1.25rem);
         b{
             font-weight: 500;
         }
@@ -89,57 +95,26 @@ const Detail = styled.div`
 
 const Option = styled.div`
     display: flex;
-    height: 80px;
-    align-items: flex-start;
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: 100%;
     button{
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
+        min-width: 75px;
+        max-width: 125px;
+        height: 40px;
+        border-radius: 5px;
         margin: 0px 25px 0px 0;
         border: none;
         position: relative;
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        font-size: 1rem;
         svg{
             font-size: 20px;
             color: #111;
             transition: 0.25s;
         }
-        &.delete{
-            :hover{
-                background: #df2b2b;
-            }          
-        }
-        &.edit{
-            :hover{
-                background: #df6b1e;
-            }          
-        }
-        :hover{
-            svg{
-                color: #FFF;
-            }
-            :before{
-                opacity: 1;
-            }
-        }
-        :before{
-            position: absolute;
-            content: attr(name);
-            width: 100px;
-            font-size: 1rem;
-            top: -40px;
-            left: -30px;
-            color: #FFF;
-            border-radius: 5px;
-            padding: 5px 10px;
-            transition: 0.25s;
-            background: rgba(0,0,0,0.75);
-            opacity: 0;
-            @media (max-width: 1000px){
-                display: none;
-            }
-        }
     }
+
 `
 
 export default PromotionCard
