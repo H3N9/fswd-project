@@ -36,17 +36,19 @@ const PromoItem = styled.div`
     transition: 0.25s;
     padding: 20px;
     position: relative;
+    overflow: hidden;
     &:before{
         content: attr(name);
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         border-radius: 15px;
         width: 100%;
         height: 100%;
-        background-image: linear-gradient(120deg,  #fa8d45, #fc6d0e);
+
+        text-align:center;
         color: #FFF;
         position: absolute;
-        margin: 0;
-        top: 0;
+        font-weight: 500;
+        top: 0%;
         left: 0;
         transition: 0.25s;
         opacity: 0;
@@ -74,6 +76,7 @@ const PromoItem = styled.div`
         }
     }
     .promotion-value{
+        transition: 0.25s;
         h3{
             margin: 0;
             font-size: 1.3rem;
@@ -85,6 +88,10 @@ const PromoItem = styled.div`
         }
     }
     &:hover{
+        .promotion-value{
+            opacity: 0;
+        }
+        color: transparent;
         :before{
             opacity: 1;
         }
