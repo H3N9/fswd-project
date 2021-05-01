@@ -11,8 +11,8 @@ const OrderCard = ({ order }) => {
     return (
         <Card>
             <div className="order-content order-header">
-                <p>รหัสออเดอร์ : {order._id}</p>
-                <p>{order.updatedAtWithFormatDateTime}</p>
+                <p><b>รหัสออเดอร์ :</b> {order._id}</p>
+                <p><b>เวลา :</b> {order.updatedAtWithFormatDateTime}</p>
                 <Status>
                     <p>{status}</p>
                 </Status>

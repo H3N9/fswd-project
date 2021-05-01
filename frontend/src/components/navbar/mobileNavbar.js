@@ -1,21 +1,23 @@
 import React, {useEffect} from 'react'
 import styled from 'styled-components'
-import BoxLink from './btnNav'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { ME_QUERY } from '../../graphql/meQuery'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import {useOrderContext} from '../../context/orderContext'
 import { Border } from '../../styles/styleComponents'
 import {useSession} from '../../context/session'
 
 const MobileNavbar = ({isShowMenu, setIsShowMenu, user, isAdmin}) =>{
 
     const { logout } = useSession()
+    // const { orders } = useOrderContext()
+    // const amount = orders.reduce((val1, val2) => val1 + (val2.quantity || 0), 0)
 
     useEffect(() => {
         document.body.style.overflow = isShowMenu ? "hidden" : "overlay";
     }, [isShowMenu])
-
+    console.log(window.innerWidth)
     const IsUser = () => {
         if(user){
             return (
@@ -41,15 +43,15 @@ const MobileNavbar = ({isShowMenu, setIsShowMenu, user, isAdmin}) =>{
                 <>
                             <NavLink to={`/products`} onClick={() => setIsShowMenu(false)}>สินค้าทั้งหมด</NavLink>
                             <Border />
-                            <NavLink to={`/promotions`} onClick={() => setIsShowMenu(false)}>โปรโมชั่น</NavLink> 
+                            <NavLink  to={`/promotions`} onClick={() => setIsShowMenu(false)}>โปรโมชั่น</NavLink> 
                             <Border />
-                            <NavLink to={`admin/orders`} onClick={() => setIsShowMenu(false)}>จัดการออเดอร์</NavLink>
+                            <NavLink exact to={`/admin/orders`} onClick={() => setIsShowMenu(false)}>จัดการออเดอร์</NavLink>
                             <Border />
-                            <NavLink to={`/best`} onClick={() => setIsShowMenu(false)}>จัดการสินค้า</NavLink>
+                            <NavLink exact to={`/admin/products`} onClick={() => setIsShowMenu(false)}>จัดการสินค้า</NavLink>
                             <Border />
-                            <NavLink to={`admin/products`} onClick={() => setIsShowMenu(false)}>จัดการโปรโมชั่น</NavLink>
+                            <NavLink exact to={`/admin/promotions`} onClick={() => setIsShowMenu(false)}>จัดการโปรโมชั่น</NavLink>
                             <Border />
-                            <NavLink to={`admin`} onClick={() => setIsShowMenu(false)}>Dashboard</NavLink> 
+                            <NavLink exact to={`/admin`} onClick={() => setIsShowMenu(false)}>Dashboard</NavLink> 
                             <Border />
                 </>
             )
@@ -161,6 +163,7 @@ const UserDetail = styled.div`
     .user-text{
         color: #FFF;
         display: flex;
+        flex: 1;
         flex-direction: column;
         justify-content: center;
         h1{
@@ -173,7 +176,6 @@ const UserDetail = styled.div`
             color: #BBB;
         }
     }
-
 `
 const MenuRole = styled.div`
     display: flex;
@@ -233,5 +235,4 @@ const AuthContainer = styled.div`
         }
     }    
 `
-
 export default MobileNavbar;

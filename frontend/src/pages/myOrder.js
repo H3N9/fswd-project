@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { MYORDER_QUERY } from '../graphql/myOrderQuery'
 import OrderCard from '../components/order/orderCard'
+import {Header} from '../styles/styleComponents'
 
 const MyOrder = () => {
     const { data } = useQuery(MYORDER_QUERY, {variables: {
@@ -13,7 +14,8 @@ const MyOrder = () => {
     const orders = data?.myOrders || []
 
     return (
-        <Container>      
+        <Container>
+            <Header><h1>ประวัติการสั่งซื้อ</h1></Header>      
             <Flex>
                 {orders.map((item) => (<OrderCard key={item._id} order={item} />))}
             </Flex>

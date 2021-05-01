@@ -3,15 +3,20 @@ import {useMutation, useLazyQuery} from '@apollo/client'
 import {SETCART_MUTATION} from '../graphql/setCartMutation'
 import { useSession } from './session'
 import {MYORDER_QUERY} from '../graphql/myOrderQuery'
+import {SETPROMOTION_MUTATION} from '../graphql/setPromotionMutation'
+
 
 const OrderContext = createContext()
 
 export const OrderProvider = (props) => {
     const { children } = props
     const [orders, setOrders] = useState([])
+    const [beforeOrders, setBeforeOrders] = useState([])
     const [setCart] = useMutation(SETCART_MUTATION)
     const {user} = useSession()
-    const [loadMyOrder, {data}] = useLazyQuery(MYORDER_QUERY, {variables: {object: {status: 'PROCESSING' }}})
+    const [setPromotion] = useMutation(SETPROMOTION_MUTATION)
+    const [coupon, setCoupon] = useState(null)
+    const [loadMyOrder, { data }] = useLazyQuery(MYORDER_QUERY, {variables: {object: {status: 'PROCESSING' }}})
 
     const setOrdersHandle = (carts) => {
         setOrders(carts)
@@ -24,6 +29,8 @@ export const OrderProvider = (props) => {
         const loadCart = async () => {
             try {
                 await loadMyOrder()
+                setBeforeOrders(orders)
+                setOrders([])
                 console.log("Load My Order Success")
             }
             catch (e) {
@@ -40,16 +47,42 @@ export const OrderProvider = (props) => {
             const copyOrders = data?.myOrders[0]?.orderProducts.map((order) => {
                 return {productId: order.productId, quantity: order.quantity, product:order.product}
             }) || []
-            if(orders.length > 0){
-                orders.forEach((product) => combineItems(product, copyOrders))
+
+            if(beforeOrders.length > 0){
+                beforeOrders.forEach((product) => combineItems(product, copyOrders))
                 handleSetCart(copyOrders)
+                setBeforeOrders([])
                 
+            }
+            if(data?.myOrders[0]?.discountCoupons[0]?.couponPromotion){
+                setCoupon(data?.myOrders[0]?.discountCoupons[0]?.couponPromotion)
             }
             setOrders(copyOrders)
             
         }
-        
     }, [data])
+
+    const addCoupon = async (couponInput) => {
+        if(couponInput){
+            try{
+                const response = await setPromotion({variables:{record:[{promotionCode: couponInput}]}})
+                setCoupon(response?.data?.setPromotion?.discountCoupons[0]?.couponPromotion)
+            }
+            catch (e){
+                console.log(e.message)
+            }
+        } 
+    }
+
+    const removeCoupon = async () => {
+        try{
+            await setPromotion({variables:{record:[]}})
+            setCoupon(null)
+        }
+        catch(e){
+            console.log(e.message)
+        }
+    }
 
     const combineItems = (product, base) => {
         const { productId, quantity } = product
@@ -101,10 +134,8 @@ export const OrderProvider = (props) => {
 
     const setCarts = (product, index, amount, id, copyArr) => {
         const total = product?.quantity || 0
-        console.log(total)
         if(index > -1 && amount > 0 && total >= amount){
             copyArr[index].quantity = amount
-            console.log(copyArr[index])
         }
         else if(index > -1 && amount === 0){
             copyArr.splice(index, 1)
@@ -115,14 +146,13 @@ export const OrderProvider = (props) => {
         setOrdersHandle([...copyArr])
     }
 
-    
 
 
     const handleSetCart = async (carts) => {
         const delProduct = carts.map((cart) => {
             return {productId:cart.productId, quantity: cart.quantity}
         })
-        
+        console.log(delProduct)
         if(user){
             try{
                 await setCart({variables:{object: delProduct}})
@@ -154,7 +184,7 @@ export const OrderProvider = (props) => {
 
     
     return (
-        <OrderContext.Provider value={{orders:orders, addOrder: ordersHandle, removeCart}}>
+        <OrderContext.Provider value={{orders:orders, addOrder: ordersHandle, removeCart, coupon, addCoupon, removeCoupon}}>
             {children}
         </OrderContext.Provider>
     )

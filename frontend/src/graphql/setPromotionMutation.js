@@ -9,6 +9,7 @@ export const SETPROMOTION_MUTATION = gql`
                     method
                     type
                     discountValue
+                    promotionCode
                 }
             }
         }

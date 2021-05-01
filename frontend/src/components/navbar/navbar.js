@@ -7,20 +7,23 @@ import Modal from './modal'
 import {useOrderContext} from '../../context/orderContext'
 import { Link, Route, Switch, NavLink } from 'react-router-dom'
 import Orders from '../../pages/admin/orders'
+import { useSession } from '../../context/session'
 const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
     const [modal, setModal] = useState(false)
     const { orders } = useOrderContext()
     const amount = orders.reduce((val1, val2) => val1 + (val2.quantity || 0), 0)
     const cart = useRef()
+    const {logout} = useSession()
 
     const IsAdmin = () => {
         if(isAdmin){
             return(
                 <>
                     <BoxLink title={"โปรโมชั่น"} link={"promotions"} main={""}  /> 
-                    <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />  
+                    <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />
+                    <BoxLink title={"ประวัติการสั่งซื้อ"} link={"customer/orders"} main={""}  />
                     <Dropdown>
-                        <p>จัดการ <FontAwesomeIcon icon={['fas', 'sort-down']} style={{marginBottom: 2}}/></p>
+                        <p className="menu-button" >จัดการ <FontAwesomeIcon icon={['fas', 'sort-down']} style={{marginBottom: 2}}/></p>
                         <div className="menu">
                             <div className="menu-items">
                                 <NavLink exact activeStyle={{ background: "#FFF", color: "#222", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin/orders`}>ออเดอร์</NavLink>
@@ -43,7 +46,8 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
             return (
                 <>
                     <BoxLink title={"โปรโมชั่น"} link={"promotions"} main={""}  /> 
-                    <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />  
+                    <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />
+                    <BoxLink title={"ประวัติการสั่งซื้อ"} link={"customer/orders"} main={""}  /> 
                 </>
             )
         }
@@ -52,10 +56,15 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
     const IsUser = () => {
         if(user){
             return (
-                <BoxButton className="img-profile">
-                    <FontAwesomeIcon icon={['fas', 'user']} />
-                    {/* <Image src={Stephen} /> */}
-                </BoxButton>
+                <>
+                    <BoxButton className="img-profile">
+                        <FontAwesomeIcon icon={['fas', 'user']} />
+                        {/* <Image src={Stephen} /> */}
+                    </BoxButton>
+                    <AuthContainer>
+                        <Link to={`/login`} onClick={() => logout()} className="logout-button">ออกจากระบบ</Link>
+                    </AuthContainer>
+                </>
             )
         }
         else{
@@ -80,13 +89,16 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
                     <IsAdmin />
                 </BoxBtn>  
                 <AccountBox>
-                    <BoxButton>
-                        <FontAwesomeIcon icon={['fas', 'search']} />
-                    </BoxButton>
+
                     <BoxButton ref={cart} className="cart" onClick={() => setModal(!modal)}>
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                         <Circle>{amount}</Circle>
                     </BoxButton>
+
+                    <Link className="cart-mobile" to={`/cart`} onClick={() => setIsShowMenu(false)}>
+                        <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
+                        <Circle className="circle">{amount}</Circle>
+                    </Link>
                     <IsUser />
                     
                     <MobileMenuButton onClick={() => setIsShowMenu(!isShowMenu)} className={isShowMenu ? "active" : ""} />
@@ -116,9 +128,23 @@ const AccountBox = styled.div`
     display: flex;
     align-items: center;
     padding-right: 2.5vmin;
-    .cart{
-        @media (max-width: 960px) {
-            display: none;
+    .cart-mobile{
+        position: relative;
+        margin: 0 15px;
+        font-size: 1.25rem;
+        display: none;
+        svg{
+            color: #111;
+        }
+        .circle{
+            border-radius: 50%;
+            min-width: 30px;
+            top: -18px;
+            right: -22px;
+
+        }
+        @media (max-width: 960px){
+            display: initial;
         }
     }
 `
@@ -185,7 +211,7 @@ const MobileMenuButton = styled.button`
 const BoxButton = styled.div`
     width: 50px;
     height: 50px;
-    background-color: white;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -208,6 +234,11 @@ const BoxButton = styled.div`
     img{
         position: absolute;
     }
+    &.cart{
+        @media (max-width: 960px){
+            display: none;
+        }
+    }
 `
 const Image = styled.img`
     border-radius: 50%;
@@ -220,7 +251,7 @@ const Circle = styled.div`
     min-width: 24px;
     min-height: 10px;
     position: absolute;
-    background: #4447f3;
+    background: #ca2828;
     color: white;
     padding: 0px 6px 0px 6px;
     display: flex;
@@ -237,6 +268,7 @@ const AuthContainer = styled.div`
         padding: 5px 10px;
         border-radius: 5px;
         font-weight: 500;
+        transition: 0.25s;
         &:first-child{
             color: #4447f3;
             border: 2px solid #4447f3;
@@ -245,6 +277,15 @@ const AuthContainer = styled.div`
             color: #FFF;
             background: #4447f3;
             border: 2px solid #4447f3;
+        }
+        &.logout-button{
+            color: #b61f1f;
+            background: #FFF;
+            border: 2px solid #b61f1f;
+            :hover{
+                color: #FFF;
+                background: #b61f1f;
+            }
         }
         @media (max-width: 960px) {
             display: none;
@@ -255,6 +296,7 @@ const AuthContainer = styled.div`
 
 const Dropdown = styled.div`
     position: relative;
+    
     p{
         cursor: pointer;
         margin-left: 0px;
@@ -270,8 +312,10 @@ const Dropdown = styled.div`
             transform: translate(-50%, -50%);
             width: 0;
             height: 25px;
-            border-radius: 5px;
-            background: #222;
+            border-radius: 5px 5px 0 0;
+            background: rgba(0,0,0,0.75);
+            -webkit-backdrop-filter-: blur(5px); 
+            backdrop-filter: blur(5px); 
             z-index: -100;
             transition: 0.25s;
         }
@@ -283,18 +327,22 @@ const Dropdown = styled.div`
         }     
     }
     .menu{
-        padding: 20px;
-        border-radius: 10px;
+        width: 450px;
+        padding: 15px;
+        border-radius: 0 5px 5px 5px;
         background: rgba(0,0,0,0.75);
         -webkit-backdrop-filter-: blur(5px); 
         backdrop-filter: blur(5px); 
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         transition: 0.25s;
         position: absolute;
+        bottom: -61px;
+        left: -1px;
         display: none;
-        opacity: 1;
+        justify-content:flex-start;
         .menu-items{
-            padding: 10px 0;
+            padding: 10px 5px;
+            flex-shrink: 0;
             a{
                 width: 100%;
                 text-decoration: none;
@@ -303,6 +351,7 @@ const Dropdown = styled.div`
                 font-weight: 500;
                 font-size: 1.2rem;
                 transition: 0.25s;
+                margin: 0 5px;
                 padding: 0 10px;
                 position: relative;
                 :hover{
@@ -313,12 +362,15 @@ const Dropdown = styled.div`
         }
     }
     &:hover .menu{
-        display: initial;
+        display: flex;
     }
-    &:hover{
-        display: initial;
+    &:hover p.menu-button{
+        color: #FFF;
+        ::before{
+            width: 100%;
+        }
     }
-    @media (max-width: 360px){
+    @media (max-width: 960px){
         display: none;
     }
 `

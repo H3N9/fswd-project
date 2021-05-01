@@ -4,18 +4,19 @@ import {Route, Switch, useLocation} from 'react-router-dom'
 import NavBarPack from '../components/navbarPack'
 import {useSession} from '../context/session'
 
+
 import Cart from './cart'
 import Home from './home'
 import Login from './login'
 import Detail from './detail'
-import Checkout from './checkout'
+import Payment from './payment'
 import MyOrder from './myOrder'
+import Checkout from './checkout'
 import Register from './register'
 import AllProducts from './allProduct'
 import AllPromotion from './allPromotion'
 import MyOrderDetail from './myOrderDetail'
 import MyInfo from './myInfo'
-
 
 import DiscountPage from './discountPage'
 import UpdateProduct from './admin/updateProduct'
@@ -59,47 +60,6 @@ const Index = () => {
         }
     }, [user])
 
-    const Admin = () => {
-        if(user?.isAdmin){
-            return (
-                <>
-                    <Route path="/admin/product/create">
-                            <CreateProduct />
-                        </Route>
-                        <Route path="/admin/orders">
-                            <Orders />                  
-                        </Route> 
-                        <Route path="/admin/promotions">
-                            <Promotions />
-                        </Route>
-                        <Route path="/admin/promotion/create">
-                                <CreatePromotion />
-                            </Route> 
-                        <Route path="/admin/promotion/:promotionId">
-                            <PromotionDetail />
-                        </Route>
-                        <Route path="/admin/products">
-                            <Products />
-                        </Route>
-                        <Route path="/admin/product/:productId">
-                            <UpdateProduct />
-                        </Route>
- 
-                        <Route path="/admin/order/:orderId">
-                            <Order />
-                        </Route>  
-                        <Route exact path="/admin">
-                            <Dashboard />
-                        </Route> 
-                </>
-            )
-        }
-        else{
-            return (
-                <></>
-            )
-        }
-    }
 
     return (
             <>             
@@ -120,6 +80,9 @@ const Index = () => {
                         
                         <Route path="/discount">
                             <DiscountPage />
+                        </Route>
+                        <Route path="/payment">
+                            <Payment />
                         </Route>
                         <Route path="/product/:productSlug">
                             <Detail />
@@ -147,8 +110,33 @@ const Index = () => {
                         </Route>
 
 {/* --------------------------------------------- For Admin ----------------------------------------------------  */}
-                          <Admin />
-                                               
+                        <Route path="/admin/product/create">
+                            <CreateProduct />
+                        </Route>
+                        <Route path="/admin/orders">
+                            <Orders />                  
+                        </Route> 
+                        <Route path="/admin/promotions">
+                            <Promotions />
+                        </Route>
+                        <Route path="/admin/promotion/create">
+                            <CreatePromotion />
+                        </Route> 
+                        <Route path="/admin/promotion/:promotionId">
+                            <PromotionDetail />
+                        </Route>
+                        <Route path="/admin/products">
+                            <Products />
+                        </Route>
+                        <Route path="/admin/product/:productId">
+                            <UpdateProduct />
+                        </Route>
+                        <Route path="/admin/order/:orderId">
+                            <Order />
+                        </Route>  
+                        <Route exact path="/admin">
+                            <Dashboard />
+                        </Route>                         
                     </Switch>
                 </ContentBox>
              </>
