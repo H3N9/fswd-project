@@ -1,6 +1,5 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { MYORDER_QUERY } from '../graphql/myOrderQuery'
 import OrderCard from '../components/order/orderCard'

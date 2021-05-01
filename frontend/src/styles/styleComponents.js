@@ -48,6 +48,8 @@ export const Button = styled.button`
     cursor: pointer;
     transition: 0.5s;
     outline: none;
+    width: 240px;
+    height: 45px;
 `
 
 
