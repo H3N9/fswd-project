@@ -3,16 +3,16 @@ import styled from 'styled-components'
 import { Box9p, SpaceBox, Header} from '../styles/styleComponents'
 import CardCart from '../components/cart/cardCart'
 import { useOrderContext } from '../context/orderContext'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import Summary from '../components/cart/summary'
 import {Input} from '../styles/styleComponents'
-
 
 
 const Cart = () => {
     const { orders, removeCart, addOrder, coupon, removeCoupon, addCoupon } = useOrderContext()
     const total = orders.length > 0 ? orders.reduce((v1, v2) => v1 + (v2.product.netPrice * v2.quantity) || 0, 0):0
     const [couponInput, setCouponInput] = useState("")
+    const history = useHistory()
 
     const handleCoupon = (discountValue, method) => {
         if(method === "PERCENT"){
@@ -47,6 +47,9 @@ const Cart = () => {
         }
     }
 
+    const summaryHandle = () => {
+        history.push('/checkout')
+    }
 
     return (
         <Box9p>
@@ -89,7 +92,7 @@ const Cart = () => {
                 </CartInfo>
 
                 <CartSummary>
-                    <Summary total={total} netPrice={netPrice} />
+                    <Summary total={total} netPrice={netPrice} handle={summaryHandle}/>
                 </CartSummary>
 
 

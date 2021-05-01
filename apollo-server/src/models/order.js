@@ -23,7 +23,8 @@ const OrderSchema = new Schema({
     },
     userId: { type: String, require: true, ref: 'User' },
     netTotalPrice: { type: Number },
-    shippingId: {type: String, ref: 'Shipping'}
+    shippingId: {type: String, ref: 'Shipping'},
+    imagePayment: {type: String}
 })
 
 OrderSchema.method('getProductDiscount', async function(){

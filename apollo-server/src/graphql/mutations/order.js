@@ -125,11 +125,15 @@ export const setShipping = schemaComposer.createResolver({
 
 export const confirmOrder = schemaComposer.createResolver({
     name: 'confirmOrder',
-    args: {},
+    args: {
+        imagePayment: 'String!'
+    },
     type: OrderTC,
     resolve: async ({ args, context }) => {
         if (context?.user){
             const user = context.user
+            const { imagePayment } = args
+
             const order = await OrderModel.findOne({ status: 'PROCESSING', userId: user._id })
             const orderProducts = await OrderProductModel.find({ orderId: order._id })
             if (orderProducts.length === 0){
@@ -154,6 +158,7 @@ export const confirmOrder = schemaComposer.createResolver({
                 product.updatedAt = Date.now()
                 await product.save()
             }
+            order.imagePayment = imagePayment
             order.status = 'COMPLETE'
             order.netTotalPrice = await order.getNetTotalPrice()
             await order.save()
