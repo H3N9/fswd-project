@@ -7,11 +7,13 @@ import Modal from './modal'
 import {useOrderContext} from '../../context/orderContext'
 import { Link, Route, Switch, NavLink } from 'react-router-dom'
 import Orders from '../../pages/admin/orders'
+import { useSession } from '../../context/session'
 const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
     const [modal, setModal] = useState(false)
     const { orders } = useOrderContext()
     const amount = orders.reduce((val1, val2) => val1 + (val2.quantity || 0), 0)
     const cart = useRef()
+    const {logout} = useSession()
 
     const IsAdmin = () => {
         if(isAdmin){
@@ -60,7 +62,7 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
                         {/* <Image src={Stephen} /> */}
                     </BoxButton>
                     <AuthContainer>
-                        <Link to={`/register`} className="logout-button">ออกจากระบบ</Link>
+                        <Link to={`/login`} onClick={() => logout()} className="logout-button">ออกจากระบบ</Link>
                     </AuthContainer>
                 </>
             )

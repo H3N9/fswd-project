@@ -32,11 +32,10 @@ const Cart = () => {
     }
 
     const CouponBox = () => {
-        console.log(coupon)
         if(coupon){
             return (
                 <Coupon>
-                    <h1>Coupon:{coupon?.promotionCode}</h1>
+                    <h1>Coupon: {coupon?.promotionCode}</h1>
                     <DelCoupon onClick={() => removeCoupon()} >
                         <FontAwesomeIcon icon={['fas', 'times']}/>
                     </DelCoupon>
@@ -84,7 +83,7 @@ const Cart = () => {
                     </BoxInput>
 
                     <ButtonBox>
-                        <Link to="/">
+                        <Link to={"/"}>
                             <ButtonAdd>ซื้อสินค้าต่อไป</ButtonAdd>
                         </Link>
                         <ButtonDel onClick={() => removeCart()}>ล้างตระกร้าสินค้า</ButtonDel>
@@ -214,6 +213,7 @@ const Coupon = styled.div`
     border-radius: 15px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     position: relative;
+    padding: 10px;
 `
 
 const DelCoupon = styled.div`
