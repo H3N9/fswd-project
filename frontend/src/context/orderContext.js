@@ -3,6 +3,8 @@ import {useMutation, useLazyQuery} from '@apollo/client'
 import {SETCART_MUTATION} from '../graphql/setCartMutation'
 import { useSession } from './session'
 import {MYORDER_QUERY} from '../graphql/myOrderQuery'
+import {SETPROMOTION_MUTATION} from '../graphql/setPromotionMutation'
+
 
 const OrderContext = createContext()
 
@@ -11,6 +13,8 @@ export const OrderProvider = (props) => {
     const [orders, setOrders] = useState([])
     const [setCart] = useMutation(SETCART_MUTATION)
     const {user} = useSession()
+    const [setPromotion] = useMutation(SETPROMOTION_MUTATION)
+    const [coupon, setCoupon] = useState(null)
     const [loadMyOrder, {data}] = useLazyQuery(MYORDER_QUERY, {variables: {object: {status: 'PROCESSING' }}})
 
     const setOrdersHandle = (carts) => {
@@ -45,11 +49,34 @@ export const OrderProvider = (props) => {
                 handleSetCart(copyOrders)
                 
             }
+            if(data?.myOrders[0]?.discountCoupons[0]?.couponPromotion){
+                setCoupon(data?.myOrders[0]?.discountCoupons[0]?.couponPromotion)
+            }
             setOrders(copyOrders)
             
         }
         
     }, [data])
+
+    const addCoupon = async (couponInput) => {
+        try{
+            const response = await setPromotion({variables:{record:[{promotionCode: couponInput}]}})
+            setCoupon(response?.data?.setPromotion?.discountCoupons[0]?.couponPromotion)
+        }
+        catch (e){
+            console.log(e.message)
+        }
+    }
+
+    const removeCoupon = async () => {
+        try{
+            await setPromotion({variables:{record:[]}})
+            setCoupon(null)
+        }
+        catch(e){
+            console.log(e.message)
+        }
+    }
 
     const combineItems = (product, base) => {
         const { productId, quantity } = product
@@ -115,7 +142,6 @@ export const OrderProvider = (props) => {
         setOrdersHandle([...copyArr])
     }
 
-    
 
 
     const handleSetCart = async (carts) => {
@@ -154,7 +180,7 @@ export const OrderProvider = (props) => {
 
     
     return (
-        <OrderContext.Provider value={{orders:orders, addOrder: ordersHandle, removeCart}}>
+        <OrderContext.Provider value={{orders:orders, addOrder: ordersHandle, removeCart, coupon, addCoupon, removeCoupon}}>
             {children}
         </OrderContext.Provider>
     )
