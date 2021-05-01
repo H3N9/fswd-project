@@ -26,23 +26,23 @@ const CardCart = ({product, quantity, addOrder}) => {
 
             <TextBoxPack>
                 <TextBox>
-                    <TitleText>{title}</TitleText>
+                    <TitleText><b>{title}</b></TitleText>
                 </TextBox>
                 
                 <TextBox>
-                    <HeadText>จำนวน: </HeadText>
+                    <HeadText><b>จำนวน:</b> </HeadText>
                     <UpNumber number={quantity} handleNumber={lockClikcing} />
                 </TextBox>
                 <TextBox>
-                    <HeadText>ราคา: </HeadText>
+                    <HeadText><b>ราคา:</b> </HeadText>
                     <NormalText>{netPrice}/ชิ้น</NormalText>
                 </TextBox>
                 <TextBox>
-                    <HeadText>ส่วนลด: </HeadText>
+                    <HeadText><b>ส่วนลด:</b> </HeadText>
                     <NormalText>{price-netPrice}/ชิ้น</NormalText>
                 </TextBox>
                 <TextBox>
-                    <HeadText>ทั้งหมด: </HeadText>
+                    <HeadText><b>ทั้งหมด:</b> </HeadText>
                     <NormalText>{netPrice*quantity} บาท</NormalText>
                 </TextBox>
             </TextBoxPack>
@@ -57,9 +57,13 @@ const CardCartBox = styled.div`
     width: 100%;
     display: flex;
     min-height: 350px;
-    margin: 5px;
+    margin: 25px 5px;
     flex-wrap: wrap;
     justify-content: center;
+    background: #FFF;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
 
 `
 const ImageTitleBox = styled.div`
@@ -68,20 +72,22 @@ const ImageTitleBox = styled.div`
     background-color: blue;
     flex-direction: column;
     align-items: center;
+    border-radius: 10px 0 0 10px;
 
 `
 const TextBoxPack = styled.div`
     width: clamp(350px, 70%, 600px);
     min-height: 350px;
+    padding: 10px;
     display: flex;
-    background-color: white;
     flex-direction: column;
 `
 const ImageBox = styled.div`
     width: 100%;
     height: 100%;
     min-height: 350px;
-    background-color: green;
+    background-color: #888;
+
 `
 const TextBox = styled.div`
     width: 100%;
