@@ -18,7 +18,7 @@ import Response from '../components/response'
 const Checkout = () => {
     const total = 0
     const { data } = useQuery(MY_SHIPPINGS)
-    const orders = useQuery(MYORDER_QUERY, {variables: {object: {status: 'PROCESSING'}}})
+    const orders = useQuery(MYORDER_QUERY, {variables: {object: {status: 'PROCESSING'}}, fetchPolicy: 'network-only'})
     const [ createShipping ] = useMutation(CREATE_SHIPPING)
     const [ updateShipping ] = useMutation(UPDATE_SHIPPING)
     const [ setShippingMutation ] = useMutation(SET_SHIPPING)
@@ -120,7 +120,6 @@ const Checkout = () => {
     }
 
     const checkoutHandle = async (e) => {
-        console.log(address?._id)
         try{
             await setShippingMutation({variables: {shippingId: address?._id}})
             history.push('/payment')

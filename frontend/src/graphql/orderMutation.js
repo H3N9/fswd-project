@@ -19,3 +19,11 @@ export const ORDER_UPDATE_STATUS = gql`
         }
     }
 `
+
+export const CONFIRM_ORDER = gql`
+    mutation ConfirmOrder($imagePayment: String!){
+        confirmOrder(imagePayment: $imagePayment){
+            _id
+        }
+    }
+`

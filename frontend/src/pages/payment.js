@@ -1,10 +1,19 @@
 import React, {useState,} from 'react'
 import styled from 'styled-components'
+import { useHistory } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Header } from '../styles/styleComponents'
+import { useMutation } from '@apollo/client'
+import { Header, Input, FormContainer } from '../styles/styleComponents'
+import { CONFIRM_ORDER } from '../graphql/orderMutation'
+import Response from '../components/response'
+
 const Payment = () => {
     const [ image, setImage ] = useState()
     const [ imgPath, setImgPath ] = useState("")
+    const [ confirmOrder ] = useMutation(CONFIRM_ORDER)
+    const [confirmResponse, setConfirmResponse] = useState(undefined)
+    const history = useHistory()
+
     const inputHandle = (event) =>{
         const {name, value, files} = event.target
         const reader = new FileReader();
@@ -17,8 +26,33 @@ const Payment = () => {
         setImgPath(files[0])
     }
 
+    const submitHandle = async (e) => {
+        e.preventDefault()
+        if (image){
+            const formData = new FormData()
+            formData.append('image', imgPath)
+
+            const uploadResponse = await fetch('http://localhost:3001/image', { 
+                method: 'POST',
+                body: formData
+            })
+            const fileData = await uploadResponse.json()
+            const filename = fileData.filename
+            try{
+                const response = await confirmOrder({variables: {imagePayment: filename}})
+                setConfirmResponse('Success')
+                setTimeout(() => history.push("/customer/orders"), 3000);
+            }
+            catch(error){
+                setConfirmResponse('Fail')
+                console.log(error.message)
+            }
+        }
+    }
+
     return (
         <Container>
+            <Response state={confirmResponse} setState={setConfirmResponse} />
             <Header>
                 <h1>การชำระเงิน</h1>
             </Header>
@@ -33,7 +67,12 @@ const Payment = () => {
                             <input type="file" id="image" name="image" accept="image/jpeg" onChange={(e) => inputHandle(e)}/> 
                             <label htmlFor="image"><FontAwesomeIcon icon={['fas', 'plus']} /> อัปโหลดหลักฐานการชำระ</label>
                         </div>
-                    </InputWrapper>             
+                    </InputWrapper>
+                    <FormContainer onSubmit={submitHandle}>
+                        <Input>
+                            <button><FontAwesomeIcon icon={['fas', 'check']} /> แจ้งการชำระเงิน</button>
+                        </Input>
+                    </FormContainer>         
                 </ImageFormContainer>
             </Flex>
         </Container>
