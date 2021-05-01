@@ -4,17 +4,18 @@ import {Route, Switch, useLocation} from 'react-router-dom'
 import NavBarPack from '../components/navbarPack'
 import {useSession} from '../context/session'
 
+
 import Cart from './cart'
 import Home from './home'
 import Login from './login'
 import Detail from './detail'
-import Checkout from './checkout'
+import Payment from './payment'
 import MyOrder from './myOrder'
+import Checkout from './checkout'
 import Register from './register'
 import AllProducts from './allProduct'
 import AllPromotion from './allPromotion'
 import MyOrderDetail from './myOrderDetail'
-
 
 
 import DiscountPage from './discountPage'
@@ -120,6 +121,9 @@ const Index = () => {
                         
                         <Route path="/discount">
                             <DiscountPage />
+                        </Route>
+                        <Route path="/payment">
+                            <Payment />
                         </Route>
                         <Route path="/product/:productSlug">
                             <Detail />
