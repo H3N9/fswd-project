@@ -79,6 +79,7 @@ const Payment = () => {
 
 const Box = styled.div`
     color: white;
+    transition: 0.5s;
     :hover{
         color: #5128e6;
     }

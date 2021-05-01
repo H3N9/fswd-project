@@ -9,8 +9,8 @@ import {Header} from '../styles/styleComponents'
 const MyOrder = () => {
     const { data } = useQuery(MYORDER_QUERY, {variables: {
         object: {_operators: {status: {in: ["COMPLETE", "SHIPPED", "CLOSED"]}}},
-        sort: "UPDATEDAT_DESC"
-    }})
+        sort: "UPDATEDAT_DESC",
+    }, fetchPolicy: 'network-only'})
     const orders = data?.myOrders || []
 
     return (
