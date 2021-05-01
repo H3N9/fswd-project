@@ -55,6 +55,9 @@ const Payment = () => {
             <Response state={confirmResponse} setState={setConfirmResponse} />
             <Header>
                 <h1>การชำระเงิน</h1>
+                <form onSubmit={submitHandle} >
+                    <button disabled={imgPath === "" ? true : false}><FontAwesomeIcon icon={['fas', 'check']} /> แจ้งการชำระเงิน</button>   
+                </form> 
             </Header>
             <Flex>
                 <ImageFormContainer>
@@ -67,12 +70,7 @@ const Payment = () => {
                             <input type="file" id="image" name="image" accept="image/jpeg" onChange={(e) => inputHandle(e)}/> 
                             <label htmlFor="image"><FontAwesomeIcon icon={['fas', 'plus']} /> อัปโหลดหลักฐานการชำระ</label>
                         </div>
-                    </InputWrapper>
-                    <FormContainer onSubmit={submitHandle}>
-                        <Input>
-                            <button><FontAwesomeIcon icon={['fas', 'check']} /> แจ้งการชำระเงิน</button>
-                        </Input>
-                    </FormContainer>         
+                    </InputWrapper>     
                 </ImageFormContainer>
             </Flex>
         </Container>

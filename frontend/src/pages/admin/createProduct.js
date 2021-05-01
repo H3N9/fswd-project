@@ -179,18 +179,18 @@ const ImageFormContainer = styled.div`
 
 `
 const Image = styled.div`
-    background: rgba(200,200,200, 0.5);
+    background: rgba(0,0,0, 0.35);
     border-radius: 5px;
     width: 100%;
-    height: 500px;
+    min-height: 550px;
     border: 2px solid rgba(180,180,180, 1);
     border-style: dashed;
     text-align: center;
     overflow: hidden;
     position: relative;
+    display: flex;
     svg{
         color: rgba(190,190,190, 1);
-        position: absolute;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -200,8 +200,11 @@ const Image = styled.div`
     img{
         z-index: 1;
         width: 100%;
+        max-width: 400px;
         border-radius: 5px;
-        margin: 0;
+        border: none;
+        margin: 0 auto;
+        object-fit: contain;
     }
 `
 const InputWrapper = styled.div`
