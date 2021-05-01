@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Box9p, SpaceBox, Header} from '../styles/styleComponents'
 import CardCart from '../components/cart/cardCart'
@@ -6,15 +6,12 @@ import { useOrderContext } from '../context/orderContext'
 import {Link} from 'react-router-dom'
 import Summary from '../components/cart/summary'
 import {Input} from '../styles/styleComponents'
-import {useMutation} from '@apollo/client'
-import {SETPROMOTION_MUTATION} from '../graphql/setPromotionMutation'
+
 
 
 const Cart = () => {
-    const { orders, removeCart, addOrder } = useOrderContext()
+    const { orders, removeCart, addOrder, coupon, removeCoupon, addCoupon } = useOrderContext()
     const total = orders.length > 0 ? orders.reduce((v1, v2) => v1 + (v2.product.netPrice * v2.quantity) || 0, 0):0
-    const [setPromotion] = useMutation(SETPROMOTION_MUTATION)
-    const [coupon, setCoupon] = useState(null)
     const [couponInput, setCouponInput] = useState("")
 
     const handleCoupon = (discountValue, method) => {
@@ -28,53 +25,24 @@ const Cart = () => {
 
     const netPrice = handleCoupon(coupon?.discountValue, coupon?.method) || total
 
-    const addCoupon = async () => {
-        try{
-            const response = await setPromotion({variables:{record:[{promotionCode: couponInput}]}})
-            setCoupon(response?.data?.setPromotion?.discountCoupons[0]?.couponPromotion)
-        }
-        catch (e){
-            console.log(e.message)
-        }
-    }
-
-    const removeCoupon = async () => {
-        try{
-            await setPromotion({variables:{record:[]}})
-            setCoupon(null)
-        }
-        catch(e){
-            console.log(e.message)
-        }
-    }
 
     const inputHandle = (e) => {
         setCouponInput(e.target.value)
     }
 
     const CouponBox = () => {
+        console.log(coupon)
         if(coupon){
             return (
                 <Coupon>
                     <h1>Coupon:{coupon?.promotionCode}</h1>
-                    <DelCoupon onClick={removeCoupon} />
+                    <DelCoupon onClick={() => removeCoupon()} />
                 </Coupon>
             )
         }
         else{
             return (
-                <BoxInput>
-                        <BoxInputBut>
-                            <Input>
-                                <input id="coupon" name="coupon" value={couponInput} onChange={inputHandle} />
-                                <label htmlFor="coupon">คูปอง</label>
-                            </Input>
-                        </BoxInputBut>
-                        
-                        <AddBut onClick={addCoupon}>
-                            เพิ่ม
-                        </AddBut>
-                    </BoxInput>
+               <></>
             )
         }
     }
@@ -95,6 +63,19 @@ const Cart = () => {
                     </OrderBookBox>
 
                     <CouponBox />
+                    
+                    <BoxInput style={{display: coupon? "none":""}}>
+                        <BoxInputBut>
+                            <Input>
+                                <input id="coupon" name="coupon" value={couponInput} onChange={inputHandle} />
+                                <label htmlFor="coupon">คูปอง</label>
+                            </Input>
+                        </BoxInputBut>
+                        
+                        <AddBut onClick={() => addCoupon(couponInput)}>
+                            เพิ่ม
+                        </AddBut>
+                    </BoxInput>
 
                     <ButtonBox>
                         <Link to="/">
