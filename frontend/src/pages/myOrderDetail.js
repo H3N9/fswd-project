@@ -1,52 +1,49 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import { useLocation } from 'react-router-dom'
-import { PRODUCT_PAGINATION_QUERY } from '../graphql/productPaginationQuery'
+import { useLocation, useParams } from 'react-router-dom'
+import { MYORDER_QUERY_BY_ID } from '../graphql/myOrderQuery'
 import { useQuery } from '@apollo/client'
 import {Header} from '../styles/styleComponents'
+import OrderItem from '../components/order/orderItem'
+
 const MyOrderDetail = () => {
+    const { orderId } = useParams()
+    const { data } = useQuery(MYORDER_QUERY_BY_ID, {variables: {id: orderId}})
+    const order = data?.myOrderById
+    const status = (order?.status === 'COMPLETE')?'ยืนยันแล้ว':(order?.status === 'SHIPPED')?'จัดส่งแล้ว':'สิ้นสุด'
+    const orderProduct = order?.orderProducts || []
+    const address = data?.myOrderById?.shipping
+    console.log(order)
+
     return (
         <Container>
             <Header>
-                <h1>ดูข้อมูลออเดอร์</h1>
+                <h1>รหัสออเดอร์ : {orderId}</h1>
             </Header>
             <Flex>
                 <OrderDetail>
-                    <p><b>หมายเลขออเดอร์ :</b></p>
-                    <p><b>สถานะออเดอร์ :</b></p>
-                    <p><b>ส่วนลด :</b></p>
-                    <p><b>ที่อยู่สำหรับการจัดส่ง :</b></p>
+                    <p><b>สถานะออเดอร์ : </b> <Status color={status === "ยืนยันแล้ว" ? "#058f0b" : status === "จัดส่งแล้ว" ? "#d86c06" : "#444"}>{status}</Status></p>
+                    <h2>ที่อยู่สำหรับการจัดส่ง</h2>
+                    <Address>
+                        <p>{address?.address}</p>
+                        <p><b>ตำบล/แขวง :</b> {address?.subDistrict || '-'}</p>
+                        <p><b>อำเภอ/เขต : </b>{address?.district || '-'}</p>
+                        <p><b>จังหวัด : </b>{address?.province}</p>
+                        <p><b>รหัสไปรษณีย์ : </b>{address?.postalCode}</p>
+                        <p><b>เบอร์โทรศัพท์ : </b>{address?.phoneNumber}</p>
+                    </Address>
                 </OrderDetail>
                 <OrderCard>
                     <div className="order-content order-header">
                         <h2>รายการสินค้า</h2>
                     </div>
                     <div className="order-content order-product">
-                        <OrderItem>
-                            <div className="image">
-                                <img src="" alt=""/>
-                            </div>
-                            <div className="detail">
-                                <p className="product-name">Product Name</p>
-                                <p className="total">x1</p>
-                                <p className="price">฿50</p>
-                            </div>
-                        </OrderItem>
-                        <OrderItem>
-                            <div className="image">
-                                <img src="" alt=""/>
-                            </div>
-                            <div className="detail">
-                                <p className="product-name">Product Name</p>
-                                <p className="total">x1</p>
-                                <p className="price">฿50</p>
-                            </div>
-                        </OrderItem>
                     </div>
+                    {orderProduct.map((item) => <OrderItem key={item._id} orderProduct={item} />)}
                     <div className="order-content order-price">
-                        <p>ราคารวมสินค้า :  <b>฿50</b></p>
-                        <p>ส่วนลด :  <b>-฿50</b></p>
-                        <h2>ราคาทั้งหมด :  <b>฿0</b></h2>
+                        <p>ราคารวมสินค้า :  <b>฿{order?.totalPrice}</b></p>
+                        <p>ส่วนลด :  <b>-฿{order?.totalPrice - order?.netTotalPrice}</b></p>
+                        <h2>ราคาสุทธิ :  <b>฿{order?.netTotalPrice}</b></h2>
                     </div>
                 </OrderCard>              
             </Flex>
@@ -69,10 +66,20 @@ const OrderDetail = styled.div`
     margin-bottom: 20px;
     p{
         font-size: 1.2rem;
-       
+    }
+    h2{
+        font-weight: 600;
+        margin: 50px 0 0 0;
     }
     
 `
+const Status = styled.span`
+    background: ${(props) => props.color};
+    border-radius: 50px;
+    color: #FFF;
+    padding: 2px 15px;
+`
+
 const OrderCard = styled.div`
     width:900px;
     padding: 10px 20px;
@@ -116,37 +123,21 @@ const OrderCard = styled.div`
 
 `
 
-const OrderItem = styled.div`
+const Address = styled.div`
+    border-radius: 5px;
     width: 100%;
-    height: 140px;
-    margin: 25px 0;
-    display:flex;
-    .image{
-        width: 15%;
-        min-width: 110px;
-        background: #EFEFEF;
+    min-height: 150px;
+    padding: 5px 7px;
+    margin-bottom: 25px;
+    margin-left: 15px;
+    p{
+        margin: 5px 0;
     }
-    .detail{
-        flex: 1;
-        text-align: right;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        p{
-            margin: 0;
-            &.product-name{
-                font-size: clamp(1.1rem,2vmin,1.8rem);
-                font-weight: bold;
-            }
-            &.total{
-                font-size: clamp(1.025rem,2vmin,1.2rem);
-                color: #666;
-            }
-            &.price{
-                font-size: clamp(1.05rem,2vmin,1.3rem);
-            }
-        }
+    @media (max-width: 1200px){
+        max-width: 1200px;
+        width: 98%;
     }
+
 `
 
 export default MyOrderDetail;                    

@@ -15,7 +15,7 @@ const CreateProduct = () => {
         publisher: "",
         author: "",
         price: 0,
-        types: "",
+        types: "Normal",
         quantity: 0,
         description: "",
         image: ""

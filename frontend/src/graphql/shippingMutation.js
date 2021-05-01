@@ -35,3 +35,16 @@ export const UPDATE_SHIPPING = gql`
         }
     }
 `
+
+export const SET_SHIPPING = gql`
+    mutation SetShipping($shippingId: String!){
+        setShipping(shippingId: $shippingId){
+            _id
+            shipping{
+                address
+                postalCode
+                phoneNumber
+            }
+        }
+    }
+`

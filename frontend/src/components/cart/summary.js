@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import {Button} from '../../styles/styleComponents'
 import {Link} from 'react-router-dom'
 
-const Summary = ({totle}) => {
-    const shipping = totle? 1:0
-    const result = shipping + totle || 0
+const Summary = ({ netPrice, total, handle=(e) => {} }) => {
+
+
     return (
         <SummaryBox>
             <TitleHead>
@@ -13,22 +13,22 @@ const Summary = ({totle}) => {
             </TitleHead>
             <TextBox>
                 <NormalText>ยอดรวม</NormalText>
-                <NormalText>{totle || 0} บาท</NormalText>
+                <NormalText>{total} บาท</NormalText>
             </TextBox>
             <TextBox>
-                <NormalText>ค่าส่ง</NormalText>
-                <NormalText>{shipping} บาท</NormalText>
+                <NormalText>ส่วนลดคูปอง</NormalText>
+                <NormalText>{total-netPrice} บาท</NormalText>
             </TextBox>
             <BreakBetween />
             <Linebreak />
             <BreakBetween />
             <TextBox>
                 <NormalText>ยอดสุทธิ</NormalText>
-                <NormalText>{result} บาท</NormalText>
+                <NormalText>{Math.max(0, netPrice)} บาท</NormalText>
             </TextBox>
             <BreakBetween />
-            <Link to="/payment">
-                <ButtonCheck>ชำระเงิน</ButtonCheck>
+            <Link>
+                <ButtonCheck onClick={(e) => { handle(e) }}>ชำระเงิน</ButtonCheck>
             </Link>
         </SummaryBox>
     )
@@ -36,6 +36,7 @@ const Summary = ({totle}) => {
 
 const SummaryBox = styled.div`
     width: 100%;
+
     display: flex;
     flex-direction: column;
     position: sticky;

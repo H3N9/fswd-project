@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import BoxLink from './btnNav'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -6,21 +6,36 @@ import logo from '../../images/logo.webp'
 import Modal from './modal'
 import {useOrderContext} from '../../context/orderContext'
 import { Link, Route, Switch, NavLink } from 'react-router-dom'
-import { Border } from '../../styles/styleComponents'
 import Orders from '../../pages/admin/orders'
 const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
     const [modal, setModal] = useState(false)
     const { orders } = useOrderContext()
     const amount = orders.reduce((val1, val2) => val1 + (val2.quantity || 0), 0)
+    const cart = useRef()
 
     const IsAdmin = () => {
         if(isAdmin){
             return(
                 <>
-                    <BoxLink title={"ออเดอร์"} link={`admin/orders`} main={""}  /> 
-                    <BoxLink title={"สินค้า"} link={`admin/products`} main={""}  /> 
-                    <BoxLink title={"โปรโมชั่น"} link={`admin/promotions`} main={""}  /> 
-                    <BoxLink title={"Dashboard"} link={`admin`} main={""}  />
+                    <BoxLink title={"โปรโมชั่น"} link={"promotions"} main={""}  /> 
+                    <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />  
+                    <Dropdown>
+                        <p>จัดการ <FontAwesomeIcon icon={['fas', 'sort-down']} style={{marginBottom: 2}}/></p>
+                        <div className="menu">
+                            <div className="menu-items">
+                                <NavLink exact activeStyle={{ background: "#FFF", color: "#222", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin/orders`}>ออเดอร์</NavLink>
+                            </div>
+                            <div className="menu-items">
+                                <NavLink exact activeStyle={{ background: "#FFF", color: "#222", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin/products`}>สินค้า</NavLink>
+                            </div>
+                            <div className="menu-items">
+                                <NavLink exact activeStyle={{ background: "#FFF", color: "#222", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin/promotions`}>โปรโมชั่น</NavLink>
+                            </div>
+                            <div className="menu-items">
+                                <NavLink exact activeStyle={{ background: "#FFF", color: "#222", padding: "0 10px", borderRadius: 5, transition: 0 }}  to={`/admin`}>Dashboard</NavLink>
+                            </div>             
+                        </div>
+                    </Dropdown>
                 </>
             )
         }
@@ -28,7 +43,7 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
             return (
                 <>
                     <BoxLink title={"โปรโมชั่น"} link={"promotions"} main={""}  /> 
-                     <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />  
+                    <BoxLink title={"สินค้าทั้งหมด"} link={"products"} main={""}  />  
                 </>
             )
         }
@@ -68,7 +83,7 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
                     <BoxButton>
                         <FontAwesomeIcon icon={['fas', 'search']} />
                     </BoxButton>
-                    <BoxButton className="cart" onClick={() => setModal(!modal)}>
+                    <BoxButton ref={cart} className="cart" onClick={() => setModal(!modal)}>
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                         <Circle>{amount}</Circle>
                     </BoxButton>
@@ -77,7 +92,7 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
                     <MobileMenuButton onClick={() => setIsShowMenu(!isShowMenu)} className={isShowMenu ? "active" : ""} />
                 </AccountBox>        
         </Package>
-        <Modal modal={modal}/>    
+        <Modal modal={modal} setModal={setModal} parent={cart}/>    
         <Switch>
             <Route path="admin/orders" render={() => <Orders/>}/>
         </Switch>
@@ -302,6 +317,9 @@ const Dropdown = styled.div`
     }
     &:hover{
         display: initial;
+    }
+    @media (max-width: 360px){
+        display: none;
     }
 `
 export default Navbar

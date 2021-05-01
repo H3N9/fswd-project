@@ -6,7 +6,7 @@ import PropTypes from "prop-types"
 import { useOrderContext } from '../../context/orderContext'
 import State from './state'
 import Discount from './discount'
-
+import { main } from '../../path'
 
 const Card = ({product}) => {
     const {title = "", price = 0, _id = 0, image = "", netPrice = 0, promotion} = product
@@ -14,14 +14,10 @@ const Card = ({product}) => {
     const { addOrder } = useOrderContext()
     const history = useHistory()
     const ignoreClick = createRef()
+    const imageIcon = (image)?`${main}/image/${image}`:'http://ird.rmuti.ac.th/2020/world/upload/post/picture/thumb/IRD291220C00001/noimg.png'
 
     const addCart = (e) => {
-        const svgTag = ignoreClick.current.firstChild
-        const path = ignoreClick.current.firstChild.firstChild
-        const pText = ignoreClick.current.lastChild
-        const buttonAdd = ignoreClick.current
-        console.log(e.target == svgTag)
-        if(e.target !== svgTag && e.target !== buttonAdd && e.target !== pText && e.target !== path){
+        if(!ignoreClick.current.contains(e.target)){
             const productSlug = title.replace(/ /gi, '-')
             const location = {
                 pathname: `/product/${productSlug}`,
@@ -37,7 +33,7 @@ const Card = ({product}) => {
                 <State quantity={quantity}/>
 
                 <ImageBox  >
-                    <Image src={"http://ird.rmuti.ac.th/2020/world/upload/post/picture/thumb/IRD291220C00001/noimg.png"} />
+                    <Image src={imageIcon} />
                 </ImageBox>
 
                 <AddCart >

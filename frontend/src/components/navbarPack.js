@@ -11,7 +11,7 @@ const NavbarPack = ({setIsShowMenu, isShowMenu, ignorePath, isAdmin, user}) => {
     return (
         <div style={{display:style}}>
             <NavBar setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} isAdmin={isAdmin} user={user}/>
-            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu}/>
+            <MobileNavbar isShowMenu={isShowMenu} setIsShowMenu={setIsShowMenu} isAdmin={isAdmin} user={user}/>
         </div>
     )
 }

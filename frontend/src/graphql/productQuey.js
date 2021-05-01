@@ -17,6 +17,7 @@ export const PRODUCT_QUERY = gql`
                 _id
                 method
             }
+            isDeleteAble
         }
     }
 
