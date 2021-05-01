@@ -13,6 +13,7 @@ import InputLong from '../components/payment/InputLong'
 import Select from '../components/payment/select'
 import InputRadio from '../components/payment/InputRadio'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Response from '../components/response'
 
 const Checkout = () => {
     const total = 0
@@ -34,7 +35,7 @@ const Checkout = () => {
     })
     const [ addressSelect, setAddressSelect ] = useState(-1)
     const [ addresses, setAddresses ] = useState([])
-    const [ paid, setPaid ] = useState("")
+    const [ response, setResponse ] = useState(undefined)
 
     useEffect(() => {
         if (data?.myShippings.length > 0){
@@ -96,8 +97,10 @@ const Checkout = () => {
                 const newShipping = await createShipping({ variables: { object: objInput } })
                 setAddresses([...addresses, newShipping.data.createShipping.record])
                 setAddressSelect(addresses.length)
+                setResponse('Success')
             } catch (error) {
                 console.log(error.message)
+                setResponse("Fail")
             }
 
         }
@@ -108,8 +111,10 @@ const Checkout = () => {
                 const addressesCopy = [...addresses]
                 addressesCopy[index] = shipping.data.updateShippingById.record
                 setAddresses(addressesCopy)
+                setResponse('Success')
             } catch (error){
                 console.log(error.message)
+                setResponse("Fail")
             }
         }
     }
@@ -128,6 +133,7 @@ const Checkout = () => {
     return (
         <Box9p>
             <BoxPayment>
+                <Response state={response} setState={setResponse} />
                 <PaymentInputBox>
                     <Header>
                         <h1>รายละเอียดการจัดส่ง</h1> 
