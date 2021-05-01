@@ -37,6 +37,14 @@ export const MYORDER_QUERY = gql`
                 discount
                 description
             }
+            discountCoupons {
+                couponPromotion {
+                  method
+                  type
+                  discountValue
+                  promotionCode
+                }
+              }
         }
     }
 `
