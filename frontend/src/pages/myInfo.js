@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import { from, useQuery } from '@apollo/client'
 import logo from '../images/logo.png'
 import whiteLogo from '../images/logo-white.webp'
-import {Form, MainContainer, LoginContainer, Input, LogoContainer} from '../styles/styleComponents'
+//import {Form, MainContainer, LoginContainer, Input, LogoContainer} from '../styles/styleComponents'
+import { Form } from 'react-bootstrap'
 
-import "bootstrap/dist/css/bootstrap.min.css"
+import "../styles/bootstrap.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const MyInfo = () => {
@@ -20,22 +21,6 @@ const MyInfo = () => {
     return (
         <Container>
             <div className="container bootstrap snippet col">
-                {/* <Row>
-                        <div className="col-sm-5">
-                            <h1> Username</h1>
-                        <div>
-                    </Row> */}
-                {/* <Row>
-                    <div className="col-sm-3">
-                        <div className="text-center">
-                            <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" roundedCircle
-                                alt="avatar" />
-                            <h6>Upload a your photo</h6>
-                            <input type="file" className="text-center center-block file-upload" />
-                        </div>
-                        <br></br>
-                    </div>
-                </Row> */}
                 <div className="col-sm-9">
                    <h2>My profile</h2>
                     <div className="tab-content">
