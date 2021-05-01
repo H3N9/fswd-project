@@ -83,7 +83,7 @@ const Cart = () => {
                     </BoxInput>
 
                     <ButtonBox>
-                        <Link to="/">
+                        <Link to={"/"}>
                             <ButtonAdd>ซื้อสินค้าต่อไป</ButtonAdd>
                         </Link>
                         <ButtonDel onClick={() => removeCart()}>ล้างตระกร้าสินค้า</ButtonDel>
