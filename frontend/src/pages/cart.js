@@ -185,6 +185,12 @@ const AddBut = styled.button`
     color: #FFF;
     background:#5128e6;
     margin-left: 10px;
+    transition: 0.5s;
+    border: 3px solid #5128e6;
+    :hover {
+        color: #5128e6;
+        background-color: #FFF;
+    }
 `
 
 const BoxInputBut = styled.div`
@@ -209,7 +215,8 @@ const Coupon = styled.div`
     margin: 30px;
     display: flex;
     align-items: center;
-    background-color: white;
+    background-image: linear-gradient(120deg,  #fa8d45, #fc6d0e);
+    color: white;
     border-radius: 15px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     position: relative;
@@ -228,7 +235,12 @@ const DelCoupon = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    border: solid 3px red;
+    transition: 0.5s;
+    :hover {
+        color: red;
+        background-color: white;
+    }
 `
 
 export default Cart

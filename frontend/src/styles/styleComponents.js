@@ -143,6 +143,7 @@ export const Input = styled.div`
             transition: 0.2s all;
             cursor: text;
             font-size: 1.1rem;
+            padding-top: 3px;
         }
         input, textarea, select{
             width: 100%;

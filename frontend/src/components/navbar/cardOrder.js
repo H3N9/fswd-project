@@ -1,17 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
+import {main} from '../../path'
 
 
 
 const CardOrder = ({product}) => {
+    const {image = "", title = "", } = product?.product
+    const imageIcon = (image)?`${main}/image/${image}`:'http://ird.rmuti.ac.th/2020/world/upload/post/picture/thumb/IRD291220C00001/noimg.png'
     return (
         <Pack key={product._id}>
             <AmountBox>
                 {product?.quantity}
             </AmountBox>
-            <ImageOrder src={product?.product?.image} />
+            <ImageOrder src={imageIcon} />
             <TitleOrder>
-                {product?.product?.title}
+                {title}
             </TitleOrder>
         </Pack>
     )
