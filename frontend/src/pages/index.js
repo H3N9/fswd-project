@@ -14,7 +14,7 @@ import Register from './register'
 import AllProducts from './allProduct'
 import AllPromotion from './allPromotion'
 import MyOrderDetail from './myOrderDetail'
-
+import MyInfo from './myInfo'
 
 
 import DiscountPage from './discountPage'
@@ -141,6 +141,9 @@ const Index = () => {
                         </Route>
                         <Route path="/customer/order/:orderId">
                             <MyOrderDetail />
+                        </Route>
+                        <Route path="/customer">
+                            <MyInfo />
                         </Route>
 
 {/* --------------------------------------------- For Admin ----------------------------------------------------  */}

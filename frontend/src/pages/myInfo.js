@@ -10,23 +10,23 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const MyInfo = () => {
-    const { loading, error, data } = useQuery(ORDERS_PAGINATION_QUERY, {variables: {
-        page: null,
-        perPage: null,
-        object: {_operators: {status: {in: ["COMPLETE", "SHIPPED", "CLOSED"]}}},
-        sort: "STATUS_ASC"
-    }})
-    const orders = data?.ordersWithPagination?.items || []
+    // const { loading, error, data } = useQuery(ORDERS_PAGINATION_QUERY, {variables: {
+    //     page: null,
+    //     perPage: null,
+    //     object: {_operators: {status: {in: ["COMPLETE", "SHIPPED", "CLOSED"]}}},
+    //     sort: "STATUS_ASC"
+    // }})
+    // const orders = data?.ordersWithPagination?.items || []
     return (
         <Container>
-            <div className="container bootstrap snippet">
-                <div className="row">
+            <div className="container bootstrap snippet col">
+                {/* <div className="row">
                     <div className="col-sm-5">
                         <h1> Username</h1>
                     </div>
 
-                </div>
-                <div className="row">
+                </div> */}
+                {/* <div className="row">
                     <div className="col-sm-3">
                         <div className="text-center">
                             <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" className="avatar img-circle img-thumbnail"
@@ -36,7 +36,7 @@ const MyInfo = () => {
                         </div>
                         <br></br>
                     </div>
-                </div>
+                </div> */}
                 <div className="col-sm-9">
                    <h2>My profile</h2>
                     <div className="tab-content">
@@ -61,26 +61,8 @@ const MyInfo = () => {
                                 </div>
                                 <div className="form-group">
                                     <div className="col-xs-6">
-                                        <label for="email">
-                                            <h4>Email</h4>
-                                        </label>
-                                        <input type="email" className="form-control" name="email" id="email"
-                                            placeholder="you@email.com" title="enter your email." />
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <div className="col-xs-6">
-                                        <label for="phone">
-                                            <h4>Phone</h4>
-                                        </label>
-                                        <input type="text" className="form-control" name="phone" id="phone"
-                                            placeholder="enter phone" title="enter your phone number if any." />
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <div className="col-xs-6">
                                         <label for="password">
-                                            <h4>Password</h4>
+                                            <h4>old Password</h4>
                                         </label>
                                         <input type="password" className="form-control" name="password" id="password"
                                             placeholder="password" title="enter your password." />
@@ -89,7 +71,16 @@ const MyInfo = () => {
                                 <div className="form-group">
                                     <div className="col-xs-6">
                                         <label for="confirm password">
-                                            <h4>Confirm Password</h4>
+                                            <h4>new Password</h4>
+                                        </label>
+                                        <input type="password" className="form-control" name="c_password" id="c_password"
+                                            placeholder="confirm password" title="enter your password again." />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="col-xs-6">
+                                        <label for="confirm password">
+                                            <h4>Confirm new Password</h4>
                                         </label>
                                         <input type="password" className="form-control" name="c_password" id="c_password"
                                             placeholder="confirm password" title="enter your password again." />
@@ -111,5 +102,9 @@ const MyInfo = () => {
         </Container>
     )
 }
+
+const Container = styled.div`
+    padding: 100px 5%;
+`
 
 export default MyInfo;
