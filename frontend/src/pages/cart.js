@@ -209,11 +209,12 @@ const Coupon = styled.div`
     margin: 30px;
     display: flex;
     align-items: center;
-    background-color: white;
+    background-image: linear-gradient(120deg,  #fa8d45, #fc6d0e);
     border-radius: 15px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     position: relative;
     padding: 10px;
+    color: white;
 `
 
 const DelCoupon = styled.div`
@@ -228,7 +229,13 @@ const DelCoupon = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    transition: 0.5s;
+    border: 3px solid red;
+    :hover {
+        background: white;
+        color: red;
+        border: 3px solid red;
+    }
 `
 
 export default Cart
