@@ -42,11 +42,10 @@ const Container = styled.div`
 const Flex = styled.div`
     width: 100%;
     display: flex;
-    margin-top: 50px;
+    flex-wrap: wrap;
     justify-content: center;
-    flex-direction: column;
-    align-items: center;
-
+    margin-top: 50px;
+    margin-bottom: 30vmin;
 `
 
 
