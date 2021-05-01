@@ -64,6 +64,7 @@ const AddCart = styled.div`
     width: 100%;
     height: 10%;
     justify-content: center;
+    margin-top: 7px;
 `
 
 const BoxCard = styled.div`
@@ -72,7 +73,7 @@ const BoxCard = styled.div`
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    height: 475px;
+    height: 485px;
     overflow: hidden;
     padding: 25px 15px;
     background: #FFF;
@@ -91,7 +92,7 @@ const BoxCard = styled.div`
 `
 
 const ImageBox = styled.div`
-    height: 54%;
+    height: 50%;
 
     padding: 0 5% 0 5%;
     justify-content: center;
@@ -108,7 +109,8 @@ const TitleBox = styled(Box)`
 `
 const TitleText = styled.h3`
     margin: 0;
-    font-size: clamp(20px, 5vmin,1.5rem);
+    line-height: 1.25;
+    font-size: clamp(20px, 5vmin,1.45rem);
     color: black;
 `
 const Button = styled.button`

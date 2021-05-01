@@ -47,9 +47,9 @@ export const OrderProvider = (props) => {
             }) || []
 
             if(orders.length > 0){
-                //orders.forEach((product) => combineItems(product, copyOrders))
+                orders.forEach((product) => combineItems(product, copyOrders))
                 console.log(1111111)
-                //handleSetCart(copyOrders)
+                handleSetCart(copyOrders)
                 
             }
             if(data?.myOrders[0]?.discountCoupons[0]?.couponPromotion){

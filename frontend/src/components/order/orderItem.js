@@ -7,8 +7,8 @@ const OrderItem = ({ orderProduct }) => {
     return (
         <Item>
             <div className="image">
-                {/* <img src={`${main}/image/${product.image}`} alt=""/> */}
-                <img src={``} alt=""/>
+                {/* <img src={"`${main}/image/${product.image}`"} alt=""/> */}
+                <img src={`https://marketplace.canva.com/EADaoAwZIbQ/1/0/251w/canva-neon-graffiti-paint-art-typography-book-cover-thTdaxKDe0c.jpg`} alt=""/>
             </div>
             <div className="detail">
                 <p className="product-name">{product.title}</p>
@@ -21,13 +21,18 @@ const OrderItem = ({ orderProduct }) => {
 
 const Item = styled.div`
     width: 100%;
-    height: 140px;
+
     margin: 25px 0;
     display:flex;
     .image{
         width: 15%;
         min-width: 110px;
+        overflow: hidden;
         background: #EFEFEF;
+        img{
+            width: 100%;
+            object-fit: contain;
+        }
     }
     .detail{
         flex: 1;
