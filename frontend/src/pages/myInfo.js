@@ -13,7 +13,14 @@ const MyInfo = () => {
     //     sort: "STATUS_ASC"
     // }})
     // const orders = data?.ordersWithPagination?.items || []
-    const [ data, setData ] = useState({username: "", name: ""})
+    const [ data, setData ] = useState({username: "", name: "", password:"", confirmPass: ""})
+    const inputHandle = (event) =>{
+        const {name, value} = event.target
+        setData({
+            ...data,
+            [name]: value
+        })
+    }
     return (
         <Container>
             <UserDetail>
@@ -29,12 +36,20 @@ const MyInfo = () => {
             </UserDetail>
             <FormContainer>
                 <Input>                     
-                    <input type="text" id="username" value={data.username} required onChange={(e) => setData({username: e.target.value, name: data.name})}/>
+                    <input type="text" id="username" required value={data.username} name="username" onChange={(e) => inputHandle(e)} />
                     <label htmlFor="username">ชื่อผู้ใช้</label>
                 </Input>
                 <Input>                     
-                    <input type="text" id="username" required value={data.name} onChange={(e) => setData({username: data.username, name: e.target.value})}/>
+                    <input type="text" id="username" required value={data.name} name="name" onChange={(e) => inputHandle(e)} />
                     <label htmlFor="username">ชื่อ นามสกุล</label>
+                </Input>
+                <Input>                     
+                    <input type="text" id="username" required value={data.password} name="password" onChange={(e) => inputHandle(e)} />
+                    <label htmlFor="username">รหัสผ่านเก่า</label>
+                </Input>
+                <Input>                     
+                    <input type="text" id="username" required value={data.confirmPass} name="confirmPass" onChange={(e) => inputHandle(e)} />
+                    <label htmlFor="username">รหัสผ่านใหม่</label>
                 </Input>
                 <button onClick={() => console.log(data)}> <FontAwesomeIcon icon={['fas', 'save']} size="1x" /> บันทึก</button>
             </FormContainer>
