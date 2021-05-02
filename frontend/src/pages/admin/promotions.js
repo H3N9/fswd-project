@@ -49,12 +49,21 @@ const Container = styled.div`
 `
 
 const Flex = styled.div`
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 50px;
-    margin-bottom: 30vmin;
+    display: grid;
+    grid-template-columns: repeat( auto-fill, minmax(500px, 1fr) );
+    justify-items:center;
+    margin-bottom: 50px;
+    gap: 20px;
+    .item-wrapper{
+        display: flex;
+        justify-content:center;
+    }
+    
+    @media (max-width: 500px){
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 `
 
 

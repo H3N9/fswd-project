@@ -52,8 +52,8 @@ const PromotionItem = styled.div`
 const Info = styled.div`
     display: flex;
     width:100%;
-    flex-wrap: wrap;
     position: relative;
+    flex-direction: column;
 `
 
 const Id = styled.div`
@@ -82,6 +82,7 @@ const Name = styled.div`
 `
 
 const Detail = styled.div`
+
     p{
         margin: 10px 0;
         font-size: clamp(1rem, 5vmin,1.25rem);
@@ -93,9 +94,10 @@ const Detail = styled.div`
 
 const Option = styled.div`
     display: flex;
+    justify-content: center;
     align-items: flex-end;
-    justify-content: flex-end;
     width: 100%;
+    height: 100%;
     button{
         min-width: 90px;
         max-width: 125px;

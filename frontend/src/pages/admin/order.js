@@ -57,7 +57,12 @@ const Orders = () => {
                     <p><b>สถานะออเดอร์ :</b> {order?.status}</p>
                     <p><b>สร้างเมื่อ :</b> {order?.createdAtWithFormatDateTime}</p>
                     <p><b>อัปเดทล่าสุดเมื่อ :</b> {order?.updatedAtWithFormatDateTime}</p>
+                    <Total>
+                        <h2>ราคาสุทธิ : {order?.netTotalPrice} บาท</h2>    
+                    </Total>
+
                     <p className="address-header"><b>ที่อยู่สำหรับจัดส่ง</b> </p>
+                  
                     <Address>
                         <p>{address?.address}</p>
                         <p><b>ตำบล/แขวง :</b> {address?.subDistrict || '-'}</p>
@@ -66,12 +71,10 @@ const Orders = () => {
                         <p><b>รหัสไปรษณีย์ : </b>{address?.postalCode}</p>
                         <p><b>เบอร์โทรศัพท์ : </b>{address?.phoneNumber}</p>
                     </Address>
-                    <Total>
-                        <h2>โปรโมชั่น : </h2>
-                        <h2>ราคาสุทธิ : {order?.netTotalPrice} บาท</h2>    
-                    </Total>
+                    
                 </Content>
                 <TableContainer>
+                    <h1>รายการสินค้า</h1>
                     <Table>
                             <thead>                
                             <tr className="table-header">
@@ -88,22 +91,29 @@ const Orders = () => {
                             </tr>
                         )}
                     </Table>
-                    <Table>
-                        <thead>                
-                            <tr className="table-header">
-                                <th>ประเภท</th>
-                                <th>รายละเอียดโปรโมชั่น</th>
-                                <th>ส่วนลด (บาท)</th>
-                            </tr>
-                        </thead>
-                        {discounts.map((value, index) => 
-                            <tr className={index%2 == 0 ? "dim-row" : ""}>
-                                <td>{value.type}</td>
-                                <td>{value.description}</td>
-                                <td>{value.discount}</td>
-                            </tr>
-                        )}
-                    </Table>
+                    {
+                        discounts.length === 0 ? null :
+                        <>
+                            <h1>รายการโปรโมชั่น</h1>
+                            <Table>
+                                <thead>                
+                                    <tr className="table-header">
+                                        <th>ประเภท</th>
+                                        <th>รายละเอียดโปรโมชั่น</th>
+                                        <th>ส่วนลด (บาท)</th>
+                                    </tr>
+                                </thead>
+                                {discounts.map((value, index) => 
+                                <tr className={index%2 == 0 ? "dim-row" : ""}>
+                                    <td>{value.type}</td>
+                                    <td>{value.description}</td>
+                                    <td>{value.discount}</td>
+                                </tr>
+                                )}
+                            </Table>
+                        </>
+                    }
+                    
                 </TableContainer>
             </Flex>
             
@@ -133,14 +143,9 @@ const TableContainer = styled.div`
     flex-direction: column;
 `
 const Total = styled.div`
-    padding: 10px;
-    margin: 0 auto;
+    padding: 10px 0;
     width: 90%;
     margin-bottom: 20px;
-    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-    background-image: linear-gradient(120deg, #000000 , #555);
-    border-radius: 10px;
-    color: #FFF;
     h2{
         font-weight: bold;
     }
@@ -167,7 +172,7 @@ const Address = styled.div`
     min-height: 150px;
     padding: 5px 7px;
     margin-bottom: 25px;
-    margin-left: 20px;
+    margin-left: 10px;
     p{
         margin: 5px 0;
     }
