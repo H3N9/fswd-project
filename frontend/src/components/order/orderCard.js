@@ -24,14 +24,11 @@ const OrderCard = ({ order }) => {
                 <p>ราคาสุทธิ :  <b>฿{order.netTotalPrice}</b></p>
             </div>
             <div className="order-content order-footer">
-                <div className="order-menu">
-                    <Link to={`/customer/order/${order._id}`}>
-                        <button>
-                            ดูข้อมูลออเดอร์
-                        </button>
-                    </Link>
-                </div>
-
+                <Link className='hoverBut' to={`/customer/order/${order._id}`}>
+                    <button>
+                        ดูข้อมูลออเดอร์
+                    </button>
+                </Link>
             </div>
         </Card>
     )
@@ -76,12 +73,20 @@ const Card = styled.div`
     .order-footer{
         justify-content: space-between;
         button{
-            background-image: linear-gradient(120deg, #5128e6 , #2891e6);
-            color: #FFF;
+            background: linear-gradient(120deg, #5128e6 , #2891e6);
+            color: white;
             border: none;
             font-size: 1rem;
             border-radius: 5px;
             padding: 5px 10px;
+        }
+        .hoverBut{
+            
+            :hover > button {
+                transition: 3s;
+                background: white;
+                color: #5128e6;
+            }
         }
     }
 
