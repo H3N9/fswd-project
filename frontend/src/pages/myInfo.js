@@ -13,6 +13,7 @@ const MyInfo = () => {
     //     sort: "STATUS_ASC"
     // }})
     // const orders = data?.ordersWithPagination?.items || []
+    const [ data, setData ] = useState({username: "", name: ""})
     return (
         <Container>
             <UserDetail>
@@ -28,14 +29,14 @@ const MyInfo = () => {
             </UserDetail>
             <FormContainer>
                 <Input>                     
-                    <input type="text" id="username" required/>
+                    <input type="text" id="username" value={data.username} required onChange={(e) => setData({username: e.target.value, name: data.name})}/>
                     <label htmlFor="username">ชื่อผู้ใช้</label>
                 </Input>
                 <Input>                     
-                    <input type="text" id="username" required/>
+                    <input type="text" id="username" required value={data.name} onChange={(e) => setData({username: data.username, name: e.target.value})}/>
                     <label htmlFor="username">ชื่อ นามสกุล</label>
                 </Input>
-                <button> <FontAwesomeIcon icon={['fas', 'save']} size="1x" /> บันทึก</button>
+                <button onClick={() => console.log(data)}> <FontAwesomeIcon icon={['fas', 'save']} size="1x" /> บันทึก</button>
             </FormContainer>
 
         </Container>
@@ -98,6 +99,7 @@ const FormContainer = styled.form`
         background: #28a745;
         color: #FFF;
         padding: 10px 20px;
+        border-radius: 5px;
     }
 `
 export default MyInfo;
