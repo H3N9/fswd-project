@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {Box9p, SpaceBox} from '../styles/styleComponents'
 import CatgoriesProducts from '../components/home/catgoriesProducts'
+import { PRODUCT_QUERY } from '../graphql/productQuey'
 import { PRODUCT_PAGINATION_QUERY } from '../graphql/productPaginationQuery'
 import { useQuery } from '@apollo/client'
 import styled from 'styled-components'
