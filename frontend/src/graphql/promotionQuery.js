@@ -113,3 +113,27 @@ export const COUPON_QUERY_BY_ID = gql`
         }
     }
 `
+
+export const DISCOUNT_PRODUCT_PROMOTION_QUERY = gql`
+    query{
+        DiscountPricePromotions{
+            _id
+            product{
+                _id
+                title
+                author
+                publisher
+                description
+                price
+                quantity
+                types
+                netPrice
+                image
+                promotion {
+                    _id
+                    method
+                }
+            }
+        }
+    }
+`

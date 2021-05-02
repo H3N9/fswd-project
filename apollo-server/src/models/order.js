@@ -109,7 +109,7 @@ OrderSchema.method('getNetTotalPrice', async function(){
         const totalPrice = await this.getTotalPrice()
         const totalCouponDiscount = await this.totalCouponDiscount()
 
-        return totalPrice - totalCouponDiscount
+        return Math.max(totalPrice - totalCouponDiscount, 0)
     }
 })
 

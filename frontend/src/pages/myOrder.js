@@ -8,7 +8,7 @@ import Loading from '../components/loading'
 const MyOrder = () => {
     const { data, loading } = useQuery(MYORDER_QUERY, {variables: {
         object: {_operators: {status: {in: ["COMPLETE", "SHIPPED", "CLOSED"]}}},
-        sort: "UPDATEDAT_DESC",
+        sort: "CREATEDAT_DESC",
     }, fetchPolicy: 'network-only'})
     const orders = data?.myOrders || []
 

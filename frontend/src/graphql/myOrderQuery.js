@@ -29,6 +29,7 @@ export const MYORDER_QUERY = gql`
                 }
             }
             updatedAtWithFormatDateTime
+            createdAtWithFormatDateTime
             totalPrice
             netTotalPrice
             discounts{
