@@ -55,6 +55,7 @@ const MyInfo = () => {
                         <p>รหัสผ่านใหม่กับ ยืนยันรหัสผ่านไม่ตรงกัน</p>
                     </ErrorContainer>
                 )
+                return 0;
             }
         }
         try{
