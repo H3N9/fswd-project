@@ -13,8 +13,7 @@ import Loading from "../components/loading"
 const AllPromotion = () => {
     const query = new URLSearchParams(useLocation().search)
     const initPage = Number(query.get("page")) || 1
-    const { data, count, loading } = useQuery(PROMOTIONS_QUERY)
-    console.log(data)
+    const { data, count, loading } = useQuery(PROMOTIONS_QUERY, {fetchPolicy: 'network-only'})
 
     const destructPromotion = (acc, curr) => {
         if (curr.product){
