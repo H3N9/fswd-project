@@ -74,6 +74,7 @@ const BoxCard = styled.div`
     flex-direction: column;
     flex-shrink: 0;
     height: 485px;
+    border-radius: 15px;
     overflow: hidden;
     padding: 25px 15px;
     background: #FFF;
