@@ -194,6 +194,7 @@ export const Header = styled.div`
         margin-top: 10px;
         font-size: 1.05rem;
         border: 2px solid #2fb12f;
+        transition: 0.25s;
         :hover{
             background-color: white;
             color: #2fb12f;
@@ -305,4 +306,12 @@ export const Border = styled.div`
     width: 100%;
     height: 1px;
     background: #888;
+`
+
+export const None = styled.div`
+    display:flex;
+    justify-content: center;
+    color: #777;
+    margin-top: 75px; 
+
 `

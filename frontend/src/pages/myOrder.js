@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
 import { MYORDER_QUERY } from '../graphql/myOrderQuery'
 import OrderCard from '../components/order/orderCard'
-import {Header} from '../styles/styleComponents'
+import {Header, None} from '../styles/styleComponents'
 
 const MyOrder = () => {
     const { data } = useQuery(MYORDER_QUERY, {variables: {
@@ -14,7 +14,8 @@ const MyOrder = () => {
 
     return (
         <Container>
-            <Header><h1>ประวัติการสั่งซื้อ</h1></Header>      
+            <Header><h1>ประวัติการสั่งซื้อ</h1></Header>   
+            {orders.length === 0 ? <None><h1>ไม่มีประวัติการสั่งซื้อ</h1></None> : null}   
             <Flex>
                 {orders.map((item) => (<OrderCard key={item._id} order={item} />))}
             </Flex>

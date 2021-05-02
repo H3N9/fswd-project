@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client'
 import { Header, Input, FormContainer } from '../styles/styleComponents'
 import { CONFIRM_ORDER } from '../graphql/orderMutation'
 import Response from '../components/response'
-
+import pay from '../images/promptpay.jpg' 
 const Payment = () => {
     const [ image, setImage ] = useState()
     const [ imgPath, setImgPath ] = useState("")
@@ -60,6 +60,9 @@ const Payment = () => {
                 </form> 
             </Header>
             <Flex>
+                <PaymentContainer>
+                    <img src={pay} alt=""/>
+                </PaymentContainer>          
                 <ImageFormContainer>
                     <Image>
                         <FontAwesomeIcon icon={['fas', 'image']} size="9x" /> 
@@ -91,7 +94,19 @@ const Container = styled.div`
 `
 const Flex = styled.div`
     display: flex;
-    justify-content:center;
+    flex-wrap: wrap;
+    justify-content:space-around;
+`
+
+const PaymentContainer = styled.div`
+    width: 450px;
+    height: fit-content;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    overflow: hidden;
+    border-radius: 10px;
+    img{
+        width: 100%;
+    }
 `
 
 const ImageFormContainer = styled.div`
@@ -107,7 +122,7 @@ const Image = styled.div`
     background: rgba(200,200,200, 0.5);
     border-radius: 5px;
     width: 100%;
-    height: 600px;
+    height: 580px;
     border: 2px solid rgba(180,180,180, 1);
     border-style: dashed;
     text-align: center;
@@ -124,7 +139,7 @@ const Image = styled.div`
     }
     img{
         z-index: 1;
-        width: 100%;
+        width: 80%;
         border-radius: 5px;
         margin: 0;
     }

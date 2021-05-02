@@ -36,7 +36,7 @@ const PromotionCard = ({promotion, index, countPage}) => {
     )
 }
 const PromotionItem = styled.div`
-    width: 500px;
+    width: 650px;
     max-width: 100%;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     display: flex;
@@ -51,10 +51,8 @@ const PromotionItem = styled.div`
 
 const Info = styled.div`
     display: flex;
-    flex-direction: column;
-    /* flex-wrap: wrap;
-    align-items: center; */
     width:100%;
+    flex-wrap: wrap;
     position: relative;
 `
 
@@ -67,7 +65,7 @@ const Id = styled.div`
 `
 
 const Name = styled.div`
-    padding-right:10px;
+    margin-right: 20px;
     display:flex;
     background: #FFF;
     width: fit-content;
@@ -99,15 +97,14 @@ const Option = styled.div`
     justify-content: flex-end;
     width: 100%;
     button{
-        min-width: 75px;
+        min-width: 90px;
         max-width: 125px;
         height: 40px;
         border-radius: 5px;
         margin: 0px 25px 0px 0;
+        background: #FFF;
         border: none;
-        position: relative;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-        font-size: 1rem;
+        font-size: 1.1rem;
         svg{
             font-size: 20px;
             color: #111;

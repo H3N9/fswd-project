@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ORDERS_PAGINATION_QUERY } from '../../graphql/orderQuery'
 import { useQuery } from '@apollo/client'
-import {Header, Table} from '../../styles/styleComponents'
+import {Header, Table, None} from '../../styles/styleComponents'
 
 const Orders = () => {
     const { loading, error, data } = useQuery(ORDERS_PAGINATION_QUERY, {variables: {
@@ -19,7 +19,10 @@ const Orders = () => {
             <Header>
                 <h1>จัดการออเดอร์</h1>
             </Header>
-            <Table>
+            {
+                orders.length === 0 ? <None><h1>ไม่มีออเดอร์</h1></None>
+                :
+                <Table>
                 <thead>
                     <tr className="table-header">
                         <th>ลำดับ</th>
@@ -43,7 +46,8 @@ const Orders = () => {
                     </td>
                 </tr>
                 )}
-            </Table>      
+            </Table> 
+            }
         </Container>
     )
 }
