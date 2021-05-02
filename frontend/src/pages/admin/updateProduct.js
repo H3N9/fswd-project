@@ -87,12 +87,17 @@ const UpdateProduct = () => {
                     setImage(reader.result)
                 }
             }
-            reader.readAsDataURL(files[0])
-            setProduct({
-                ...product,
-                [name]: files[0]
-            })
+            try{
+                reader.readAsDataURL(files[0])
+                setProduct({
+                    ...product,
+                    [name]: files[0]
+                })
             setIsImageChange(true)
+            }
+            catch(error){
+                console.log(error)
+            }
         }
     })
 

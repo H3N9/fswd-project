@@ -9,7 +9,7 @@ import { useOrderContext } from '../context/orderContext'
 import UpNumber from '../components/detail/upNumber'
 import { PRODUCT_FIND_ONE } from '../graphql/productQuey'
 import {useLazyQuery} from '@apollo/client'
-
+import { main } from '../path'
 
 const Detail = () => {
     const location = useLocation()
@@ -78,7 +78,7 @@ const Detail = () => {
                 <DetailBox>
                     <ImageBox>
                         <MainImageBox>
-                            <MainImage src={(image === "" || image === null) ? "http://ird.rmuti.ac.th/2020/world/upload/post/picture/thumb/IRD291220C00001/noimg.png" : `http://localhost:3001/image/${image}`} />
+                            <MainImage src={(image === "" || image === null) ? "http://ird.rmuti.ac.th/2020/world/upload/post/picture/thumb/IRD291220C00001/noimg.png" : `${main}/image/${image}`} />
                         </MainImageBox>
                         {/* <SecondImageBox>
                             <SecondImage href="" src={image} />

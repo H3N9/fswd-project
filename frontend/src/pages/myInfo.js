@@ -1,19 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { from, useQuery } from '@apollo/client'
+import { useQuery, useMutation } from '@apollo/client'
 import { Form } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {Input} from '../styles/styleComponents'
+import { MY_PROFILE } from '../graphql/meQuery'
+import { UPDATE_PROFILE } from '../graphql/meMutation'
+import Response from '../components/response'
+
 const MyInfo = () => {
-    // const { loading, error, data } = useQuery(ORDERS_PAGINATION_QUERY, {variables: {
-    //     page: null,
-    //     perPage: null,
-    //     object: {_operators: {status: {in: ["COMPLETE", "SHIPPED", "CLOSED"]}}},
-    //     sort: "STATUS_ASC"
-    // }})
-    // const orders = data?.ordersWithPagination?.items || []
-    const [ data, setData ] = useState({username: "", name: "", password:"", confirmPass: ""})
+    const myProfile = useQuery(MY_PROFILE, {fetchPolicy: 'network-only'})
+    const [ updateProfile ] = useMutation(UPDATE_PROFILE)
+    const [ data, setData ] = useState({username: "", name: "", oldPass: "", newPass: "", confirmPass: ""})
+    const [ error, setError ] = useState(<></>)
+    const [ response, setResponse ] = useState(null)
+
+    useEffect(() => {
+        if (myProfile?.data?.me){
+            const newProfile = {
+                ...data,
+                username: myProfile?.data?.me.username,
+                name: myProfile?.data?.me.name,
+            }
+            setData(newProfile)
+        }
+    }, [myProfile])
+
     const inputHandle = (event) =>{
         const {name, value} = event.target
         setData({
@@ -21,8 +34,54 @@ const MyInfo = () => {
             [name]: value
         })
     }
+
+    const submitHandle = async (e) => {
+        e.preventDefault()
+        const newInput = {
+            username: data.username,
+            name: data.name,
+            oldPassword: "",
+            newPassword: ""
+        }
+        setError(<></>)
+        if (data.newPass !== "" && data.oldPass !== ""){
+            if (data.newPass === data.confirmPass){
+                newInput.oldPassword = data.oldPass
+                newInput.newPassword = data.newPass
+            }
+            else{
+                setError(
+                    <ErrorContainer>
+                        <p>รหัสผ่านใหม่กับ ยืนยันรหัสผ่านไม่ตรงกัน</p>
+                    </ErrorContainer>
+                )
+                return 0;
+            }
+        }
+        try{
+            const newProfile = await updateProfile({ variables: {object: newInput} })
+            setData({
+                ...newProfile.data.updateProfile,
+                oldPass: "", 
+                newPass: "", 
+                confirmPass: ""
+            })
+            setResponse("Success")
+        }
+        catch(error){
+            console.log(error.message)
+            setError(
+                <ErrorContainer>
+                    <p>รหัสผ่านเก่าไม่ถูกต้อง</p>
+                </ErrorContainer>
+            )
+            setResponse("Fail")
+        }
+    }
+
     return (
         <Container>
+            <Response state={response} setState={setResponse} /> 
             <UserDetail>
                 <div className="user-image">
                     <FontAwesomeIcon icon={['fas', 'user']} />
@@ -34,7 +93,7 @@ const MyInfo = () => {
                     <h3>Role</h3>
                 </div>
             </UserDetail>
-            <FormContainer>
+            <FormContainer onSubmit={submitHandle}>
                 <Input>                     
                     <input type="text" id="username" required value={data.username} name="username" onChange={(e) => inputHandle(e)} />
                     <label htmlFor="username">ชื่อผู้ใช้</label>
@@ -43,15 +102,20 @@ const MyInfo = () => {
                     <input type="text" id="username" required value={data.name} name="name" onChange={(e) => inputHandle(e)} />
                     <label htmlFor="username">ชื่อ นามสกุล</label>
                 </Input>
+                {error}
                 <Input>                     
-                    <input type="text" id="username" required value={data.password} name="password" onChange={(e) => inputHandle(e)} />
+                    <input type="password" id="username" value={data.oldPass} name="oldPass" onChange={(e) => inputHandle(e)} />
                     <label htmlFor="username">รหัสผ่านเก่า</label>
                 </Input>
                 <Input>                     
-                    <input type="text" id="username" required value={data.confirmPass} name="confirmPass" onChange={(e) => inputHandle(e)} />
+                    <input type="password" id="username" value={data.newPass} name="newPass" onChange={(e) => inputHandle(e)} />
                     <label htmlFor="username">รหัสผ่านใหม่</label>
                 </Input>
-                <button onClick={() => console.log(data)}> <FontAwesomeIcon icon={['fas', 'save']} size="1x" /> บันทึก</button>
+                <Input>                     
+                    <input type="password" id="username" value={data.confirmPass} name="confirmPass" onChange={(e) => inputHandle(e)} />
+                    <label htmlFor="username">ยืนยันรหัสผ่านใหม่</label>
+                </Input>
+                <button> <FontAwesomeIcon icon={['fas', 'save']} size="1x" /> บันทึก</button>
             </FormContainer>
 
         </Container>
@@ -117,4 +181,15 @@ const FormContainer = styled.form`
         border-radius: 5px;
     }
 `
+
+const ErrorContainer = styled.div`
+    padding: 5px;
+    margin-bottom: 25px;
+    background: #d43434;
+    color: #FFF;
+    font-weight: 500;
+    border-radius: 5px;
+
+`
+
 export default MyInfo;
