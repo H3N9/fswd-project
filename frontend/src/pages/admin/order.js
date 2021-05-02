@@ -9,11 +9,12 @@ import {Header, Table} from '../../styles/styleComponents'
 import ConfirmModal from '../../components/adminOrder/confirmModal'
 import Response from '../../components/response'
 import { main } from '../../path'
+import Loading from '../../components/loading'
 
 const Orders = () => {
     const { orderId } = useParams();
     //const { loading, error, data } = useQuery(PRODUCT_QUERY)
-    const { data } = useQuery(ORDER_QUERY_BY_ID, {variables: {id: orderId}})
+    const { data, loading } = useQuery(ORDER_QUERY_BY_ID, {variables: {id: orderId}})
     const orderProducts = data?.order?.orderProducts || []
     const address = data?.order?.shipping
     const discounts = data?.order?.discounts || []
@@ -52,78 +53,79 @@ const Orders = () => {
                 <h1>ออเดอร์ {orderId}</h1>
                 <button onClick={() => setIsModal(true)}><FontAwesomeIcon icon={['fas', 'check']} /> ยืนยัน</button>
             </Header>
+            {loading ? <Loading />
+            :
             <Flex>
-                <Content>
-                    <p><b>รหัสออเดอร์ :</b> {orderId}</p>
-                    <p><b>ออเดอร์เป็นของผู้ใช้ :</b> {order?.user.name}</p>
-                    <p><b>สถานะออเดอร์ :</b> {order?.status}</p>
-                    <p><b>สร้างเมื่อ :</b> {order?.createdAtWithFormatDateTime}</p>
-                    <p><b>อัปเดทล่าสุดเมื่อ :</b> {order?.updatedAtWithFormatDateTime}</p>
-                    <Total>
-                        <h2>ราคาสุทธิ : {order?.netTotalPrice} บาท</h2>    
-                    </Total>
+            <Content>
+                <p><b>รหัสออเดอร์ :</b> {orderId}</p>
+                <p><b>ออเดอร์เป็นของผู้ใช้ :</b> {order?.user.name}</p>
+                <p><b>สถานะออเดอร์ :</b> {order?.status}</p>
+                <p><b>สร้างเมื่อ :</b> {order?.createdAtWithFormatDateTime}</p>
+                <p><b>อัปเดทล่าสุดเมื่อ :</b> {order?.updatedAtWithFormatDateTime}</p>
+                <Total>
+                    <h2>ราคาสุทธิ : {order?.netTotalPrice} บาท</h2>    
+                </Total>
 
-                    <p className="address-header"><b>ที่อยู่สำหรับจัดส่ง</b> </p>
-                  
-                    <Address>
-                        <p>{address?.address}</p>
-                        <p><b>ตำบล/แขวง :</b> {address?.subDistrict || '-'}</p>
-                        <p><b>อำเภอ/เขต : </b>{address?.district || '-'}</p>
-                        <p><b>จังหวัด : </b>{address?.province}</p>
-                        <p><b>รหัสไปรษณีย์ : </b>{address?.postalCode}</p>
-                        <p><b>เบอร์โทรศัพท์ : </b>{address?.phoneNumber}</p>
-                    </Address>
-                    <p className="address-header"><b>หลักฐานการชำระเงิน</b> </p>
-                    <ImageBox>
-                        <MainImageBox>
-                            <MainImage src={(imagePayment === "" || imagePayment === null) ? "http://ird.rmuti.ac.th/2020/world/upload/post/picture/thumb/IRD291220C00001/noimg.png" : `${main}/image/${imagePayment}`} />
-                        </MainImageBox>
-                    </ImageBox>
-                </Content>
-                <TableContainer>
-                    <h1>รายการสินค้า</h1>
-                    <Table>
+                <p className="address-header"><b>ที่อยู่สำหรับจัดส่ง</b> </p>
+              
+                <Address>
+                    <p>{address?.address}</p>
+                    <p><b>ตำบล/แขวง :</b> {address?.subDistrict || '-'}</p>
+                    <p><b>อำเภอ/เขต : </b>{address?.district || '-'}</p>
+                    <p><b>จังหวัด : </b>{address?.province}</p>
+                    <p><b>รหัสไปรษณีย์ : </b>{address?.postalCode}</p>
+                    <p><b>เบอร์โทรศัพท์ : </b>{address?.phoneNumber}</p>
+                </Address>
+                <p className="address-header"><b>หลักฐานการชำระเงิน</b> </p>
+                <ImageBox>
+                    <MainImageBox>
+                        <MainImage src={(imagePayment === "" || imagePayment === null) ? "http://ird.rmuti.ac.th/2020/world/upload/post/picture/thumb/IRD291220C00001/noimg.png" : `${main}/image/${imagePayment}`} />
+                    </MainImageBox>
+                </ImageBox>
+            </Content>
+            <TableContainer>
+                <h1>รายการสินค้า</h1>
+                <Table>
+                        <thead>                
+                        <tr className="table-header">
+                            <th>ชื่อสินค้า</th>
+                            <th>ราคา (บาท)</th>
+                            <th>จำนวนที่สั่งซื้อ (ชิ้น)</th>
+                        </tr>
+                    </thead>
+                    {orderProducts.map((value, index) => 
+                        <tr className={index%2 == 0 ? "dim-row" : ""}>
+                            <td>{value.product.title}</td>
+                            <td>{value.product.price}</td>
+                            <td>{value.quantity}</td>
+                        </tr>
+                    )}
+                </Table>
+                {
+                    discounts.length === 0 ? null :
+                    <>
+                        <h1>รายการโปรโมชั่น</h1>
+                        <Table>
                             <thead>                
-                            <tr className="table-header">
-                                <th>ชื่อสินค้า</th>
-                                <th>ราคา (บาท)</th>
-                                <th>จำนวนที่สั่งซื้อ (ชิ้น)</th>
-                            </tr>
-                        </thead>
-                        {orderProducts.map((value, index) => 
-                            <tr className={index%2 == 0 ? "dim-row" : ""}>
-                                <td>{value.product.title}</td>
-                                <td>{value.product.price}</td>
-                                <td>{value.quantity}</td>
-                            </tr>
-                        )}
-                    </Table>
-                    {
-                        discounts.length === 0 ? null :
-                        <>
-                            <h1>รายการโปรโมชั่น</h1>
-                            <Table>
-                                <thead>                
-                                    <tr className="table-header">
-                                        <th>ประเภท</th>
-                                        <th>รายละเอียดโปรโมชั่น</th>
-                                        <th>ส่วนลด (บาท)</th>
-                                    </tr>
-                                </thead>
-                                {discounts.map((value, index) => 
-                                <tr className={index%2 == 0 ? "dim-row" : ""}>
-                                    <td>{value.type}</td>
-                                    <td>{value.description}</td>
-                                    <td>{value.discount}</td>
+                                <tr className="table-header">
+                                    <th>ประเภท</th>
+                                    <th>รายละเอียดโปรโมชั่น</th>
+                                    <th>ส่วนลด (บาท)</th>
                                 </tr>
-                                )}
-                            </Table>
-                        </>
-                    }
-                    
-                </TableContainer>
-            </Flex>
-            
+                            </thead>
+                            {discounts.map((value, index) => 
+                            <tr className={index%2 == 0 ? "dim-row" : ""}>
+                                <td>{value.type}</td>
+                                <td>{value.description}</td>
+                                <td>{value.discount}</td>
+                            </tr>
+                            )}
+                        </Table>
+                    </>
+                }  
+            </TableContainer>
+        </Flex>
+            }            
         </Container>
         </>
     )
