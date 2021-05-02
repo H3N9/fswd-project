@@ -28,7 +28,7 @@ export const updateProfile = schemaComposer.createResolver({
             const userContext = context.user
             const { username, name, oldPassword, newPassword } = args.record
             const user = await UserModel.findOne({ _id: userContext._id })
-            if (oldPassword !== ''){
+            if (oldPassword !== '' && newPassword !== '' && newPassword !== null){
                 const passwordValid = await user.verifyPassword(oldPassword)
                 if (passwordValid){
                     user.password = newPassword

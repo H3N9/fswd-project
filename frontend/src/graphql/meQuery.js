@@ -10,3 +10,14 @@ export const ME_QUERY = gql`
     }
 
 `
+
+export const MY_PROFILE = gql`
+    query{
+        me{
+            _id
+            username
+            name
+            isAdmin
+        }
+    }
+`
