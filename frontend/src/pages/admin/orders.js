@@ -12,7 +12,7 @@ const Orders = () => {
         perPage: null,
         object: {_operators: {status: {in: ["COMPLETE", "SHIPPED"]}}},
         sort: "STATUS_ASC"
-    }})
+    }, fetchPolicy: 'network-only'})
     const orders = data?.ordersWithPagination?.items || []
     return (
         <Container>         

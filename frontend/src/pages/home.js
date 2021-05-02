@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {Box9p, SpaceBox} from '../styles/styleComponents'
 import CatgoriesProducts from '../components/home/catgoriesProducts'
 import { PRODUCT_QUERY } from '../graphql/productQuey'
+import { PRODUCT_PAGINATION_QUERY } from '../graphql/productPaginationQuery'
 import { useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import Response from "../components/response"
@@ -9,8 +10,9 @@ import Loading from "../components/loading"
 
 const Home = () => {
     const [isToCart, setIsToCart ] = useState(undefined)
-    const { data, loading } = useQuery(PRODUCT_QUERY, {fetchPolicy: 'network-only'})
-    const products = data?.products || []
+    const { data } = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:1, perPageNum: 20}, fetchPolicy: 'network-only'})
+    const products1 = data?.productsWithPagination?.items?.slice(0, 11) || []
+    const products2 = data?.productsWithPagination?.items?.slice(11, 21) || []
 
     return (
         <>
@@ -23,11 +25,10 @@ const Home = () => {
                     <Loading/>
                     :
                     <>
-                        <CatgoriesProducts products={products} title={"สินค้าทั้งหมด"} setIsToCart={setIsToCart}/>
-                        <CatgoriesProducts products={products} title={"สินค้าโปรโมชั่น"} setIsToCart={setIsToCart}/>
+                        <CatgoriesProducts products={products1} title={"สินค้าทั้งหมด"} setIsToCart={setIsToCart}/>
+                        <CatgoriesProducts products={products2} title={"สินค้าทั้งหมด"} setIsToCart={setIsToCart}/>
                     </>
                 }
-                
             </Box9p>
             <SpaceBox />
         </>

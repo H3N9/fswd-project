@@ -8,6 +8,7 @@ import { useQuery, useMutation } from '@apollo/client'
 import {Header, Table} from '../../styles/styleComponents'
 import ConfirmModal from '../../components/adminOrder/confirmModal'
 import Response from '../../components/response'
+import { main } from '../../path'
 
 const Orders = () => {
     const { orderId } = useParams();
@@ -16,6 +17,7 @@ const Orders = () => {
     const orderProducts = data?.order?.orderProducts || []
     const address = data?.order?.shipping
     const discounts = data?.order?.discounts || []
+    const imagePayment = data?.order?.imagePayment || ''
     const [order, setOrder] = useState()
     const [status, setStatus] = useState("");
     const [isModal, setIsModal] = useState(false)
@@ -71,7 +73,12 @@ const Orders = () => {
                         <p><b>รหัสไปรษณีย์ : </b>{address?.postalCode}</p>
                         <p><b>เบอร์โทรศัพท์ : </b>{address?.phoneNumber}</p>
                     </Address>
-                    
+                    <p className="address-header"><b>หลักฐานการชำระเงิน</b> </p>
+                    <ImageBox>
+                        <MainImageBox>
+                            <MainImage src={(imagePayment === "" || imagePayment === null) ? "http://ird.rmuti.ac.th/2020/world/upload/post/picture/thumb/IRD291220C00001/noimg.png" : `${main}/image/${imagePayment}`} />
+                        </MainImageBox>
+                    </ImageBox>
                 </Content>
                 <TableContainer>
                     <h1>รายการสินค้า</h1>
@@ -181,6 +188,25 @@ const Address = styled.div`
         width: 98%;
     }
 
+`
+
+const ImageBox = styled.div`
+    width: clamp(500px, 40%, 1000px);
+    display: flex;
+    flex-direction: column;
+`
+
+const MainImageBox = styled.div`
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    
+`
+
+const MainImage = styled.img`
+    width: 55%;
+    object-fit: cover;
+    
 `
 
 export default Orders;                    
