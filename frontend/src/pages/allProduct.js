@@ -7,7 +7,9 @@ import Card from '../components/home/card'
 import Pagination from "../components/pagination"
 import {Input, Header, None} from '../styles/styleComponents'
 import Loading from '../components/loading'
+import Response from '../components/response'
 const AllProducts = () => {
+    const [isToCart, setIsToCart ] = useState(undefined)
     const query = new URLSearchParams(useLocation().search)
     const initPage = Number(query.get("page")) || 1
     const [ queryPage, setQueryPage ] = useState(initPage)
@@ -35,6 +37,7 @@ const AllProducts = () => {
            <Header>
             <h1>สินค้าทั้งหมด</h1>
            </Header>
+           <Response state={isToCart} setState={setIsToCart}/>
             {/* <SearchBar>
                 <Input>
                     <input type="text" name="name" id="name" placeholder="ค้นหาชื่อหนังสือ" value={filter.name}  onChange={(e) => inputHandle(e)}/>
@@ -66,11 +69,12 @@ const AllProducts = () => {
                 null
             }
             <Flex>
-                {products?.map((product, index) => (<Card key={index} product={product} />))} 
+                {products?.map((product, index) => (<Card key={index} product={product} setIsToCart={setIsToCart} />))} 
             </Flex>
             { loading ? <Loading/> 
                 :  pageData.itemCount === 0 ? null 
-                : <Pagination setQueryPage={setQueryPage} queryPage={queryPage} pageData={pageData}/>}
+                : <Pagination setQueryPage={setQueryPage} queryPage={queryPage} pageData={pageData}/>
+            }
         </Container>
     )
 }
