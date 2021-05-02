@@ -15,7 +15,7 @@ const OrderItem = ({ orderProduct }) => {
             </div>
             <div className="detail">
                 <p className="product-name">{title}</p>
-                <p className="total">x{quantity}</p>
+                <p className="total">x{orderProduct.quantity}</p>
                 <p className="price">฿{price}</p>
             </div>
         </Item>

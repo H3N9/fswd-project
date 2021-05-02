@@ -79,6 +79,9 @@ export const setPromotion = schemaComposer.createResolver({
             const orderPromotionInput = await Promise.all(args.records.map(async (item1) => {
                 if (item1.promotionCode){
                     const promotion = await CouponPromotionModel.findOne({promotionCode: item1.promotionCode})
+                    if (promotion.quantity === 0){
+                        throw new Error(`promotion code ${promotion.promotionCode} quantity is not enough`)
+                    }
                     return {promotionId: promotion._id, orderId: order._id}
                 }
                 else{
@@ -143,6 +146,14 @@ export const confirmOrder = schemaComposer.createResolver({
                 throw new Error(`order don't have shipping`);
             }
 
+            const orderPromotions = await OrderPromotionModel.find({ orderId: order._id }).populate('promotionId')
+            for (const orderPromotion of orderPromotions){
+                if (orderPromotion.promotionId.quantity === 0){
+                    await orderPromotion.delete()
+                    throw new Error(`promotion code ${orderPromotion.promotionId.promotionCode} quantity is not enough`)
+                }
+            }
+
             for (const orderProduct of orderProducts) {
                 const product = await ProductModel.findById(orderProduct.productId)
                 const newQuantity = product.quantity - orderProduct.quantity
@@ -154,21 +165,19 @@ export const confirmOrder = schemaComposer.createResolver({
                     }
                     throw new Error(`product ${product.title} (id=${product._id}) quantity is not enough.`);
                 }
+            }
+
+            for (const orderProduct of orderProducts){
+                const product = await ProductModel.findById(orderProduct.productId)
+                const newQuantity = product.quantity - orderProduct.quantity
                 product.quantity = newQuantity
                 product.updatedAt = Date.now()
                 await product.save()
             }
-            const orderPromotions = await OrderPromotionModel.find({ orderId: order._id }).populate('promotionId')
-            for (const orderPromotion of orderPromotions){
-                if (orderPromotion.promotionId.quantity === 0){
-                    await orderPromotion.delete()
-                    throw new Error(`promotion code ${orderPromotion.promotionId.promotionCode} quantity is not enough`)
-                }
-            }
 
             order.imagePayment = imagePayment
             order.status = 'COMPLETE'
-            order.netTotalPrice = await order.getNetTo.talPrice()
+            order.netTotalPrice = await order.getNetTotalPrice()
             await order.save()
             await OrderModel.create({ userId: user._id })
 
