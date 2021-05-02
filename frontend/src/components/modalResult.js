@@ -5,14 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const ModalResult = ({title, icon, color, setIsCreate}) => {
-    const [transX, setTransX] = useState("");
+    const [opacity, setOpacity] = useState();
     useEffect(()=>{
-        setTimeout(() => setTransX("translateY(-120px)"), 2000);
-        setTimeout(() => setIsCreate(undefined), 2500);  
+        setTimeout(() => setOpacity("0"), 1500);
+        setTimeout(() => setIsCreate(undefined), 1600);  
     },[])
     return (
-        <Container>
-            <Banner bgColor={color} translateX={transX}>
+        <Container opacityValue={opacity}>
+            <Banner bgColor={color}>
                 <FontAwesomeIcon icon={['fas', icon]} size="3x" /> 
                 <p>{title}</p>
             </Banner>
@@ -20,32 +20,38 @@ const ModalResult = ({title, icon, color, setIsCreate}) => {
     )
 }
 
-const Container = styled.div`
-    width: 100%;
 
-    display: flex;
-    justify-content:center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
-`
-
-
-const transform = keyframes`
+const fade = keyframes`
   from {
-    transform: translateY(-100px);
+    opacity: 0;
   }
 
   to {
-    transform: translateY(0px);
+    opacity: 1;
   }
-`;
+`
 
+const Container = styled.div`
+    width: 100%;
+    height: 100vh;
+    background:rgba(0,0,0, 0.5);
+    backdrop-filter: blur(7px);
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    opacity: ${(props) => props.opacityValue};
+    transition: 0.25s;
+    animation: ${fade} 0.5s;
+`
 
 const Banner = styled.div`
     margin-top: 20px;
     padding: 10px 70px;
+    height: fit-content;
     background: ${(props) => props.bgColor};
     display: flex;
     justify-content: space-between;
@@ -58,8 +64,8 @@ const Banner = styled.div`
         font-size: 1.3rem;
         margin-left: 10px;
     }
-    transform: ${(props) => props.translateX};
-    animation: ${transform} 1s;
+   
+    
     
 `
 

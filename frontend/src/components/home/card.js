@@ -8,7 +8,7 @@ import State from './state'
 import Discount from './discount'
 import { main } from '../../path'
 
-const Card = ({product}) => {
+const Card = ({product, setIsToCart}) => {
     const {title = "", price = 0, _id = 0, image = "", netPrice = 0, promotion} = product
     const quantity = product?.quantity > 0 ? true:false
     const { addOrder } = useOrderContext()
@@ -24,9 +24,10 @@ const Card = ({product}) => {
                 state: product,
             }
             history.push(location)
-        }
-        
+        }    
     }
+
+
 
     return (
             <BoxCard onClick={addCart} >
@@ -37,7 +38,10 @@ const Card = ({product}) => {
                 </ImageBox>
 
                 <AddCart >
-                    <Button ref={ignoreClick} onClick={() => addOrder(product, 1, "Add")}>
+                    <Button ref={ignoreClick} onClick={() => { 
+                        addOrder(product, 1, "Add") 
+                        setIsToCart("Success")
+                    }}>
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                         <p>{"เพิ่มลงรถเข็น"}</p>
                     </Button>

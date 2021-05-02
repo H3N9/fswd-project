@@ -4,7 +4,7 @@ import Card from './card'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const CatgoriesBooks = ({products, title}) => {
+const CatgoriesBooks = ({products, title, setIsToCart}) => {
     const pageRef = useRef(0);
 
     const prevClick = () =>{
@@ -32,7 +32,7 @@ const CatgoriesBooks = ({products, title}) => {
                     <NavButton onClick={() => prevClick()}> <FontAwesomeIcon icon={['fas', 'chevron-left']} /></NavButton>
                 </ButtonWrapper>
                 <Catgories ref={pageRef}>
-                    {products?.map((product, index) => (<Card key={index} product={product} />))} 
+                    {products?.map((product, index) => (<Card key={index} product={product}  setIsToCart={setIsToCart} />))} 
                 </Catgories>
                 <ButtonWrapper>
                     <NavButton onClick={() => nextClick()}><FontAwesomeIcon icon={['fas', 'chevron-right']} /></NavButton>
