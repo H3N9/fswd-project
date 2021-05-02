@@ -28,6 +28,7 @@ app.use(
     secret: process.env.SECRET ?? 'default-secret',
     algorithms: ['HS256'],
     getToken: (req) => {
+      console.log(req?.cookies?.token)
       if (req?.cookies?.token) {
         return req?.cookies?.token
       }

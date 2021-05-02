@@ -8,9 +8,10 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import {OrderProvider} from './context/orderContext'
 import {SessionProvider} from './context/session'
 import {CookiesProvider} from 'react-cookie'
+import { main } from './path'
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3001/graphql',
+  uri: `${main}/graphql`,
   cache: new InMemoryCache(),
   credentials: 'include',
 })
