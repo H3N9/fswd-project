@@ -15,12 +15,12 @@ const Dashboard = () => {
     const [couponQuantity, setCouponQuantity] = useState(0)
     const [coupons, setCoupons] = useState([])
 
-    const productQuery = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:1, perPageNum: 10}})
-    const ordersCountQuery = useQuery(ORDERS_COUNT_QUERY)
+    const productQuery = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:1, perPageNum: 10}, fetchPolicy: 'network-only'})
+    const ordersCountQuery = useQuery(ORDERS_COUNT_QUERY, {fetchPolicy: 'network-only'})
     const productQuantityQuery = useQuery(PRODUCT_QUERY_QUANTITY, {variables: {
         object: {_operators: {quantity: {gt: 0 }}}
-    }})
-    const couponQuantityQuery = useQuery(COUPON_PAGINATION_QUERY)
+    }, fetchPolicy: 'network-only'})
+    const couponQuantityQuery = useQuery(COUPON_PAGINATION_QUERY, {fetchPolicy: 'network-only'})
     const { completeCount, shippedCount } = ordersCountQuery?.data?.ordersCount || { 
         completeCount: 0,
         shippedCount: 0

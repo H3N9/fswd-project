@@ -41,6 +41,7 @@ export const SET_SHIPPING = gql`
         setShipping(shippingId: $shippingId){
             _id
             shipping{
+                _id
                 address
                 postalCode
                 phoneNumber

@@ -12,7 +12,7 @@ const OrderCard = ({ order }) => {
         <Card>
             <div className="order-content order-header">
                 <p><b>รหัสออเดอร์ :</b> {order._id}</p>
-                <p><b>เวลา :</b> {order.updatedAtWithFormatDateTime}</p>
+                <p><b>เวลา :</b> {order.createdAtWithFormatDateTime}</p>
                 <Status>
                     <p>{status}</p>
                 </Status>

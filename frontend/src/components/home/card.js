@@ -38,9 +38,10 @@ const Card = ({product, setIsToCart}) => {
                 </ImageBox>
 
                 <AddCart >
-                    <Button ref={ignoreClick} onClick={() => { 
-                        addOrder(product, 1, "Add") 
-                        setIsToCart("Success")
+                    <Button ref={ignoreClick} onClick={() => {
+                        if (quantity){
+                            addOrder(product, 1, "Add")
+                        }
                     }}>
                         <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                         <p>{"เพิ่มลงรถเข็น"}</p>

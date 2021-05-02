@@ -30,7 +30,6 @@ const PromotionCard = ({promotion, index, countPage}) => {
                 <Link to={editLink}>
                     <button className="edit"  name="แก้ไขโปรโมชั่น"><FontAwesomeIcon icon={['fas', 'edit']} /> แก้ไข</button>
                 </Link>
-                <button className="delete" name="ลบโปรโมชั่น" ><FontAwesomeIcon icon={['fas', 'trash-alt']}/> ลบ</button>
             </Option>
          </PromotionItem>
     )

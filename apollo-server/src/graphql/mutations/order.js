@@ -175,9 +175,16 @@ export const confirmOrder = schemaComposer.createResolver({
                 await product.save()
             }
 
+            for (const orderPromotion of orderPromotions){
+                const coupon = await CouponPromotionModel.findById(orderPromotion.promotionId._id)
+                coupon.quantity = coupon.quantity - 1
+                coupon.save()
+            }
+
             order.imagePayment = imagePayment
             order.status = 'COMPLETE'
             order.netTotalPrice = await order.getNetTotalPrice()
+            order.createdAt = Date.now()
             await order.save()
             await OrderModel.create({ userId: user._id })
 
