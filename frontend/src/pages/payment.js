@@ -12,6 +12,7 @@ const Payment = () => {
     const [ imgPath, setImgPath ] = useState("")
     const [ confirmOrder ] = useMutation(CONFIRM_ORDER)
     const [confirmResponse, setConfirmResponse] = useState(undefined)
+
     const history = useHistory()
 
     const inputHandle = (event) =>{
@@ -22,8 +23,13 @@ const Payment = () => {
                  setImage(reader.result)
             }
         }
-        reader.readAsDataURL(files[0])
-        setImgPath(files[0])
+        try{
+            reader.readAsDataURL(files[0])
+            setImgPath(files[0])
+        }
+        catch(error){
+            console.log(error)
+        }    
     }
 
     const submitHandle = async (e) => {
@@ -60,10 +66,15 @@ const Payment = () => {
                 </form> 
             </Header>
             <Flex>
+                
                 <PaymentContainer>
+                    <Account>
+                        <p><b>เลขบัญชี : </b>0123456789</p>
+                        <button onClick={() => {navigator.clipboard.writeText("0123456789")}}>คัดลอก</button>
+                    </Account>
                     <img src={pay} alt=""/>
                 </PaymentContainer>          
-                <ImageFormContainer>
+                <ImageFormContainer>            
                     <Image>
                         <FontAwesomeIcon icon={['fas', 'image']} size="9x" /> 
                         <img src={image} alt=""/>
@@ -102,13 +113,50 @@ const PaymentContainer = styled.div`
     width: 450px;
     height: fit-content;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    overflow: hidden;
+
     border-radius: 10px;
     img{
         width: 100%;
     }
+    p{
+        text-align: center;
+        font-size: 1.1rem;
+    }
 `
-
+const Account = styled.div`
+    display: flex;
+    justify-content:center;
+    button{
+        background: #5128e6;
+        margin: 10px 0 10px 5px;
+        border: none;
+        border-radius: 5px;
+        color: #FFF;
+        font-size: 1rem;
+        position: relative;
+        :before{
+            content: "คัดลอกแล้ว";
+            width: 100px;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            position: absolute;
+            top: -110%;
+            left: -30%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            opacity: 0;
+            transition: 0.25s;
+        }
+        :focus{
+            :before{
+                content: "คัดลอกแล้ว";
+                opacity: 1;
+            }
+        }
+    }
+`
 const ImageFormContainer = styled.div`
     width: 500px;
     display: flex;
@@ -128,6 +176,9 @@ const Image = styled.div`
     text-align: center;
     overflow: hidden;
     position: relative;
+    display:flex;
+    justify-content:center;
+    align-items: center;
     svg{
         color: rgba(190,190,190, 1);
         position: absolute;
@@ -172,7 +223,7 @@ const InputWrapper = styled.div`
             text-align: center;
             cursor: pointer;
             background: #5128e6;
-            transition: 0.5s;
+            transition: 0.25s;
         }
         :hover::before{
             background-color: white;
