@@ -1,19 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
+import {main} from '../../path'
 
 const OrderItem = ({ orderProduct }) => {
-    const { product } = orderProduct
+    const { product = {} } = orderProduct
+    const {title = "", quantity = 0, price = 0, image = ""} = product
+    const imageIcon = (image)?`${main}/image/${image}`:'http://ird.rmuti.ac.th/2020/world/upload/post/picture/thumb/IRD291220C00001/noimg.png'
+    
 
     return (
         <Item>
             <div className="image">
-                {/* <img src={"`${main}/image/${product.image}`"} alt=""/> */}
-                <img src={`https://marketplace.canva.com/EADaoAwZIbQ/1/0/251w/canva-neon-graffiti-paint-art-typography-book-cover-thTdaxKDe0c.jpg`} alt=""/>
+                <img src={imageIcon} alt=""/>
             </div>
             <div className="detail">
-                <p className="product-name">{product.title}</p>
+                <p className="product-name">{title}</p>
                 <p className="total">x{orderProduct.quantity}</p>
-                <p className="price">฿{product.price}</p>
+                <p className="price">฿{price}</p>
             </div>
         </Item>
 )
@@ -31,6 +34,7 @@ const Item = styled.div`
         background: #EFEFEF;
         img{
             width: 100%;
+            height: 175px;
             object-fit: contain;
         }
     }

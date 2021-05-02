@@ -1,12 +1,12 @@
 import React, {useState,} from 'react'
 import styled from 'styled-components'
-import { useHistory } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMutation } from '@apollo/client'
 import { Header, Input, FormContainer } from '../styles/styleComponents'
 import { CONFIRM_ORDER } from '../graphql/orderMutation'
 import Response from '../components/response'
-
+import pay from '../images/promptpay.jpg' 
 const Payment = () => {
     const [ image, setImage ] = useState()
     const [ imgPath, setImgPath ] = useState("")
@@ -60,16 +60,19 @@ const Payment = () => {
                 </form> 
             </Header>
             <Flex>
+                <PaymentContainer>
+                    <img src={pay} alt=""/>
+                </PaymentContainer>          
                 <ImageFormContainer>
                     <Image>
                         <FontAwesomeIcon icon={['fas', 'image']} size="9x" /> 
                         <img src={image} alt=""/>
                     </Image>
                     <InputWrapper>
-                        <div>
+                        <Box>
                             <input type="file" id="image" name="image" accept="image/jpeg" onChange={(e) => inputHandle(e)}/> 
                             <label htmlFor="image"><FontAwesomeIcon icon={['fas', 'plus']} /> อัปโหลดหลักฐานการชำระ</label>
-                        </div>
+                        </Box>
                     </InputWrapper>     
                 </ImageFormContainer>
             </Flex>
@@ -77,13 +80,33 @@ const Payment = () => {
     )
 }
 
+const Box = styled.div`
+    color: white;
+    transition: 0.5s;
+    :hover{
+        color: #5128e6;
+    }
+`
+
 const Container = styled.div`
     padding: 100px 5% 0 5%;
     
 `
 const Flex = styled.div`
     display: flex;
-    justify-content:center;
+    flex-wrap: wrap;
+    justify-content:space-around;
+`
+
+const PaymentContainer = styled.div`
+    width: 450px;
+    height: fit-content;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    overflow: hidden;
+    border-radius: 10px;
+    img{
+        width: 100%;
+    }
 `
 
 const ImageFormContainer = styled.div`
@@ -99,7 +122,7 @@ const Image = styled.div`
     background: rgba(200,200,200, 0.5);
     border-radius: 5px;
     width: 100%;
-    height: 600px;
+    height: 580px;
     border: 2px solid rgba(180,180,180, 1);
     border-style: dashed;
     text-align: center;
@@ -116,7 +139,7 @@ const Image = styled.div`
     }
     img{
         z-index: 1;
-        width: 100%;
+        width: 80%;
         border-radius: 5px;
         margin: 0;
     }
@@ -130,14 +153,12 @@ const InputWrapper = styled.div`
     text-align: center;
     margin-top: 20px;
     p{
-        background: blue;
         width: 100%;
         text-align: center;
     }
     input{
         width:100%;
         height: 50px;
-        background: blue;
         opacity: 1;
         margin: 0;
         padding: 0;
@@ -146,20 +167,25 @@ const InputWrapper = styled.div`
         :before{
             content: "";
             position: absolute;
-            background: #FFF;
             width: 100%;
             height: 100%;
             text-align: center;
             cursor: pointer;
-            background: #5128e6
+            background: #5128e6;
+            transition: 0.5s;
         }
+        :hover::before{
+            background-color: white;
+            color: red;
+        }
+        
         
     }
     label{
         position: relative;
         top: -37px;
-        color: #FFF;
         font-size: 1.1rem;
+        cursor: pointer;
     }
 `
 

@@ -1,21 +1,21 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { MYORDER_QUERY } from '../graphql/myOrderQuery'
 import OrderCard from '../components/order/orderCard'
-import {Header} from '../styles/styleComponents'
+import {Header, None} from '../styles/styleComponents'
 
 const MyOrder = () => {
     const { data } = useQuery(MYORDER_QUERY, {variables: {
         object: {_operators: {status: {in: ["COMPLETE", "SHIPPED", "CLOSED"]}}},
-        sort: "UPDATEDAT_DESC"
-    }})
+        sort: "UPDATEDAT_DESC",
+    }, fetchPolicy: 'network-only'})
     const orders = data?.myOrders || []
 
     return (
         <Container>
-            <Header><h1>ประวัติการสั่งซื้อ</h1></Header>      
+            <Header><h1>ประวัติการสั่งซื้อ</h1></Header>   
+            {orders.length === 0 ? <None><h1>ไม่มีประวัติการสั่งซื้อ</h1></None> : null}   
             <Flex>
                 {orders.map((item) => (<OrderCard key={item._id} order={item} />))}
             </Flex>

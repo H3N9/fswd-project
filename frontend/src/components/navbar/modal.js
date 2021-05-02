@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import {Button} from '../../styles/styleComponents'
+import {Button, None} from '../../styles/styleComponents'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Link} from 'react-router-dom'
 import {useOrderContext} from '../../context/orderContext'
 import CardOrder from './cardOrder'
@@ -24,41 +25,29 @@ const Modal = ({modal, setModal, parent}) => {
     }, [])
 
     return (
-        <BoxModal modalHeight={modal ? "330px": "0"} ref={modalElement}>
-            <BoxCover>
-                <TitleBox>
-                    <Title>ตระกร้าของฉัน</Title>
-                </TitleBox>
-                <OrderBox>
-                    <OrderText>
-                        สินค้าในตระกร้า
-                    </OrderText>
-                </OrderBox>
-                <ButtonBox>
-                    <Link to="/cart">
-                        <ButtonOrder>ดูหรือแก้ไขสินค้า</ButtonOrder>
-                    </Link>
-                </ButtonBox>
-            </BoxCover>
+        <BoxModal modalHeight={modal ? "340px": "0"} ref={modalElement}>
+            <TitleBox>
+                <Title>ตะกร้าของฉัน</Title>
+            </TitleBox>
             <Underline />
 
             <BoxCover>
                 <Order>
+                    {orders.length === 0 ? <NoProduct><h3>ไม่มีสินค้า</h3></NoProduct> : null}
                     {orders.map((product, index) => (<CardOrder product={product} key={index}/>))}
                 </Order>
             </BoxCover>
             <Underline />
             <BoxCover>
-                <OrderBox>
-                    <OrderText>
-                        สินค้าในตระกร้า
-                    </OrderText>
-                </OrderBox>
+                <ButtonBox>
+                    <Link to="/cart">
+                        <ButtonOrder> <FontAwesomeIcon icon={['fas', 'eye']} /> ดูหรือแก้ไขสินค้า</ButtonOrder>
+                    </Link>
+                </ButtonBox>
                 <ButtonBox>
                     <Link to="/checkout">
-                        <ButtonOrder>ไปชำระเงิน</ButtonOrder>
-                    </Link>
-                    
+                        <ButtonOrder>  <FontAwesomeIcon icon={['fas', 'shopping-cart']} /> ไปชำระเงิน</ButtonOrder>
+                    </Link>            
                 </ButtonBox>
             </BoxCover>
 
@@ -88,10 +77,9 @@ const BoxModal = styled.div`
 `
 const BoxCover = styled.div`
     width: 100%;
-
     display: flex;
     justify-content: center;
-    
+    height: 100%;
     align-items: center;
     flex-direction: column;
 `
@@ -99,28 +87,23 @@ const TitleBox = styled.div`
     padding: 5px;
 
 `
-const Title = styled.h3`
-    margin: 0;
+const Title = styled.h2`
+    margin: 10px;
+    font-weight: bold;
+    letter-spacing: 1.3px;
     
-`
-const OrderText = styled.p`
-    margin: 0;
-`
-
-
-const OrderBox = styled.div`
-    padding: 5px;
 `
 const ButtonBox = styled.div`
     padding: 5px;
+    margin-bottom: 10px;
 `
 const ButtonOrder = styled(Button)`
-    background-color: #EFEFEF;
+    background-color: #FFF;
     border: none;
-    width: 255px;
+    width: 275px;
     color: #111;
     :hover{
-        background-color: #3f64df;
+        background-color: #4297dd;
         color: #EFEFEF;
     }
 
@@ -147,5 +130,14 @@ const Order = styled.div`
     }
 `
 
-
+const NoProduct = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    h3{
+        margin-left: 10px;
+        color: #CCC;
+    }
+`
 export default Modal

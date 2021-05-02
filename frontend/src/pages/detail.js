@@ -117,19 +117,11 @@ const Detail = () => {
 
                         <PackHandle>
                             <UpNumber number={number} handleNumber={handleNumber} />
-                            <ButtonAdd onClick={() => addOrder(product, number, "Set")}>Add</ButtonAdd>
-                            <ButtonWish>
-                                <FontAwesomeIcon icon={['fas', 'heart']}/>
-                                Wishlist
-                            </ButtonWish>
-                        </PackHandle>
-
-                        <BoxShare>
-                            <NormalDetailText>Share : </NormalDetailText>
-                            <a href="https://facebook.com" target="_blank"><ImageIcon src={FacebookIcon} /></a>
-                            <a href="https://myaccount.google.com/profile" target="_blank"><ImageIcon src={GoogleIcon} /></a>
-                            
-                        </BoxShare>                   
+                            <ButtonAdd onClick={() => addOrder(product, number, "Set")}>
+                                <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
+                                <span>Add</span>
+                            </ButtonAdd>   
+                        </PackHandle>               
                     </InfoBox>
                 </DetailBox>
             </Box9p>
@@ -152,15 +144,7 @@ const Detail = () => {
         </>
     )
 }
-const SecondImageBox = styled.div`
-    width: 100%;
-    display: flex;
-`
-const SecondImage = styled.img`
-    width: 17%;
-    margin: 10px;
 
-`
 const MainImageBox = styled.div`
     width: 100%;
     padding: 10px 0;
@@ -238,50 +222,28 @@ const ButtonAdd = styled(Button)`
     background-color: #003cff;
     border: solid 2px #003cff;
     color: white;
-    width: 230px;
-    margin: 20px;
+    margin: 20px 0 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     :hover{
         background-color: white;
         color: #003cff;
     }
-`
-const ButtonWish = styled(Button)`
-    background-color: #ff9010;
-    border: solid 2px #ff9010;
-    color: white;
-    width: 230px;
-    margin: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    :hover{
-        background-color: white;
-        color: #ff9010;
+    span {
+        margin-left: 5px;
     }
 `
-const BoxShare = styled.div`
-    width: 90%;
-    padding: 0 5% 0 5%;
-    display: flex;
-    margin-top: 100px;
-    align-items: center;
-`
+
 
 const PackHandle = styled.div`
     display: flex;
-    width: 90%;
+    width: 100%;
     padding: 0 5% 0 5%;
     flex-wrap: wrap;
     align-items: center;
+    
 
-`
-
-const ImageIcon = styled.img`
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin: 0 10px 0 10px;
 `
 
 const Underline = styled.div`
@@ -317,6 +279,7 @@ const TextTitleDes = styled.span`
     margin-left: 20px;
 
 `
+
 
 
 export default Detail

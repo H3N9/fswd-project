@@ -5,7 +5,7 @@ import { PRODUCT_PAGINATION_QUERY } from '../graphql/productPaginationQuery'
 import { useQuery } from '@apollo/client'
 import Card from '../components/home/card'
 import Pagination from "../components/pagination"
-import {Input, Header} from '../styles/styleComponents'
+import {Input, Header, None} from '../styles/styleComponents'
 
 const AllProducts = () => {
     const query = new URLSearchParams(useLocation().search)
@@ -59,10 +59,20 @@ const AllProducts = () => {
                     </select>
                 </Input>
             </SearchBar> */}
+            { 
+                pageData.itemCount === 0 ? <None><h1>ไม่มีสินค้า</h1> </None> 
+                :
+                null
+            }
             <Flex>
                 {products?.map((product, index) => (<Card key={index} product={product} />))} 
             </Flex>
-            <Pagination setQueryPage={setQueryPage} queryPage={queryPage} pageData={pageData}/>       
+            { 
+                pageData.itemCount === 0 ? null 
+                :
+                <Pagination setQueryPage={setQueryPage} queryPage={queryPage} pageData={pageData}/>      
+            }
+               
         </Container>
     )
 }

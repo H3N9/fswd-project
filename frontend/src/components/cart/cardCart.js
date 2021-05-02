@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import UpNumber from '../detail/upNumber'
+import {main} from '../../path'
 
 
 const CardCart = ({product, quantity, addOrder}) => {
     const {image = "", title = "", price = 0, promotion = {}, netPrice = 0} = product
+    const imageIcon = (image)?`${main}/image/${image}`:'http://ird.rmuti.ac.th/2020/world/upload/post/picture/thumb/IRD291220C00001/noimg.png'
 
     const lockClikcing = (n, command) => {
         if(command === "Increase"){
@@ -20,7 +22,7 @@ const CardCart = ({product, quantity, addOrder}) => {
 
             <ImageTitleBox>
                 <ImageBox>
-
+                    <Image src={imageIcon} />
                 </ImageBox>
             </ImageTitleBox>
 
@@ -87,6 +89,12 @@ const ImageBox = styled.div`
     height: 100%;
     min-height: 350px;
     background-color: #888;
+
+`
+const Image = styled.img`
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 
 `
 const TextBox = styled.div`

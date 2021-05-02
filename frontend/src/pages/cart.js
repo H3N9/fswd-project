@@ -13,6 +13,7 @@ const Cart = () => {
     const { orders, removeCart, addOrder, coupon, removeCoupon, addCoupon } = useOrderContext()
     const total = orders.length > 0 ? orders.reduce((v1, v2) => v1 + (v2.product.netPrice * v2.quantity) || 0, 0):0
     const [couponInput, setCouponInput] = useState("")
+    const [error , setError ] = useState(false)
     const history = useHistory()
 
     const handleCoupon = (discountValue, method) => {
@@ -33,6 +34,7 @@ const Cart = () => {
 
     const CouponBox = () => {
         if(coupon){
+            setError(false)
             return (
                 <Coupon>
                     <h1>Coupon: {coupon?.promotionCode}</h1>
@@ -53,6 +55,12 @@ const Cart = () => {
         history.push('/checkout')
     }
 
+    const add = () =>{
+        if(!coupon){
+            setError(true)
+        }
+        addCoupon(couponInput)
+    }
     return (
         <Box9p>
             <SpaceBox />
@@ -75,9 +83,10 @@ const Cart = () => {
                                 <input id="coupon" name="coupon" value={couponInput} onChange={inputHandle} required />
                                 <label htmlFor="coupon">เพิ่มคูปองส่วนลด</label>
                             </Input>
+                            {error ? <Error>โค้ดส่วนลดไม่ถูกต้อง</Error> : null}
                         </BoxInputBut>
                         
-                        <AddBut onClick={() => addCoupon(couponInput)}>
+                        <AddBut onClick={() => add()}>
                             เพิ่ม
                         </AddBut>
                     </BoxInput>
@@ -141,7 +150,14 @@ const CartSummary = styled.div`
 const OrderBookBox = styled.div`
     width: 100%;
 `
-
+const Error = styled.div`
+    text-align:center;
+    width: 100%;
+    background: #ca2828;
+    border-radius: 5px;
+    padding: 10px 0;
+    color: #FFF;
+`
 const ButtonBox = styled.div`
     display: flex;
     width: 100%;
@@ -185,6 +201,12 @@ const AddBut = styled.button`
     color: #FFF;
     background:#5128e6;
     margin-left: 10px;
+    transition: 0.5s;
+    border: 3px solid #5128e6;
+    :hover {
+        color: #5128e6;
+        background-color: #FFF;
+    }
 `
 
 const BoxInputBut = styled.div`
@@ -209,7 +231,8 @@ const Coupon = styled.div`
     margin: 30px;
     display: flex;
     align-items: center;
-    background-color: white;
+    background-image: linear-gradient(120deg,  #fa8d45, #fc6d0e);
+    color: white;
     border-radius: 15px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     position: relative;
@@ -228,7 +251,12 @@ const DelCoupon = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    border: solid 3px red;
+    transition: 0.5s;
+    :hover {
+        color: red;
+        background-color: white;
+    }
 `
 
 export default Cart
