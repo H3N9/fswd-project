@@ -2,22 +2,24 @@ import React from 'react'
 import {Box9p, SpaceBox} from '../styles/styleComponents'
 import CatgoriesProducts from '../components/home/catgoriesProducts'
 import { PRODUCT_QUERY } from '../graphql/productQuey'
+import { PRODUCT_PAGINATION_QUERY } from '../graphql/productPaginationQuery'
 import { useQuery } from '@apollo/client'
 import styled from 'styled-components'
 
-
-
 const Home = () => {
-    const { data } = useQuery(PRODUCT_QUERY, {fetchPolicy: 'network-only'})
-    const products = data?.products || []
+    const { data } = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:1, perPageNum: 20}, fetchPolicy: 'network-only'})
+    //const { data } = useQuery(PRODUCT_QUERY, {fetchPolicy: 'network-only'})
+    //const products = data?.products || []
+    const products1 = data?.productsWithPagination?.items?.slice(0, 11) || []
+    const products2 = data?.productsWithPagination?.items?.slice(11, 21) || []
 
     return (
         <>
             <SpaceBox />
             <Box9p> 
             <MainImage />
-                <CatgoriesProducts products={products} title={"สินค้าทั้งหมด"}/>
-                <CatgoriesProducts products={products} title={"สินค้าโปรโมชั่น"}/>
+                <CatgoriesProducts products={products1} title={"สินค้าทั้งหมด"}/>
+                <CatgoriesProducts products={products2} title={"สินค้าทั้งหมด"}/>
             </Box9p>
             <SpaceBox />
         </>
