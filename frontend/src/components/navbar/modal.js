@@ -27,7 +27,7 @@ const Modal = ({modal, setModal, parent}) => {
     return (
         <BoxModal modalHeight={modal ? "340px": "0"} ref={modalElement}>
             <TitleBox>
-                <Title>ตระกร้าของฉัน</Title>
+                <Title>ตะกร้าของฉัน</Title>
             </TitleBox>
             <Underline />
 
