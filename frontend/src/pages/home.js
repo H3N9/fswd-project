@@ -10,7 +10,7 @@ import Loading from "../components/loading"
 
 const Home = () => {
     const [isToCart, setIsToCart ] = useState(undefined)
-    const { data, loading } = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:1, perPageNum: 20}, fetchPolicy: 'network-only'})
+    const { data, loading } = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:1, perPageNum: 20, sort: "QUANTITY_DESC"}, fetchPolicy: 'network-only'})
     const discountProduct = useQuery(DISCOUNT_PRODUCT_PROMOTION_QUERY, {fetchPolicy: 'network-only'})
 
     const products1 = data?.productsWithPagination?.items?.slice(0, 11) || []

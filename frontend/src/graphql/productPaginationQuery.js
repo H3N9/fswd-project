@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 export const PRODUCT_PAGINATION_QUERY = gql`
-    query productsWithPagination($pageNum: Int $perPageNum: Int){
-        productsWithPagination(page: $pageNum perPage: $perPageNum){
+    query productsWithPagination($pageNum: Int $perPageNum: Int $sort: SortFindManyProductInput){
+        productsWithPagination(page: $pageNum perPage: $perPageNum sort: $sort){
             count
             pageInfo{
                 currentPage

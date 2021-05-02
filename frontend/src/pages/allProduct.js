@@ -19,7 +19,7 @@ const AllProducts = () => {
         date: "",
         types: "",
     })
-    const { data, count, loading } = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:queryPage, perPageNum: 8}, fetchPolicy: 'network-only'})
+    const { data, count, loading } = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:queryPage, perPageNum: 8, sort: "QUANTITY_DESC"}, fetchPolicy: 'network-only'})
     const pageData = data?.productsWithPagination.pageInfo || {}
     const products = data?.productsWithPagination.items || []
 

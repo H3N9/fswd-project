@@ -16,7 +16,7 @@ import Response from '../components/response'
 
 const Checkout = () => {
     const total = 0
-    const { data } = useQuery(MY_SHIPPINGS)
+    const { data } = useQuery(MY_SHIPPINGS, {fetchPolicy: 'network-only'})
     const orders = useQuery(MYORDER_QUERY, {variables: {object: {status: 'PROCESSING'}}, fetchPolicy: 'network-only'})
     const [ createShipping ] = useMutation(CREATE_SHIPPING)
     const [ updateShipping ] = useMutation(UPDATE_SHIPPING)
@@ -95,6 +95,7 @@ const Checkout = () => {
             try {
                 const newShipping = await createShipping({ variables: { object: objInput } })
                 setAddresses([...addresses, newShipping.data.createShipping.record])
+                setAddress(newShipping.data.createShipping.record)
                 setAddressSelect(addresses.length)
                 setResponse('Success')
             } catch (error) {
@@ -109,6 +110,7 @@ const Checkout = () => {
                 const shipping = await updateShipping({ variables: { id: addresses[index]._id, object: objInput } })
                 const addressesCopy = [...addresses]
                 addressesCopy[index] = shipping.data.updateShippingById.record
+                setAddress(addressesCopy[index])
                 setAddresses(addressesCopy)
                 setResponse('Success')
             } catch (error){
@@ -119,6 +121,7 @@ const Checkout = () => {
     }
 
     const checkoutHandle = async (e) => {
+        console.log(address)
         try{
             await setShippingMutation({variables: {shippingId: address?._id}})
             history.push('/payment')
