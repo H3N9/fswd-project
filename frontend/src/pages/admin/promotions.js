@@ -8,7 +8,7 @@ import {COUPON_PAGINATION_QUERY, PROMOTIONS_PAGINATION_QUERY} from '../../graphq
 import { useQuery} from '@apollo/client'
 import PromotionCard from '../../components/adminPromotion/promotionCard'
 import Pagination from "../../components/pagination"
-
+import Loading from '../../components/loading'
 
 const Promotions = () => {
     const query = new URLSearchParams(useLocation().search)
@@ -16,7 +16,7 @@ const Promotions = () => {
     const [page, setPage] = useState(initPage)
     const perPage = 5
     //const {data} = useQuery(COUPON_PAGINATION_QUERY, {variables: {page:initPage, perPage}, fetchPolicy: 'network-only'})
-    const {data, count} = useQuery(PROMOTIONS_PAGINATION_QUERY, {variables: {page:initPage, perPage}, fetchPolicy: 'network-only'})
+    const {data, count, loading} = useQuery(PROMOTIONS_PAGINATION_QUERY, {variables: {page:initPage, perPage}, fetchPolicy: 'network-only'})
     const promotions = data?.promotionsWithPagination?.items || []
     const pageData = data?.promotionsWithPagination?.pageInfo || {}
     const countPage = (page - 1)*perPage
@@ -26,7 +26,9 @@ const Promotions = () => {
                 <h1>จัดการโปรโมชั่น{count}</h1>
                 <Link to={`/admin/promotion/create`}><FontAwesomeIcon icon={['fas', 'plus']} /> เพิ่มโปรโมชั่น</Link>
             </Header>
-            { 
+            {
+                loading ? <Loading/>
+                :
                 pageData.itemCount === 0 ? <None><h1>ไม่มีโปรโมชั่น</h1> </None>
                 :
                 null
@@ -36,6 +38,8 @@ const Promotions = () => {
             </Flex>
             { 
                 pageData.itemCount === 0 ? null 
+                :
+                loading ? null 
                 :
                 <Pagination setQueryPage={setPage} queryPage={page} pageData={pageData}/>    
             }
