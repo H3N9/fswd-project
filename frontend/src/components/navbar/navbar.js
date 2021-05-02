@@ -56,11 +56,13 @@ const Navbar = ({setIsShowMenu, isShowMenu, isAdmin, user}) => {
     const IsUser = () => {
         if(user){
             return (
-                <>
-                    <BoxButton className="img-profile">
-                        <FontAwesomeIcon icon={['fas', 'user']} />
-                        {/* <Image src={Stephen} /> */}
-                    </BoxButton>
+                <>  
+                    <Link to={'/customer'}>
+                        <BoxButton className="img-profile">
+                            <FontAwesomeIcon icon={['fas', 'user']} />
+                            {/* <Image src={Stephen} /> */}
+                        </BoxButton>
+                    </Link>
                     <AuthContainer>
                         <Link to={`/login`} onClick={() => logout()} className="logout-button">ออกจากระบบ</Link>
                     </AuthContainer>

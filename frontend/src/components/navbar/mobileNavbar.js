@@ -22,11 +22,11 @@ const MobileNavbar = ({isShowMenu, setIsShowMenu, user, isAdmin}) =>{
         if(user){
             return (
                 <UserDetail>
-                        <div className="user-image">
+                        <Link className="user-image" to={'/customer'} onClick={() => setIsShowMenu(false)}>
                             <FontAwesomeIcon icon={['fas', 'user']} />
-                        </div>
+                        </Link>
                         <div className="user-text">
-                            <h1>{user?.name}</h1>
+                            <Link to={'/customer'} onClick={() => setIsShowMenu(false)}>{user?.name}</Link>
                             <h3>{isAdmin ? "ผู้ดูแลระบบ" : "ผู้ใช้งานทั่วไป"}</h3>
                         </div>
                 </UserDetail>
@@ -166,10 +166,11 @@ const UserDetail = styled.div`
         flex: 1;
         flex-direction: column;
         justify-content: center;
-        h1{
+        a{
             margin: 0;
             font-weight: 500;
             line-height: 1;
+            font-size: 2rem;
         }
         h3{
             margin: 0;
