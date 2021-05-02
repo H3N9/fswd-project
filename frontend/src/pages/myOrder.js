@@ -4,9 +4,9 @@ import { useQuery } from '@apollo/client'
 import { MYORDER_QUERY } from '../graphql/myOrderQuery'
 import OrderCard from '../components/order/orderCard'
 import {Header, None} from '../styles/styleComponents'
-
+import Loading from '../components/loading'
 const MyOrder = () => {
-    const { data } = useQuery(MYORDER_QUERY, {variables: {
+    const { data, loading } = useQuery(MYORDER_QUERY, {variables: {
         object: {_operators: {status: {in: ["COMPLETE", "SHIPPED", "CLOSED"]}}},
         sort: "UPDATEDAT_DESC",
     }, fetchPolicy: 'network-only'})
@@ -14,11 +14,16 @@ const MyOrder = () => {
 
     return (
         <Container>
-            <Header><h1>ประวัติการสั่งซื้อ</h1></Header>   
-            {orders.length === 0 ? <None><h1>ไม่มีประวัติการสั่งซื้อ</h1></None> : null}   
-            <Flex>
-                {orders.map((item) => (<OrderCard key={item._id} order={item} />))}
-            </Flex>
+            <Header><h1>ประวัติการสั่งซื้อ</h1></Header> 
+            { loading ? <Loading/> :
+                <>
+                    {orders.length === 0 ? <None><h1>ไม่มีประวัติการสั่งซื้อ</h1></None> : null}   
+                    <Flex>
+                        {orders.map((item) => (<OrderCard key={item._id} order={item} />))}
+                    </Flex>
+                </>
+            }  
+
         </Container>
     )
 }

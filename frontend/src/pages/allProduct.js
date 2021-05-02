@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/client'
 import Card from '../components/home/card'
 import Pagination from "../components/pagination"
 import {Input, Header, None} from '../styles/styleComponents'
-
+import Loading from '../components/loading'
 const AllProducts = () => {
     const query = new URLSearchParams(useLocation().search)
     const initPage = Number(query.get("page")) || 1
@@ -17,7 +17,7 @@ const AllProducts = () => {
         date: "",
         types: "",
     })
-    const { data, count } = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:queryPage, perPageNum: 8}, fetchPolicy: 'network-only'})
+    const { data, count, loading } = useQuery(PRODUCT_PAGINATION_QUERY, {variables: {pageNum:queryPage, perPageNum: 8}, fetchPolicy: 'network-only'})
     const pageData = data?.productsWithPagination.pageInfo || {}
     const products = data?.productsWithPagination.items || []
 
@@ -59,6 +59,7 @@ const AllProducts = () => {
                     </select>
                 </Input>
             </SearchBar> */}
+            
             { 
                 pageData.itemCount === 0 ? <None><h1>ไม่มีสินค้า</h1> </None> 
                 :
@@ -67,12 +68,9 @@ const AllProducts = () => {
             <Flex>
                 {products?.map((product, index) => (<Card key={index} product={product} />))} 
             </Flex>
-            { 
-                pageData.itemCount === 0 ? null 
-                :
-                <Pagination setQueryPage={setQueryPage} queryPage={queryPage} pageData={pageData}/>      
-            }
-               
+            { loading ? <Loading/> 
+                :  pageData.itemCount === 0 ? null 
+                : <Pagination setQueryPage={setQueryPage} queryPage={queryPage} pageData={pageData}/>}
         </Container>
     )
 }

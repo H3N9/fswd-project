@@ -8,11 +8,12 @@ import {Input, Header} from '../styles/styleComponents'
 import CatgoriesProducts from '../components/home/catgoriesProducts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PromotionItem from "../components/promotion/promotionItem"
+import Loading from "../components/loading" 
 
 const AllPromotion = () => {
     const query = new URLSearchParams(useLocation().search)
     const initPage = Number(query.get("page")) || 1
-    const { data, count } = useQuery(PROMOTIONS_QUERY)
+    const { data, count, loading } = useQuery(PROMOTIONS_QUERY)
     console.log(data)
 
     const destructPromotion = (acc, curr) => {
@@ -34,14 +35,21 @@ const AllPromotion = () => {
             <Header>
                 <h1>คูปองส่วนลด</h1>
             </Header>
-            <PromoFlex>
-                {coupons.map((item) => (
-                    <div className="item-wrapper">
-                        <PromotionItem key={item._id} promotion={item} />
-                    </div>
-                ))}
-            </PromoFlex>
-            <CatgoriesProducts products={products} title={"สินค้าโปรโมชั่น"}/>  
+            {loading ? 
+                <Loading />
+                :
+                <>
+                    <PromoFlex>
+                        {coupons.map((item) => (
+                            <div className="item-wrapper">
+                                <PromotionItem key={item._id} promotion={item} />
+                            </div>
+                         ))}
+                    </PromoFlex>
+                    <CatgoriesProducts products={products} title={"สินค้าโปรโมชั่น"}/>  
+                </>
+            }
+
         </Container>
     )
 }
