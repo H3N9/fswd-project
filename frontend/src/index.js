@@ -3,16 +3,48 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client'
 import { BrowserRouter as Router } from 'react-router-dom'
 import {OrderProvider} from './context/orderContext'
 import {SessionProvider} from './context/session'
 import {CookiesProvider} from 'react-cookie'
+import {setContext} from '@apollo/client/link/context'
+
+
+const httpLink = createHttpLink({
+  uri: 'https://fswd-book-store.herokuapp.com/graphql',
+});
+
+const getCookie = (cname) => {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+const authLink = setContext((_, { headers }) => {
+  const token = getCookie("token")
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  }
+});
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3001/graphql',
   cache: new InMemoryCache(),
   credentials: 'include',
+  link: authLink.concat(httpLink),
 })
 
 ReactDOM.render(
