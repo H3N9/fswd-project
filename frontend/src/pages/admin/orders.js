@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ORDERS_PAGINATION_QUERY } from '../../graphql/orderQuery'
 import { useQuery } from '@apollo/client'
 import {Header, Table, None} from '../../styles/styleComponents'
+import Loading from '../../components/loading'
 
 const Orders = () => {
     const { loading, error, data } = useQuery(ORDERS_PAGINATION_QUERY, {variables: {
@@ -19,8 +20,9 @@ const Orders = () => {
             <Header>
                 <h1>จัดการออเดอร์</h1>
             </Header>
-            {
-                orders.length === 0 ? <None><h1>ไม่มีออเดอร์</h1></None>
+            {        
+                loading ? <Loading/>
+                :  orders.length === 0 ? <None><h1>ไม่มีออเดอร์</h1></None>
                 :
                 <Table>
                 <thead>
@@ -46,7 +48,7 @@ const Orders = () => {
                     </td>
                 </tr>
                 )}
-            </Table> 
+                </Table>     
             }
         </Container>
     )
