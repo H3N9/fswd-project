@@ -6,7 +6,9 @@ import { useMutation } from '@apollo/client'
 import { Header, Input, FormContainer } from '../styles/styleComponents'
 import { CONFIRM_ORDER } from '../graphql/orderMutation'
 import Response from '../components/response'
-import pay from '../images/promptpay.jpg' 
+import pay from '../images/promptpay.jpg'
+import { main } from '../../path'
+
 const Payment = () => {
     const [ image, setImage ] = useState()
     const [ imgPath, setImgPath ] = useState("")
@@ -38,7 +40,7 @@ const Payment = () => {
             const formData = new FormData()
             formData.append('image', imgPath)
 
-            const uploadResponse = await fetch('http://localhost:3001/image', { 
+            const uploadResponse = await fetch(`${main}/image`, { 
                 method: 'POST',
                 body: formData
             })

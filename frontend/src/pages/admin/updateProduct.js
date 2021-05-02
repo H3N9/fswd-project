@@ -7,6 +7,7 @@ import ProductForm from '../../components/adminProduct/productForm'
 import Response from '../../components/response'
 import {CREATEDISCOUNT_MUTATION, UPDATEPROMOTION_MUTATION} from '../../graphql/createDiscountMutation'
 import {REMOVEDISCOUNT_MUTATION} from '../../graphql/removeDiscount'
+import { main } from '../../path'
 
 const UpdateProduct = () => {
     const { productId } = useParams()
@@ -53,7 +54,7 @@ const UpdateProduct = () => {
                 setIsDiscountCreate(false)
                 setPromotionExist(false)
             }
-            setImage('http://localhost:3001/image/'+data?.productById?.image)
+            setImage(`${main}/image/${data?.productById?.image}`)
         }
     }, [data])
 
@@ -129,7 +130,7 @@ const UpdateProduct = () => {
             const formData = new FormData()
             formData.append('image', product.image)
 
-            const uploadResponse = await fetch('http://localhost:3001/image', { 
+            const uploadResponse = await fetch(`${main}/image`, { 
                 method: 'POST',
                 body: formData
             })

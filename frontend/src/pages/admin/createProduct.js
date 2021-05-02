@@ -7,7 +7,7 @@ import {Input} from '../../styles/styleComponents'
 import { useHistory } from "react-router-dom"
 import Response from '../../components/response'
 import {FormContainer} from '../../styles/styleComponents'
-
+import { main } from '../../path'
 
 const CreateProduct = () => {
     const [ product, setProduct ] = useState({
@@ -62,7 +62,7 @@ const CreateProduct = () => {
             const formData = new FormData()
             formData.append('image', image)
 
-            const uploadResponse = await fetch('http://localhost:3001/image', { 
+            const uploadResponse = await fetch(`${main}/image`, { 
                 method: 'POST',
                 body: formData
             })
