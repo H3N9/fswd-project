@@ -49,6 +49,7 @@ export const ORDER_QUERY_BY_ID = gql`
         status
         createdAtWithFormatDateTime
         updatedAtWithFormatDateTime
+        imagePayment
         user{
             _id
             username
