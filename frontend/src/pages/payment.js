@@ -7,7 +7,7 @@ import { Header, Input, FormContainer } from '../styles/styleComponents'
 import { CONFIRM_ORDER } from '../graphql/orderMutation'
 import Response from '../components/response'
 import pay from '../images/promptpay.jpg'
-import { main } from '../../path'
+import { main } from '../path'
 
 const Payment = () => {
     const [ image, setImage ] = useState()
